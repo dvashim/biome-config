@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.0.8
+
+### Patch Changes
+
+- [#21](https://github.com/dvashim/biome-config/pull/21) [`e85cfd3`](https://github.com/dvashim/biome-config/commit/e85cfd363ae32f727f9da3ad134f7afbc01dffe2) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update JSON expanding (set to auto)
+
 ## 1.0.7
 
 ### Patch Changes
