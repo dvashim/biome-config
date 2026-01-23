@@ -2,10 +2,11 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -26,7 +27,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Run Changesets (version or publish)
         id: changesets
-        uses: changesets/action@v1.5.3
+        uses: changesets/action@v1
         with:
           version: pnpm run changeset:version
           publish: pnpm run changeset:publish
