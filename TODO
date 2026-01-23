@@ -1,0 +1,7 @@
+- biome.strict
+  ☐ noExcessiveLinesPerFile
+  ☐ useErrorCause
+
+extends
+ ☐ implement nesting
+    (see https://github.com/biomejs/biome/discussions/8257)

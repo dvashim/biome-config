@@ -1,0 +1,40 @@
+name: Release Version (Changesets)
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  version-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # important for changeset to calculate versions correctly
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Create Version PR or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # This command bumps version + changelog + commits + tags
+          version: pnpm version
+          commit: "chore: version packages"
+          title: "chore: version packages"
+          # Optional: publish npm too (most people skip for pure RPM projects)
+          # publish: npm run release   # only if you have npm publish logic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}   # only if publishing npm

@@ -1,0 +1,33 @@
+{
+  "name": "@dvashim/biome-config",
+  "version": "1.0.0",
+  "description": "Shared Biome Configurations",
+  "type": "module",
+  "exports": {
+    "./all/recommended": "./biome.all.recommended.json",
+    "./react/strict": "./biome.react.strict.json",
+    "./react/recommended": "./biome.react.recommended.json"
+  },
+  "main": "./biome.all.recommended.json",
+  "files": ["*.json"],
+  "scripts": {
+    "check": "biome check .",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish"
+  },
+  "keywords": ["biome", "lint", "formatter", "config"],
+  "author": {
+    "name": "Aleksei Reznichenko",
+    "email": "aleksei@dvashim.dev"
+  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.1",
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
+    "@changesets/cli": "^2.29.8"
+  },
+  "peerDependencies": {
+    "@biomejs/biome": "^2.3.11"
+  }
+}
