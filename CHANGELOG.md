@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.0.4
+
+### Patch Changes
+
+- [#13](https://github.com/dvashim/biome-config/pull/13) [`3be32ce`](https://github.com/dvashim/biome-config/commit/3be32ce70e7d42105269e5b2b56aff7321b80162) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Optimize workflow
+
 ## 1.0.3
 
 ### Patch Changes
