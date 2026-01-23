@@ -22,16 +22,18 @@ jobs:
         with:
           fetch-depth: 0  # Important for changesets to detect history
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           cache: 'pnpm'
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
+
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
