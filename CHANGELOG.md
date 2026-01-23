@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.0.9
+
+### Patch Changes
+
+- [#24](https://github.com/dvashim/biome-config/pull/24) [`d4522f4`](https://github.com/dvashim/biome-config/commit/d4522f498e410d1874ba4e1d7656fc70a99a4c5a) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Reorganise files, add testing, update ci/cd
+
 ## 1.0.8
 
 ### Patch Changes
