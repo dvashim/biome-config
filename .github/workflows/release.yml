@@ -6,7 +6,7 @@ on:
       - main
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -18,10 +18,10 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
         with:
-          fetch-depth: 0  # Important for changesets to detect history
+          fetch-depth: 0
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -29,14 +29,13 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Create Release Pull Request or Publish to npm
+      - name: Run Changesets (version or publish)
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@v1.5.3
         with:
-          version: pnpm version
-          # publish: pnpm ci:publish
-          title: "chore: version packages"
-          commit: "chore: version packages"
+          version: pnpm run changeset:version
+          # publish: pnpm run changeset:publish
+          commit: 'ci: Version Packages'
+          title: 'ci: Version Packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
