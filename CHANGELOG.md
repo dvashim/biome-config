@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.0.6
+
+### Patch Changes
+
+- [#17](https://github.com/dvashim/biome-config/pull/17) [`2398ba6`](https://github.com/dvashim/biome-config/commit/2398ba669dd116c5adecc732cd5a9023de5ace30) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Finalize publishing (2)
+
 ## 1.0.5
 
 ### Patch Changes
