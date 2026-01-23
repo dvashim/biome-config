@@ -14,7 +14,8 @@ permissions:
   pull-requests: write  # Needed for creating/updating version PRs
 
 jobs:
-  version-and-publish:
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
