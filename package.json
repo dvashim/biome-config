@@ -13,8 +13,8 @@
   "scripts": {
     "check": "biome check .",
     "changeset": "changeset",
-    "version": "changeset version",
-    "release": "changeset publish"
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish"
   },
   "keywords": ["biome", "lint", "formatter", "config"],
   "author": {
