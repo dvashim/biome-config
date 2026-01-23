@@ -2,5 +2,15 @@
   "root": true,
   "$schema": "https://biomejs.dev/schemas/2.3.12/schema.json",
   "extends": ["dist/biome.recommended.json"],
-  "files": { "includes": ["*.json"] }
+  "files": { "includes": ["*.json"] },
+  "overrides": [
+    {
+      "includes": ["package.json"],
+      "json": {
+        "formatter": {
+          "expand": "always"
+        }
+      }
+    }
+  ]
 }
