@@ -1,6 +1,6 @@
 {
   "name": "@dvashim/biome-config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shared Biome Configurations",
   "type": "module",
   "exports": {
