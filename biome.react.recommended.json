@@ -23,7 +23,10 @@
   },
 
   "files": {
-    "includes": ["**", "!!**/dist"]
+    "includes": [
+      "**",
+      "!!**/dist"
+    ]
   },
 
   "formatter": {
@@ -64,6 +67,9 @@
     "parser": {
       "allowComments": true,
       "allowTrailingCommas": true
+    },
+    "formatter": {
+      "expand": "always"
     }
   },
 
