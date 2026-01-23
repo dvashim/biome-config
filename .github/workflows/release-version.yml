@@ -1,4 +1,4 @@
-name: Release Version (Changesets)
+name: Release
 
 on:
   push:
@@ -9,32 +9,41 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write       # Needed for creating PRs and commits
+  pull-requests: write  # Needed for creating/updating version PRs
+
 jobs:
   version-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # important for changeset to calculate versions correctly
+          fetch-depth: 0  # Important for changesets to detect history
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 25
-          cache: 'pnpm'
+          node-version: 20
+          cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
 
-      - name: Create Version PR or Publish
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          # This command bumps version + changelog + commits + tags
           version: pnpm version
-          commit: "chore: version packages"
+          # publish: pnpm ci:publish
           title: "chore: version packages"
-          # Optional: publish npm too (most people skip for pure RPM projects)
-          # publish: npm run release   # only if you have npm publish logic
+          commit: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}   # only if publishing npm
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
