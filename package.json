@@ -1,6 +1,6 @@
 {
   "name": "@dvashim/biome-config",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Shared Biome Configurations",
   "type": "module",
   "exports": {
@@ -9,14 +9,21 @@
     "./react/recommended": "./biome.react.recommended.json"
   },
   "main": "./biome.all.recommended.json",
-  "files": ["*.json"],
+  "files": [
+    "*.json"
+  ],
   "scripts": {
     "check": "biome check .",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish"
   },
-  "keywords": ["biome", "lint", "formatter", "config"],
+  "keywords": [
+    "biome",
+    "lint",
+    "formatter",
+    "config"
+  ],
   "author": {
     "name": "Aleksei Reznichenko",
     "email": "aleksei@dvashim.dev"
