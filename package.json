@@ -3,7 +3,6 @@
   "version": "1.0.6",
   "description": "Shared Biome Configurations",
   "type": "module",
-  "private": "false",
   "exports": {
     "./all/recommended": "./biome.all.recommended.json",
     "./react/strict": "./biome.react.strict.json",
