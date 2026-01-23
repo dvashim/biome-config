@@ -1,7 +1,7 @@
 {
-	"root": false,
-	"$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
-	"extends": ["./biome.recommended.json"],
-	"files": { "includes": ["*.json"] },
-	"vcs": { "useIgnoreFile": true }
+  "root": true,
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+  "extends": ["./biome.all.recommended.json"],
+  "files": { "includes": ["*.json"] },
+  "vcs": { "useIgnoreFile": true }
 }
