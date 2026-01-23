@@ -12,11 +12,11 @@ npm install @dvashim/biome-config
 
 ```json
 {
-  "extends": ["@dvashim/biome-config/all/recommended"]
+  "extends": ["@dvashim/biome-config"]
 }
 ```
 
-### React config
+### React configs
 
 ```json
 {
