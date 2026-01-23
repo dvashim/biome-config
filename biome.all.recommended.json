@@ -20,10 +20,7 @@
   },
 
   "files": {
-    "includes": [
-      "**",
-      "!!**/dist"
-    ]
+    "includes": ["**", "!!**/dist"]
   },
 
   "formatter": {
@@ -66,7 +63,7 @@
       "allowTrailingCommas": true
     },
     "formatter": {
-      "expand": "always"
+      "expand": "auto"
     }
   },
 
