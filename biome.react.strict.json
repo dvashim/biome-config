@@ -53,11 +53,15 @@
         "noImportCycles": "warn",
         "noIncrementDecrement": {
           "level": "warn",
-          "options": { "allowForLoopAfterthoughts": true }
+          "options": {
+            "allowForLoopAfterthoughts": true
+          }
         },
         "noJsxLiterals": {
           "level": "warn",
-          "options": { "noStrings": true }
+          "options": {
+            "noStrings": true
+          }
         },
         "noJsxPropsBind": "error",
         "noLeakedRender": "error",
@@ -211,7 +215,10 @@
   },
 
   "files": {
-    "includes": ["**", "!!**/dist"]
+    "includes": [
+      "**",
+      "!!**/dist"
+    ]
   },
 
   "formatter": {
@@ -252,6 +259,9 @@
     "parser": {
       "allowComments": true,
       "allowTrailingCommas": true
+    },
+    "formatter": {
+      "expand": "always"
     }
   },
 
