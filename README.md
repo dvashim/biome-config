@@ -4,10 +4,16 @@
 
 ## Installation
 
-To install this package, you can use npm or yarn:
+To install this package, you can use npm:
 
 ```bash
-npm install @dvashim/biome-config
+npm install -D @dvashim/biome-config
+```
+
+or pnpm:
+
+```bash
+pnpm add -D @dvashim/biome-config
 ```
 
 ## Provided configurations
@@ -17,6 +23,8 @@ npm install @dvashim/biome-config
 | [Base recommended configuration](#base-recommended-configuration) | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
 | [React recommended configuration](#react-recommended-configuration) | `@dvashim/biome-config/react/recommended` |
 | [React strict configuration](#react-strict-configuration) | `@dvashim/biome-config/react/strict` |
+
+## Using Biome configurations
 
 ### Base recommended configuration
 
