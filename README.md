@@ -1,10 +1,10 @@
 # Biome Configurations
 
-[![npm version](https://img.shields.io/npm/v/@dvashim/biome-config.svg?logo=npm&style=flat-square&color2=07c)](https://www.npmjs.com/package/@dvashim/biome-config) [![npm downloads](https://img.shields.io/npm/dm/@dvashim/biome-config?logo=npm&style=flat-square&color=07c)](https://www.npmjs.com/package/@dvashim/biome-config) [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff)](https://biomejs.dev)
+[![npm version](https://img.shields.io/npm/v/@dvashim/biome-config.svg?logo=npm&style=flat-square&color2=07c&label=@dvashim/biome-config)](https://www.npmjs.com/package/@dvashim/biome-config) [![npm downloads](https://img.shields.io/npm/dm/@dvashim/biome-config?logo=npm&style=flat-square&color=07c)](https://www.npmjs.com/package/@dvashim/biome-config) [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff)](https://biomejs.dev)
 
 ## Installation
 
-To install this package, you can use npm:
+npm:
 
 ```bash
 npm install -D @dvashim/biome-config
@@ -16,19 +16,60 @@ or pnpm:
 pnpm add -D @dvashim/biome-config
 ```
 
-## Provided configurations
+## Configurations
 
 | Name | Path |
 |------|------|
-| [Base recommended configuration](#base-recommended-configuration) | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
-| [React recommended configuration](#react-recommended-configuration) | `@dvashim/biome-config/react/recommended` |
-| [React strict configuration](#react-strict-configuration) | `@dvashim/biome-config/react/strict` |
+| [Base recommended](#base-recommended-configuration) | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
+| [React recommended](#react-recommended-configuration) | `@dvashim/biome-config/react/recommended` |
+| [React strict](#react-strict-configuration) | `@dvashim/biome-config/react/strict` |
 
-## Using Biome configurations
+## Use
+
+Base recommended configuration
+
+```jsonc
+// biome.json (base recommended)
+// This configuration provides a base setup for linting,
+// formatting, and code consistency across JavaScript,
+// JSX, JSON, and HTML files.
+
+{
+  "extends": ["@dvashim/biome-config"]
+}
+```
+
+React recommended configuration
+
+```jsonc
+// biome.json (react recommended)
+// This configuration provides setup for linting,
+// formatting, and code consistency across JavaScript,
+// JSX, JSON, and HTML files, optimized for React projects.
+
+{
+  "extends": ["@dvashim/biome-config/react/recommended"]
+}
+```
+
+React strict configuration
+
+```jsonc
+// biome.json (react strict)
+// This configuration enforces strict rules for linting,
+// formatting, and code quality across JavaScript,
+// TypeScript, JSX, JSON, and HTML files.
+
+{
+  "extends": ["@dvashim/biome-config/react/strict"]
+}
+```
+
+## Rules
 
 ### Base recommended configuration
 
-This configuration provides a base setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files. Key features include:
+> This configuration provides a base setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files. Key features include:
 
 * **Linter Rules**
 
@@ -51,18 +92,9 @@ This configuration provides a base setup for linting, formatting, and code consi
 
   * Includes all project files by default, excluding distribution directories.
 
-This setup provides a robust, opinionated baseline for projects, ensuring readable, maintainable, and consistent code while enforcing Biome’s recommended practices.
-
-```jsonc
-// biome.json
-{
-  "extends": ["@dvashim/biome-config"]
-}
-```
-
 ### React recommended configuration
 
-This configuration provides setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files, optimized for React projects. Key features include:
+> This configuration provides setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files, optimized for React projects. Key features include:
 
 * **Linter Rules**
 
@@ -86,18 +118,9 @@ This configuration provides setup for linting, formatting, and code consistency 
 
   * Includes all project files by default, excluding distribution directories.
 
-This setup ensures a clean, maintainable, and React-ready codebase, focusing on recommended best practices and consistent formatting.
-
-```jsonc
-// biome.json
-{
-  "extends": ["@dvashim/biome-config/react/recommended"]
-}
-```
-
 ### React strict configuration
 
-This configuration enforces strict rules for linting, formatting, and code quality across JavaScript, TypeScript, JSX, JSON, and HTML files. Key features include:
+> This configuration enforces strict rules for linting, formatting, and code quality across JavaScript, TypeScript, JSX, JSON, and HTML files. Key features include:
 
 * **Linter Rules**
 
@@ -126,12 +149,3 @@ This configuration enforces strict rules for linting, formatting, and code quali
 * **File Management:**
 
   * Includes all project files by default, excluding distribution directories.
-
-This setup ensures a consistent, maintainable, and high-quality codebase while enforcing best practices across accessibility, performance, security, and style.
-
-```jsonc
-// biome.json
-{
-  "extends": ["@dvashim/biome-config/react/strict"]
-}
-```
