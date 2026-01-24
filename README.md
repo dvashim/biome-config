@@ -16,7 +16,7 @@ npm install @dvashim/biome-config
 |------|------|
 | [Base recommended configuration](#base-recommended-configuration) | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
 | [React recommended configuration](#react-recommended-configuration) | `@dvashim/biome-config/react/recommended` |
-| [React strict configuration](#react-strict-configuration) | `@dvashim/typescript-config/react/strict` |
+| [React strict configuration](#react-strict-configuration) | `@dvashim/biome-config/react/strict` |
 
 ### Base recommended configuration
 
