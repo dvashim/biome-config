@@ -1,4 +1,4 @@
-# Using Biome Configs
+# Biome Configurations
 
 [![npm version](https://img.shields.io/npm/v/@dvashim/biome-config.svg?logo=npm&style=flat-square&color2=07c)](https://www.npmjs.com/package/@dvashim/biome-config) [![npm downloads](https://img.shields.io/npm/dm/@dvashim/biome-config?logo=npm&style=flat-square&color=07c)](https://www.npmjs.com/package/@dvashim/biome-config) [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff)](https://biomejs.dev)
 
@@ -10,7 +10,15 @@ To install this package, you can use npm or yarn:
 npm install @dvashim/biome-config
 ```
 
-### Base recommended config
+## Provided configurations
+
+| Name | Path |
+|------|------|
+| [Base recommended configuration](#base-recommended-configuration) | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
+| [React recommended configuration](#react-recommended-configuration) | `@dvashim/biome-config/react/recommended` |
+| [React strict configuration](#react-strict-configuration) | `@dvashim/typescript-config/react/strict` |
+
+### Base recommended configuration
 
 This configuration provides a base setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files. Key features include:
 
