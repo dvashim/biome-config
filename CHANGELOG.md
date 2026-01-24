@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.1.0
+
+### Minor Changes
+
+- [#26](https://github.com/dvashim/biome-config/pull/26) [`d9503f8`](https://github.com/dvashim/biome-config/commit/d9503f83cc0668e75c00a1b4ae16f063db63e5de) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Improve readme, update exports
+
 ## 1.0.9
 
 ### Patch Changes
