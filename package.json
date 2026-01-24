@@ -6,10 +6,11 @@
   "exports": {
     ".": "./dist/biome.recommended.json",
     "./recommended": "./dist/biome.recommended.json",
-    "./react/*": "./dist/react/biome.react-*.json"
+    "./react/recommended": "./dist/biome.react.recommended.json",
+    "./react/strict": "./dist/biome.react.strict.json"
   },
   "files": [
-    "dist/**/*.json"
+    "dist"
   ],
   "scripts": {
     "test:format": "biome format .",
