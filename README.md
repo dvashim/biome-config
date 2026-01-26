@@ -24,9 +24,11 @@ pnpm add -D @dvashim/biome-config
 | [React recommended](#react-recommended-configuration) | `@dvashim/biome-config/react/recommended` |
 | [React strict](#react-strict-configuration) | `@dvashim/biome-config/react/strict` |
 
+<br>
+
 ## Use
 
-Base recommended configuration
+Base recommended configuration:
 
 ```jsonc
 // biome.json (base recommended)
@@ -39,7 +41,7 @@ Base recommended configuration
 }
 ```
 
-React recommended configuration
+React recommended configuration:
 
 ```jsonc
 // biome.json (react recommended)
@@ -52,7 +54,7 @@ React recommended configuration
 }
 ```
 
-React strict configuration
+React strict configuration:
 
 ```jsonc
 // biome.json (react strict)
@@ -69,7 +71,7 @@ React strict configuration
 
 ### Base recommended configuration
 
-> This configuration provides a base setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files. Key features include:
+This configuration provides a base setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files. Key features include:
 
 * **Linter Rules**
 
@@ -92,9 +94,11 @@ React strict configuration
 
   * Includes all project files by default, excluding distribution directories.
 
+---
+
 ### React recommended configuration
 
-> This configuration provides setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files, optimized for React projects. Key features include:
+This configuration provides setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files, optimized for React projects. Key features include:
 
 * **Linter Rules**
 
@@ -118,9 +122,11 @@ React strict configuration
 
   * Includes all project files by default, excluding distribution directories.
 
+---
+
 ### React strict configuration
 
-> This configuration enforces strict rules for linting, formatting, and code quality across JavaScript, TypeScript, JSX, JSON, and HTML files. Key features include:
+This configuration enforces strict rules for linting, formatting, and code quality across JavaScript, TypeScript, JSX, JSON, and HTML files. Key features include:
 
 * **Linter Rules**
 
