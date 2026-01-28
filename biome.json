@@ -1,6 +1,6 @@
 {
   "root": true,
-  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
   "extends": ["dist/biome.recommended.json"],
   "files": { "includes": ["**/dist"] },
   "overrides": [
