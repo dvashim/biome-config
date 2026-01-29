@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.1.7
+
+### Patch Changes
+
+- [#40](https://github.com/dvashim/biome-config/pull/40) [`be687a6`](https://github.com/dvashim/biome-config/commit/be687a628e89fb2c05486e3028ee88dbb45ac0b6) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add new nursery rules for react domain, add balanced config
+
 ## 1.1.6
 
 ### Patch Changes
