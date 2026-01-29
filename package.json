@@ -7,7 +7,7 @@
     ".": "./dist/biome.recommended.json",
     "./recommended": "./dist/biome.recommended.json",
     "./react/recommended": "./dist/biome.react.recommended.json",
-    "./react/moderate": "./dist/biome.react.moderate.json",
+    "./react/balanced": "./dist/biome.react.balanced.json",
     "./react/strict": "./dist/biome.react.strict.json"
   },
   "files": [

@@ -18,11 +18,12 @@ pnpm add -D @dvashim/biome-config
 
 ## Configurations
 
-| Name | Path |
-|------|------|
-| [Base recommended](#base-recommended-configuration) | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
-| [React recommended](#react-recommended-configuration) | `@dvashim/biome-config/react/recommended` |
-| [React strict](#react-strict-configuration) | `@dvashim/biome-config/react/strict` |
+| Domain | Level | Path |
+|--------|------------|------|
+| Base | recommended | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
+| React | recommended | `@dvashim/biome-config/react/recommended` |
+| React | balanced | `@dvashim/biome-config/react/balanced` |
+| React | strict | `@dvashim/biome-config/react/strict` |
 
 <br>
 
@@ -45,12 +46,25 @@ React recommended configuration:
 
 ```jsonc
 // biome.json (react recommended)
-// This configuration provides setup for linting,
+// This configuration provides recommended setup for linting,
 // formatting, and code consistency across JavaScript,
 // JSX, JSON, and HTML files, optimized for React projects.
 
 {
   "extends": ["@dvashim/biome-config/react/recommended"]
+}
+```
+
+React balanced configuration:
+
+```jsonc
+// biome.json (react balanced)
+// This configuration provides balanced setup for linting,
+// formatting, and code consistency across JavaScript,
+// JSX, JSON, and HTML files, optimized for React projects.
+
+{
+  "extends": ["@dvashim/biome-config/react/balanced"]
 }
 ```
 
