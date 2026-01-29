@@ -1,0 +1,272 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
+
+  "linter": {
+    "rules": {
+      "a11y": {
+        "useSemanticElements": "off",
+        "useFocusableInteractive": "info",
+        "useKeyWithClickEvents": "off",
+        "noStaticElementInteractions": "off",
+        "useAriaPropsSupportedByRole": "warn",
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noNoninteractiveElementInteractions": "warn",
+        "useAltText": "warn",
+        "useAriaPropsForRole": "warn",
+        "noAriaUnsupportedElements": "warn",
+        "useButtonType": "off"
+      },
+
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "warn",
+        "noExcessiveLinesPerFunction": "warn",
+        "noExcessiveNestedTestSuites": "warn",
+        "noForEach": "warn",
+        "noImplicitCoercions": "warn",
+        "noUselessStringConcat": "warn",
+        "noVoid": "warn",
+        "useSimplifiedLogicExpression": "warn",
+        "useWhile": "warn"
+      },
+
+      "correctness": {
+        "noGlobalDirnameFilename": "warn",
+        "noNestedComponentDefinitions": "warn",
+        "noNodejsModules": "warn",
+        "noProcessGlobal": "warn",
+        "noReactPropAssignments": "warn",
+        "noUndeclaredDependencies": "warn",
+        "noUndeclaredVariables": "warn",
+        "useSingleJsDocAsterisk": "warn",
+        "useUniqueElementIds": "warn"
+      },
+
+      "nursery": {
+        "noAmbiguousAnchorText": "warn",
+        "noContinue": "info",
+        "noDeprecatedImports": "warn",
+        "noDivRegex": "warn",
+        "noDuplicateAttributes": "warn",
+        "noDuplicatedSpreadProps": "warn",
+        "noDuplicateEnumValueNames": "warn",
+        "noDuplicateEnumValues": "warn",
+        "noEmptySource": "warn",
+        "noEqualsToNull": "warn",
+        "noExcessiveClassesPerFile": "warn",
+        "noExcessiveLinesPerFile": "warn",
+        "noFloatingClasses": "warn",
+        "noFloatingPromises": "warn",
+        "noForIn": "warn",
+        "noImportCycles": "warn",
+        "noIncrementDecrement": {
+          "level": "warn",
+          "options": {
+            "allowForLoopAfterthoughts": true
+          }
+        },
+        "noJsxLiterals": "off",
+        "noJsxPropsBind": "error",
+        "noLeakedRender": "error",
+        "noMisusedPromises": "error",
+        "noMultiAssign": "error",
+        "noMultiStr": "error",
+        "noParametersOnlyUsedInRecursion": "error",
+        "noProto": "warn",
+        "noReactForwardRef": "warn",
+        "noReturnAssign": "warn",
+        "noScriptUrl": "warn",
+        "noShadow": "warn",
+        "noSyncScripts": "error",
+        "noTernary": "off",
+        "noUndeclaredEnvVars": "warn",
+        "noUnknownAttribute": "warn",
+        "noUnnecessaryConditions": "warn",
+        "noUnresolvedImports": "off",
+        "noUnusedExpressions": "warn",
+        "noUselessCatchBinding": "warn",
+        "noUselessUndefined": "warn",
+        "useArraySortCompare": "warn",
+        "useAwaitThenable": "warn",
+        "useConsistentArrowReturn": "warn",
+        "useConsistentEnumValueType": "warn",
+        "useDestructuring": "warn",
+        "useErrorCause": "warn",
+        "useExhaustiveSwitchCases": "warn",
+        "useExplicitType": "off",
+        "useFind": "warn",
+        "useMaxParams": "warn",
+        "useRegexpExec": "warn",
+        "useSpread": "warn"
+      },
+
+      "performance": {
+        "noAwaitInLoops": "warn",
+        "noBarrelFile": "warn",
+        "noDelete": "warn",
+        "noNamespaceImport": "warn",
+        "noReExportAll": "warn",
+        "useTopLevelRegex": "warn"
+      },
+
+      "security": {
+        "noSecrets": "warn"
+      },
+
+      "style": {
+        "noCommonJs": "warn",
+        "noDefaultExport": "off",
+        "noEnum": "warn",
+        "noExportedImports": "warn",
+        "noImplicitBoolean": "info",
+        "noInferrableTypes": "warn",
+        "noMagicNumbers": "warn",
+        "noNamespace": "warn",
+        "noNegationElse": "warn",
+        "noNestedTernary": "info",
+        "noParameterAssign": "warn",
+        "noParameterProperties": "warn",
+        "noProcessEnv": "warn",
+        "noShoutyConstants": "warn",
+        "noSubstr": "warn",
+        "noUnusedTemplateLiteral": "warn",
+        "noUselessElse": "warn",
+        "noYodaExpression": "warn",
+        "useArrayLiterals": "warn",
+        "useAsConstAssertion": "warn",
+        "useAtIndex": "warn",
+        "useBlockStatements": "warn",
+        "useCollapsedElseIf": "warn",
+        "useCollapsedIf": "warn",
+        "useComponentExportOnlyModules": "warn",
+        "useConsistentArrayType": {
+          "level": "warn",
+          "options": {
+            "syntax": "shorthand"
+          }
+        },
+        "useConsistentBuiltinInstantiation": "warn",
+        "useConsistentCurlyBraces": "warn",
+        "useConsistentMemberAccessibility": "warn",
+        "useConsistentObjectDefinitions": "warn",
+        "useConsistentTypeDefinitions": {
+          "level": "warn",
+          "options": {
+            "style": "type"
+          }
+        },
+        "useDefaultParameterLast": "warn",
+        "useDefaultSwitchClause": "warn",
+        "useEnumInitializers": "warn",
+        "useExplicitLengthCheck": "warn",
+        "useExportsLast": "warn",
+        "useFilenamingConvention": "warn",
+        "useForOf": "warn",
+        "useFragmentSyntax": "warn",
+        "useGroupedAccessorPairs": "warn",
+        "useNamingConvention": {
+          "level": "warn",
+          "options": {
+            "strictCase": true,
+            "requireAscii": true
+          }
+        },
+        "useNumberNamespace": "error",
+        "useNumericSeparators": "error",
+        "useObjectSpread": "error",
+        "useReactFunctionComponents": "error",
+        "useReadonlyClassProperties": "error",
+        "useSelfClosingElements": "error",
+        "useShorthandAssign": "error",
+        "useSingleVarDeclarator": "error",
+        "useSymbolDescription": "error",
+        "useThrowNewError": "error",
+        "useThrowOnlyError": "error",
+        "useTrimStartEnd": "error",
+        "useUnifiedTypeSignatures": "error"
+      },
+
+      "suspicious": {
+        "noAlert": "warn",
+        "noBitwiseOperators": "warn",
+        "noConsole": "warn",
+        "noConstantBinaryExpressions": "warn",
+        "noEmptyBlockStatements": "warn",
+        "noEvolvingTypes": "warn",
+        "noMisplacedAssertion": "warn",
+        "noSkippedTests": "warn",
+        "noUnassignedVariables": "warn",
+        "noVar": "error",
+        "useAwait": "warn",
+        "useErrorMessage": "warn",
+        "useGuardForIn": "warn",
+        "useNumberToFixedDigitsArgument": "warn",
+        "useStaticResponseMethods": "warn",
+        "useStrictMode": "warn"
+      }
+    }
+  },
+
+  "assist": {
+    "actions": {
+      "recommended": true
+    }
+  },
+
+  "vcs": {
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+
+  "files": {
+    "includes": ["**", "!!**/dist"]
+  },
+
+  "formatter": {
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "useEditorconfig": true
+  },
+
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "jsxQuoteStyle": "single",
+      "operatorLinebreak": "before",
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "es5"
+    },
+
+    "parser": {
+      "gritMetavariables": false,
+      "jsxEverywhere": true,
+      "unsafeParameterDecoratorsEnabled": false
+    },
+
+    "globals": [],
+    "jsxRuntime": "transparent"
+  },
+
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    },
+    "formatter": {
+      "expand": "auto"
+    }
+  },
+
+  "html": {
+    "experimentalFullSupportEnabled": true
+  }
+}
