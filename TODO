@@ -1,6 +1,6 @@
-- biome.strict
-  ☐ noExcessiveLinesPerFile
-  ☐ useErrorCause
+- strict / moderate
+  ✔ noExcessiveLinesPerFile @done(26-01-29 12:56)
+  ✔ useErrorCause @done(26-01-29 12:56)
 
 extends
  ☐ implement nesting
