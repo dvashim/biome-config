@@ -1,34 +1,27 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
 
   "linter": {
     "rules": {
       "a11y": {
-        "useSemanticElements": "off",
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noStaticElementInteractions": "off",
+        "useButtonType": "off",
         "useFocusableInteractive": "info",
         "useKeyWithClickEvents": "off",
-        "noStaticElementInteractions": "off",
-        "useAriaPropsSupportedByRole": "warn",
-        "noNoninteractiveElementToInteractiveRole": "off",
-        "noNoninteractiveElementInteractions": "warn",
-        "useAltText": "warn",
-        "useAriaPropsForRole": "warn",
-        "noAriaUnsupportedElements": "warn",
-        "useButtonType": "off"
+        "useSemanticElements": "off"
       },
-
       "complexity": {
         "noExcessiveCognitiveComplexity": "warn",
         "noExcessiveLinesPerFunction": "warn",
         "noExcessiveNestedTestSuites": "warn",
         "noForEach": "warn",
-        "noImplicitCoercions": "warn",
+        "noImplicitCoercions": "off",
         "noUselessStringConcat": "warn",
         "noVoid": "warn",
         "useSimplifiedLogicExpression": "warn",
         "useWhile": "warn"
       },
-
       "correctness": {
         "noGlobalDirnameFilename": "warn",
         "noNestedComponentDefinitions": "warn",
@@ -37,10 +30,11 @@
         "noReactPropAssignments": "warn",
         "noUndeclaredDependencies": "warn",
         "noUndeclaredVariables": "warn",
+        "useImportExtensions": "off",
+        "useJsonImportAttributes": "warn",
         "useSingleJsDocAsterisk": "warn",
         "useUniqueElementIds": "warn"
       },
-
       "nursery": {
         "noAmbiguousAnchorText": "warn",
         "noContinue": "info",
@@ -73,10 +67,11 @@
         "noParametersOnlyUsedInRecursion": "error",
         "noProto": "warn",
         "noReactForwardRef": "warn",
+        "noRedundantDefaultExport": "warn",
         "noReturnAssign": "warn",
         "noScriptUrl": "warn",
         "noShadow": "warn",
-        "noSyncScripts": "error",
+        "noSyncScripts": "warn",
         "noTernary": "off",
         "noUndeclaredEnvVars": "warn",
         "noUnknownAttribute": "warn",
@@ -89,40 +84,40 @@
         "useAwaitThenable": "warn",
         "useConsistentArrowReturn": "warn",
         "useConsistentEnumValueType": "warn",
+        "useConsistentMethodSignatures": "warn",
         "useDestructuring": "warn",
         "useErrorCause": "warn",
         "useExhaustiveSwitchCases": "warn",
         "useExplicitType": "off",
         "useFind": "warn",
+        "useGlobalThis": "warn",
         "useMaxParams": "warn",
         "useRegexpExec": "warn",
         "useSpread": "warn"
       },
-
       "performance": {
         "noAwaitInLoops": "warn",
-        "noBarrelFile": "warn",
+        "noBarrelFile": "off",
         "noDelete": "warn",
-        "noNamespaceImport": "warn",
-        "noReExportAll": "warn",
+        "noNamespaceImport": "off",
+        "noReExportAll": "off",
         "useTopLevelRegex": "warn"
       },
-
       "security": {
         "noSecrets": "warn"
       },
-
       "style": {
         "noCommonJs": "warn",
         "noDefaultExport": "off",
+        "noDoneCallback": "warn",
         "noEnum": "warn",
         "noExportedImports": "warn",
         "noImplicitBoolean": "info",
         "noInferrableTypes": "warn",
-        "noMagicNumbers": "warn",
+        "noMagicNumbers": "off",
         "noNamespace": "warn",
         "noNegationElse": "warn",
-        "noNestedTernary": "info",
+        "noNestedTernary": "off",
         "noParameterAssign": "warn",
         "noParameterProperties": "warn",
         "noProcessEnv": "warn",
@@ -131,7 +126,6 @@
         "noUnusedTemplateLiteral": "warn",
         "noUselessElse": "warn",
         "noYodaExpression": "warn",
-        "useArrayLiterals": "warn",
         "useAsConstAssertion": "warn",
         "useAtIndex": "warn",
         "useBlockStatements": "warn",
@@ -166,7 +160,7 @@
         "useNamingConvention": {
           "level": "warn",
           "options": {
-            "strictCase": true,
+            "strictCase": false,
             "requireAscii": true
           }
         },
@@ -184,7 +178,6 @@
         "useTrimStartEnd": "error",
         "useUnifiedTypeSignatures": "error"
       },
-
       "suspicious": {
         "noAlert": "warn",
         "noBitwiseOperators": "warn",
@@ -260,9 +253,6 @@
     "parser": {
       "allowComments": true,
       "allowTrailingCommas": true
-    },
-    "formatter": {
-      "expand": "auto"
     }
   },
 

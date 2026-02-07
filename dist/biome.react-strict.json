@@ -37,7 +37,7 @@
       },
       "nursery": {
         "noAmbiguousAnchorText": "warn",
-        "noContinue": "info",
+        "noContinue": "warn",
         "noDeprecatedImports": "warn",
         "noDivRegex": "warn",
         "noDuplicateAttributes": "warn",
@@ -52,18 +52,8 @@
         "noFloatingPromises": "warn",
         "noForIn": "warn",
         "noImportCycles": "warn",
-        "noIncrementDecrement": {
-          "level": "warn",
-          "options": {
-            "allowForLoopAfterthoughts": true
-          }
-        },
-        "noJsxLiterals": {
-          "level": "warn",
-          "options": {
-            "noStrings": true
-          }
-        },
+        "noIncrementDecrement": "warn",
+        "noJsxLiterals": "warn",
         "noJsxPropsBind": "error",
         "noLeakedRender": "error",
         "noMisusedPromises": "error",
@@ -258,9 +248,6 @@
     "parser": {
       "allowComments": true,
       "allowTrailingCommas": true
-    },
-    "formatter": {
-      "expand": "auto"
     }
   },
 
