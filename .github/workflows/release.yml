@@ -29,8 +29,8 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: pnpm run changeset:version
-          publish: pnpm run changeset:publish
+          version: pnpm changeset version
+          publish: pnpm changeset publish
           commit: 'ci: Version Packages'
           title: 'ci: Version Packages'
         env:
