@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.1.10
+
+### Patch Changes
+
+- [#45](https://github.com/dvashim/biome-config/pull/45) [`3c3e9db`](https://github.com/dvashim/biome-config/commit/3c3e9db35f525841825e4afd0b6541984e777700) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add workflow job dependency
+
 ## 1.1.9
 
 ### Patch Changes
