@@ -21,9 +21,9 @@ pnpm add -D @dvashim/biome-config
 | Domain | Level | Path |
 |--------|------------|------|
 | Base | recommended | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
-| React | recommended | `@dvashim/biome-config/react/recommended` |
-| React | balanced | `@dvashim/biome-config/react/balanced` |
-| React | strict | `@dvashim/biome-config/react/strict` |
+| React | recommended | `@dvashim/biome-config/react-recommended` |
+| React | balanced | `@dvashim/biome-config/react-balanced` |
+| React | strict | `@dvashim/biome-config/react-strict` |
 
 <br>
 
@@ -46,25 +46,11 @@ React recommended configuration:
 
 ```jsonc
 // biome.json (react recommended)
-// This configuration provides recommended setup for linting,
-// formatting, and code consistency across JavaScript,
-// JSX, JSON, and HTML files, optimized for React projects.
+// This configuration extends the base recommended configuration
+// and enables the recommended rules for the React domain
 
 {
-  "extends": ["@dvashim/biome-config/react/recommended"]
-}
-```
-
-React balanced configuration:
-
-```jsonc
-// biome.json (react balanced)
-// This configuration provides balanced setup for linting,
-// formatting, and code consistency across JavaScript,
-// JSX, JSON, and HTML files, optimized for React projects.
-
-{
-  "extends": ["@dvashim/biome-config/react/balanced"]
+  "extends": ["@dvashim/biome-config/react-recommended"]
 }
 ```
 
@@ -72,14 +58,72 @@ React strict configuration:
 
 ```jsonc
 // biome.json (react strict)
-// This configuration enforces strict rules for linting,
-// formatting, and code quality across JavaScript,
-// TypeScript, JSX, JSON, and HTML files.
+// This configuration enables recommended lint rules,
+// including React-specific recommended rules,
+// and opts into nursery (experimental) rules.
 
 {
   "extends": ["@dvashim/biome-config/react/strict"]
 }
 ```
+
+React balanced configuration:
+
+```jsonc
+// biome.json (react balanced)
+// This configuration enables recommended lint rules,
+// including React-specific recommended rules,
+// with a few rules intentionally disabled
+// to reduce false positives / noise.
+
+{
+  "extends": ["@dvashim/biome-config/react-balanced"]
+}
+```
+
+## Defaults
+
+### Formatter
+
+- attributePosition: `"auto"`
+- bracketSameLine: `false`
+- bracketSpacing: `true`
+- expand: `"auto"`
+- formatWithErrors: `false`
+- indentStyle: `"space"`
+- indentWidth: `2`
+- lineEnding: `"lf"`
+- lineWidth: `80`
+- useEditorconfig: `true`
+
+### Javascript Formatter
+
+- arrowParentheses: `"always"`
+- jsxQuoteStyle: `"single"`
+- operatorLinebreak: `"before"`
+- quoteProperties: `"asNeeded"`
+- quoteStyle: `"single"`
+- semicolons: `"asNeeded"`
+- trailingCommas: `"es5"`
+
+### Files
+
+- includes: `["**", "!!**/dist"]`
+
+### VCS
+
+- clientKind: `"git"`
+- useIgnoreFile: `true`
+- defaultBranch: `"main"`
+
+### Assist
+
+- actions:
+  - recommended: `true`
+
+### Schema
+
+- `https://biomejs.dev/schemas/2.3.14/schema.json`
 
 ## Rules
 
@@ -87,26 +131,26 @@ React strict configuration:
 
 This configuration provides a base setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files. Key features include:
 
-* **Linter Rules**
+- **Linter Rules**
 
-  * Enables all **recommended Biome rules**, providing sensible defaults for code quality, correctness, and best practices without custom overrides.
+  - Enables all **recommended Biome rules**, providing sensible defaults for code quality, correctness, and best practices without custom overrides.
 
-* **Formatting:**
+- **Formatting:**
 
-  * Enforces consistent code style across JavaScript, JSX, JSON, and HTML, including indentation, bracket spacing, quote style, trailing commas, and line width.
-  * Supports editorconfig integration to maintain consistent formatting across editors.
+  - Enforces consistent code style across JavaScript, JSX, JSON, and HTML, including indentation, bracket spacing, quote style, trailing commas, and line width.
+  - Supports editorconfig integration to maintain consistent formatting across editors.
 
-* **Assist & Automation:**
+- **Assist & Automation:**
 
-  * Enables **recommended automated actions** to streamline development and improve productivity.
+  - Enables **recommended automated actions** to streamline development and improve productivity.
 
-* **Version Control (VCS):**
+- **Version Control (VCS):**
 
-  * Supports Git with `.gitignore` usage and sets `main` as the default branch.
+  - Supports Git with `.gitignore` usage and sets `main` as the default branch.
 
-* **File Management:**
+- **File Management:**
 
-  * Includes all project files by default, excluding distribution directories.
+  - Includes all project files by default, excluding distribution directories.
 
 ---
 
@@ -114,27 +158,27 @@ This configuration provides a base setup for linting, formatting, and code consi
 
 This configuration provides setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files, optimized for React projects. Key features include:
 
-* **Linter Rules**
+- **Linter Rules**
 
-  * **React Domain:** Applies recommended linting rules for React applications.
-  * **General:** Enables all recommended rules for consistent and safe coding practices.
+  - **React Domain:** Applies recommended linting rules for React applications.
+  - **General:** Enables all recommended rules for consistent and safe coding practices.
 
-* **Formatting:**
+- **Formatting:**
 
-  * Enforces consistent indentation, line endings, bracket style, quote style, arrow function parentheses, operator line breaks, and trailing commas.
-  * Supports JavaScript, JSX, JSON, and HTML with editorconfig integration.
+  - Enforces consistent indentation, line endings, bracket style, quote style, arrow function parentheses, operator line breaks, and trailing commas.
+  - Supports JavaScript, JSX, JSON, and HTML with editorconfig integration.
 
-* **Assist & Automation:**
+- **Assist & Automation:**
 
-  * Enables recommended automated actions to improve developer productivity.
+  - Enables recommended automated actions to improve developer productivity.
 
-* **Version Control (VCS):**
+- **Version Control (VCS):**
 
-  * Supports Git with `.gitignore` usage and sets `main` as the default branch.
+  - Supports Git with `.gitignore` usage and sets `main` as the default branch.
 
-* **File Management:**
+- **File Management:**
 
-  * Includes all project files by default, excluding distribution directories.
+  - Includes all project files by default, excluding distribution directories.
 
 ---
 
@@ -142,30 +186,30 @@ This configuration provides setup for linting, formatting, and code consistency 
 
 This configuration enforces strict rules for linting, formatting, and code quality across JavaScript, TypeScript, JSX, JSON, and HTML files. Key features include:
 
-* **Linter Rules**
+- **Linter Rules**
 
-  * **Accessibility (a11y):** Warns on missing or misused ARIA attributes and alt text; selectively disables certain rules for flexibility.
-  * **Complexity:** Monitors cognitive complexity, function length, nested test suites, and logic expressions to maintain readable code.
-  * **Correctness:** Ensures no undeclared variables, safe usage of globals, and proper React patterns.
-  * **Nursery / Best Practices:** Detects deprecated imports, floating promises, JSX issues, unused expressions, and enforces safer coding patterns.
-  * **Performance:** Highlights potential runtime inefficiencies (e.g., `await` in loops, barrel files, `delete` usage).
-  * **Security:** Warns on accidental inclusion of secrets in code.
-  * **Style & Consistency:** Enforces consistent syntax, naming conventions, array/object patterns, TypeScript typings, and React best practices.
-  * **Suspicious / Error-Prone Patterns:** Flags `var` usage, console calls, bitwise operators, empty blocks, and other potentially problematic constructs.
+  - **Accessibility (a11y):** Warns on missing or misused ARIA attributes and alt text; selectively disables certain rules for flexibility.
+  - **Complexity:** Monitors cognitive complexity, function length, nested test suites, and logic expressions to maintain readable code.
+  - **Correctness:** Ensures no undeclared variables, safe usage of globals, and proper React patterns.
+  - **Nursery / Best Practices:** Detects deprecated imports, floating promises, JSX issues, unused expressions, and enforces safer coding patterns.
+  - **Performance:** Highlights potential runtime inefficiencies (e.g., `await` in loops, barrel files, `delete` usage).
+  - **Security:** Warns on accidental inclusion of secrets in code.
+  - **Style & Consistency:** Enforces consistent syntax, naming conventions, array/object patterns, TypeScript typings, and React best practices.
+  - **Suspicious / Error-Prone Patterns:** Flags `var` usage, console calls, bitwise operators, empty blocks, and other potentially problematic constructs.
 
-* **Formatting:**
+- **Formatting:**
 
-  * Configures indentation, line width, bracket style, quote style, trailing commas, and JSX formatting for consistent code appearance across the project.
-  * Supports JavaScript, JSON, HTML, and JSX with editorconfig integration.
+  - Configures indentation, line width, bracket style, quote style, trailing commas, and JSX formatting for consistent code appearance across the project.
+  - Supports JavaScript, JSON, HTML, and JSX with editorconfig integration.
 
-* **Assist & Automation:**
+- **Assist & Automation:**
 
-  * Enables recommended automated actions to improve developer productivity.
+  - Enables recommended automated actions to improve developer productivity.
 
-* **Version Control (VCS):**
+- **Version Control (VCS):**
 
-  * Supports Git with `.gitignore` usage and sets `main` as the default branch.
+  - Supports Git with `.gitignore` usage and sets `main` as the default branch.
 
-* **File Management:**
+- **File Management:**
 
-  * Includes all project files by default, excluding distribution directories.
+  - Includes all project files by default, excluding distribution directories.
