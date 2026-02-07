@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.1.8
+
+### Patch Changes
+
+- [`c324fd6`](https://github.com/dvashim/biome-config/commit/c324fd67e14c7b9ea271e7cbfd6b7d4b3d9482ee) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update Biome to v2.3.14, overhaul some rules, improve readme
+
 ## 1.1.7
 
 ### Patch Changes
