@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.1.9
+
+### Patch Changes
+
+- [#43](https://github.com/dvashim/biome-config/pull/43) [`52efeb2`](https://github.com/dvashim/biome-config/commit/52efeb27a387649b3bf9d73848eec1a716506bfe) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update workflow job names
+
 ## 1.1.8
 
 ### Patch Changes
