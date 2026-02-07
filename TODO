@@ -1,6 +1,10 @@
 - strict / moderate
   ✔ noExcessiveLinesPerFile @done(26-01-29 12:56)
   ✔ useErrorCause @done(26-01-29 12:56)
+  ✔ useGlobalThis @done(26-02-07 14:18)
+  ✔ noGlobalDirnameFilename @done(26-02-07 14:18)
+  ✔ noRedundantDefaultExport @done(26-02-07 14:18)
+  ✔ useConsistentMethodSignatures @done(26-02-07 14:19)
 
 extends
  ☐ implement nesting
