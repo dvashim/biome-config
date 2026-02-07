@@ -1,22 +1,16 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
 
   "linter": {
     "rules": {
       "a11y": {
-        "useSemanticElements": "off",
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noStaticElementInteractions": "off",
+        "useButtonType": "off",
         "useFocusableInteractive": "info",
         "useKeyWithClickEvents": "off",
-        "noStaticElementInteractions": "off",
-        "useAriaPropsSupportedByRole": "warn",
-        "noNoninteractiveElementToInteractiveRole": "off",
-        "noNoninteractiveElementInteractions": "warn",
-        "useAltText": "warn",
-        "useAriaPropsForRole": "warn",
-        "noAriaUnsupportedElements": "warn",
-        "useButtonType": "off"
+        "useSemanticElements": "off"
       },
-
       "complexity": {
         "noExcessiveCognitiveComplexity": "warn",
         "noExcessiveLinesPerFunction": "warn",
@@ -28,7 +22,6 @@
         "useSimplifiedLogicExpression": "warn",
         "useWhile": "warn"
       },
-
       "correctness": {
         "noGlobalDirnameFilename": "warn",
         "noNestedComponentDefinitions": "warn",
@@ -37,10 +30,11 @@
         "noReactPropAssignments": "warn",
         "noUndeclaredDependencies": "warn",
         "noUndeclaredVariables": "warn",
+        "useImportExtensions": "off",
+        "useJsonImportAttributes": "warn",
         "useSingleJsDocAsterisk": "warn",
         "useUniqueElementIds": "warn"
       },
-
       "nursery": {
         "noAmbiguousAnchorText": "warn",
         "noContinue": "info",
@@ -78,10 +72,11 @@
         "noParametersOnlyUsedInRecursion": "error",
         "noProto": "warn",
         "noReactForwardRef": "warn",
+        "noRedundantDefaultExport": "warn",
         "noReturnAssign": "warn",
         "noScriptUrl": "warn",
         "noShadow": "warn",
-        "noSyncScripts": "error",
+        "noSyncScripts": "warn",
         "noTernary": "off",
         "noUndeclaredEnvVars": "warn",
         "noUnknownAttribute": "warn",
@@ -94,16 +89,17 @@
         "useAwaitThenable": "warn",
         "useConsistentArrowReturn": "warn",
         "useConsistentEnumValueType": "warn",
+        "useConsistentMethodSignatures": "warn",
         "useDestructuring": "warn",
         "useErrorCause": "warn",
         "useExhaustiveSwitchCases": "warn",
         "useExplicitType": "off",
         "useFind": "warn",
+        "useGlobalThis": "warn",
         "useMaxParams": "warn",
         "useRegexpExec": "warn",
         "useSpread": "warn"
       },
-
       "performance": {
         "noAwaitInLoops": "warn",
         "noBarrelFile": "warn",
@@ -112,22 +108,21 @@
         "noReExportAll": "warn",
         "useTopLevelRegex": "warn"
       },
-
       "security": {
         "noSecrets": "warn"
       },
-
       "style": {
         "noCommonJs": "warn",
         "noDefaultExport": "warn",
+        "noDoneCallback": "warn",
         "noEnum": "warn",
         "noExportedImports": "warn",
-        "noImplicitBoolean": "info",
+        "noImplicitBoolean": "warn",
         "noInferrableTypes": "warn",
         "noMagicNumbers": "warn",
         "noNamespace": "warn",
         "noNegationElse": "warn",
-        "noNestedTernary": "info",
+        "noNestedTernary": "warn",
         "noParameterAssign": "warn",
         "noParameterProperties": "warn",
         "noProcessEnv": "warn",
@@ -136,7 +131,6 @@
         "noUnusedTemplateLiteral": "warn",
         "noUselessElse": "warn",
         "noYodaExpression": "warn",
-        "useArrayLiterals": "warn",
         "useAsConstAssertion": "warn",
         "useAtIndex": "warn",
         "useBlockStatements": "warn",
@@ -175,21 +169,20 @@
             "requireAscii": true
           }
         },
-        "useNumberNamespace": "error",
-        "useNumericSeparators": "error",
-        "useObjectSpread": "error",
-        "useReactFunctionComponents": "error",
-        "useReadonlyClassProperties": "error",
-        "useSelfClosingElements": "error",
-        "useShorthandAssign": "error",
-        "useSingleVarDeclarator": "error",
-        "useSymbolDescription": "error",
-        "useThrowNewError": "error",
-        "useThrowOnlyError": "error",
-        "useTrimStartEnd": "error",
-        "useUnifiedTypeSignatures": "error"
+        "useNumberNamespace": "warn",
+        "useNumericSeparators": "warn",
+        "useObjectSpread": "warn",
+        "useReactFunctionComponents": "warn",
+        "useReadonlyClassProperties": "warn",
+        "useSelfClosingElements": "warn",
+        "useShorthandAssign": "warn",
+        "useSingleVarDeclarator": "warn",
+        "useSymbolDescription": "warn",
+        "useThrowNewError": "warn",
+        "useThrowOnlyError": "warn",
+        "useTrimStartEnd": "warn",
+        "useUnifiedTypeSignatures": "warn"
       },
-
       "suspicious": {
         "noAlert": "warn",
         "noBitwiseOperators": "warn",
