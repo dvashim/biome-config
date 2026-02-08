@@ -43,9 +43,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create GitHub Release
-        if: steps.changesets.outputs.published == 'true'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.changesets.outputs.tag }}
-          body: ${{ steps.changesets.outputs.releaseNotes }}
+      # - name: Create GitHub Release
+      #   if: steps.changesets.outputs.published == 'true'
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     tag_name: ${{ steps.changesets.outputs.tag }}
+      #     body: ${{ steps.changesets.outputs.releaseNotes }}
