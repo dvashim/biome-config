@@ -63,7 +63,7 @@ React strict configuration:
 // and opts into nursery (experimental) rules.
 
 {
-  "extends": ["@dvashim/biome-config/react/strict"]
+  "extends": ["@dvashim/biome-config/react-strict"]
 }
 ```
 
