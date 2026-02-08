@@ -13,7 +13,12 @@
       },
       "complexity": {
         "noExcessiveCognitiveComplexity": "warn",
-        "noExcessiveLinesPerFunction": "warn",
+        "noExcessiveLinesPerFunction": {
+          "level": "warn",
+          "options": {
+            "maxLines": 100
+          }
+        },
         "noExcessiveNestedTestSuites": "warn",
         "noForEach": "warn",
         "noImplicitCoercions": "off",
