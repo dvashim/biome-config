@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.1.11
+
+### Patch Changes
+
+- [#49](https://github.com/dvashim/biome-config/pull/49) [`8c9fbe5`](https://github.com/dvashim/biome-config/commit/8c9fbe5676668e662cd6e852d8fd9f2e6f6dd0c5) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update react-balanced config - set noExcessiveLinesPerFunction.maxLines = 100
+
 ## 1.1.10
 
 ### Patch Changes
