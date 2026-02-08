@@ -32,7 +32,7 @@ pnpm add -D @dvashim/biome-config
 Base recommended configuration:
 
 ```jsonc
-// biome.json (base recommended)
+// biome.json (Base recommended)
 // This configuration provides a base setup for linting,
 // formatting, and code consistency across JavaScript,
 // JSX, JSON, and HTML files.
@@ -45,7 +45,7 @@ Base recommended configuration:
 React recommended configuration:
 
 ```jsonc
-// biome.json (react recommended)
+// biome.json (React recommended)
 // This configuration extends the base recommended configuration
 // and enables the recommended rules for the React domain
 
@@ -57,7 +57,7 @@ React recommended configuration:
 React strict configuration:
 
 ```jsonc
-// biome.json (react strict)
+// biome.json (React strict)
 // This configuration enables recommended lint rules,
 // including React-specific recommended rules,
 // and opts into nursery (experimental) rules.
@@ -70,7 +70,7 @@ React strict configuration:
 React balanced configuration:
 
 ```jsonc
-// biome.json (react balanced)
+// biome.json (React balanced)
 // This configuration enables recommended lint rules,
 // including React-specific recommended rules,
 // with a few rules intentionally disabled
