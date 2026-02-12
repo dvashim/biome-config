@@ -20,7 +20,7 @@
     "check:format": "biome format .",
     "check:exports": "validate-package-exports --check",
     "check": "pnpm run \"/^check:.*/\"",
-    "changeset": "changeset"
+    "changeset": "EDITOR=\"code --wait\" changeset"
   },
   "keywords": [
     "biome",
