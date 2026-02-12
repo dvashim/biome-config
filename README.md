@@ -123,7 +123,7 @@ React balanced configuration:
 
 ### Schema
 
-- `https://biomejs.dev/schemas/2.3.14/schema.json`
+- `https://biomejs.dev/schemas/2.3.15/schema.json`
 
 ## Rules
 
