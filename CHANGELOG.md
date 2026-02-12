@@ -1,5 +1,16 @@
 # @dvashim/biome-config
 
+## 1.1.13
+
+### Patch Changes
+
+- [#56](https://github.com/dvashim/biome-config/pull/56) [`c5c5a79`](https://github.com/dvashim/biome-config/commit/c5c5a79b2dc2d055deeb1f699e2b338fde1f9442) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update Biome to the latest version (currently 2.3.15)
+
+  React strict configuration:
+
+  - add rule [lint/nursery/noNestedPromises](https://biomejs.dev/linter/rules/no-nested-promises/) `warn`
+  - add rule [lint/nursery/noUselessReturn](https://biomejs.dev/linter/rules/no-useless-return/) `warn`
+
 ## 1.1.12
 
 ### Patch Changes
