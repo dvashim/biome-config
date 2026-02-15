@@ -1,4 +1,4 @@
-- strict / moderate
+strict / moderate:
   ✔ noExcessiveLinesPerFile @done(26-01-29 12:56)
   ✔ useErrorCause @done(26-01-29 12:56)
   ✔ useGlobalThis @done(26-02-07 14:18)
@@ -6,6 +6,36 @@
   ✔ noRedundantDefaultExport @done(26-02-07 14:18)
   ✔ useConsistentMethodSignatures @done(26-02-07 14:19)
 
-extends
- ☐ implement nesting
+2.4.0:
+  ✔ javascript.experimentalEmbeddedSnippetsEnabled @done(26-02-15 23:40)
+  ✔ assist/source/noDuplicateClasses @done(26-02-15 23:41)
+
+extends:
+  ☐ implement nesting
     (see https://github.com/biomejs/biome/discussions/8257)
+
+overrides:
+  ☐ override json
+    ```
+    {
+      "includes": ["**/package.json"],
+      "json": {
+        "formatter": {
+          "expand": "always"
+        }
+      }
+    }
+    ```
+  ☐ override vite.config
+    ```
+    {
+      "includes": ["**/vite.config.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "off"
+          }
+        }
+      }
+    }
+    ```
