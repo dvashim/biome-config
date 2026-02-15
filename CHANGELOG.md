@@ -1,5 +1,18 @@
 # @dvashim/biome-config
 
+## 1.2.0
+
+### Minor Changes
+
+- [#58](https://github.com/dvashim/biome-config/pull/58) [`714931b`](https://github.com/dvashim/biome-config/commit/714931b44a49ff6ab2ed50bd48b3d0b7bf7fe818) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update Biome to the latest version (currently 2.4.0)
+
+  - json: apply useSortedKeys with groupByNesting
+
+  - assist/source/noDuplicateClasses = true
+  - javascript.experimentalEmbeddedSnippetsEnabled = on
+
+  - promote nursery rules to stable groups, making them production-ready
+
 ## 1.1.13
 
 ### Patch Changes
