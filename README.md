@@ -96,10 +96,15 @@ React balanced configuration:
 - lineWidth: `80`
 - useEditorconfig: `true`
 
+### Javascript
+
+- experimentalEmbeddedSnippetsEnabled: `true`
+- jsxRuntime: `"transparent"`
+
 ### Javascript Formatter
 
 - arrowParentheses: `"always"`
-- jsxQuoteStyle: `"single"`
+- jsxQuoteStyle: `"double"`
 - operatorLinebreak: `"before"`
 - quoteProperties: `"asNeeded"`
 - quoteStyle: `"single"`
@@ -120,10 +125,12 @@ React balanced configuration:
 
 - actions:
   - recommended: `true`
+  - source
+    - noDuplicateClasses: `"on"`
 
 ### Schema
 
-- `https://biomejs.dev/schemas/2.3.15/schema.json`
+- `https://biomejs.dev/schemas/2.4.0/schema.json`
 
 ## Rules
 
