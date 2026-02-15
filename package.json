@@ -42,9 +42,9 @@
     "url": "https://github.com/dvashim/biome-config.git"
   },
   "scripts": {
-    "changeset": "EDITOR=\"code --wait\" changeset",
+    "changeset": "changeset",
     "check": "pnpm run \"/^check:.*/\"",
     "check:exports": "validate-package-exports --check",
-    "check:format": "biome format ."
+    "check:format": "biome format"
   }
 }
