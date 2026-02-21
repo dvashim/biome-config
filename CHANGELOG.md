@@ -1,5 +1,26 @@
 # @dvashim/biome-config
 
+## 1.2.1
+
+### Patch Changes
+
+- [#60](https://github.com/dvashim/biome-config/pull/60) [`f760e69`](https://github.com/dvashim/biome-config/commit/f760e6986f11da997bd78acde2e962cd1946b313) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update Biome to the latest version (currently 2.4.4)
+
+  - add nursery rules to the react strict/balanced configuration
+    - ✔ lint/nursery/noConditionalExpect
+    - ✔ lint/nursery/noPlaywrightElementHandle
+    - ✔ lint/nursery/noPlaywrightEval
+    - ✔ lint/nursery/noPlaywrightForceOption
+    - ✔ lint/nursery/noPlaywrightMissingAwait
+    - ✔ lint/nursery/noPlaywrightNetworkidle
+    - ✔ lint/nursery/noPlaywrightPagePause
+    - ✔ lint/nursery/noPlaywrightUselessAwait
+    - ✔ lint/nursery/noPlaywrightWaitForNavigation
+    - ✔ lint/nursery/noPlaywrightWaitForSelector
+    - ✔ lint/nursery/noPlaywrightWaitForTimeout
+    - ✔ lint/nursery/useExpect
+    - ✔ lint/nursery/usePlaywrightValidDescribeCallback
+
 ## 1.2.0
 
 ### Minor Changes
