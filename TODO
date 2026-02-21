@@ -10,6 +10,21 @@ strict / moderate:
   ✔ javascript.experimentalEmbeddedSnippetsEnabled @done(26-02-15 23:40)
   ✔ assist/source/noDuplicateClasses @done(26-02-15 23:41)
 
+2.4.2:
+  ✔ lint/nursery/noConditionalExpect @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightElementHandle @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightEval @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightForceOption @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightMissingAwait @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightNetworkidle @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightPagePause @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightUselessAwait @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightWaitForNavigation @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightWaitForSelector @done(26-02-21 21:40)
+  ✔ lint/nursery/noPlaywrightWaitForTimeout @done(26-02-21 21:40)
+  ✔ lint/nursery/useExpect @done(26-02-21 21:40)
+  ✔ lint/nursery/usePlaywrightValidDescribeCallback @done(26-02-21 21:40)
+
 extends:
   ☐ implement nesting
     (see https://github.com/biomejs/biome/discussions/8257)
