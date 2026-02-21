@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
 
   "assist": {
     "actions": {
@@ -103,6 +103,7 @@
       },
       "nursery": {
         "noAmbiguousAnchorText": "warn",
+        "noConditionalExpect": "warn",
         "noContinue": "info",
         "noDivRegex": "warn",
         "noDuplicateAttributes": "warn",
@@ -122,6 +123,16 @@
         "noMultiStr": "error",
         "noNestedPromises": "warn",
         "noParametersOnlyUsedInRecursion": "error",
+        "noPlaywrightElementHandle": "warn",
+        "noPlaywrightEval": "warn",
+        "noPlaywrightForceOption": "warn",
+        "noPlaywrightMissingAwait": "warn",
+        "noPlaywrightNetworkidle": "warn",
+        "noPlaywrightPagePause": "warn",
+        "noPlaywrightUselessAwait": "warn",
+        "noPlaywrightWaitForNavigation": "warn",
+        "noPlaywrightWaitForSelector": "warn",
+        "noPlaywrightWaitForTimeout": "warn",
         "noProto": "warn",
         "noRedundantDefaultExport": "warn",
         "noReturnAssign": "warn",
@@ -140,9 +151,11 @@
         "useDestructuring": "warn",
         "useErrorCause": "warn",
         "useExhaustiveSwitchCases": "warn",
+        "useExpect": "warn",
         "useExplicitType": "off",
         "useFind": "warn",
         "useGlobalThis": "warn",
+        "usePlaywrightValidDescribeCallback": "warn",
         "useRegexpExec": "warn",
         "useSpread": "warn",
         "noIncrementDecrement": {
