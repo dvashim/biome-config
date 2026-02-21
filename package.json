@@ -4,7 +4,7 @@
   "name": "@dvashim/biome-config",
   "packageManager": "pnpm@10.30.1",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "email": "aleksei@dvashim.dev",
     "name": "Aleksei Reznichenko"
