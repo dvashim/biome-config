@@ -10,20 +10,20 @@
     "name": "Aleksei Reznichenko"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
-    "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.29.8",
-    "validate-package-exports": "^0.18.0"
+    "@biomejs/biome": "^2.4.5",
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
+    "validate-package-exports": "^0.19.1"
   },
   "exports": {
-    ".": "./dist/biome.recommended.json",
-    "./react-balanced": "./dist/biome.react-balanced.json",
-    "./react-recommended": "./dist/biome.react-recommended.json",
-    "./react-strict": "./dist/biome.react-strict.json",
-    "./react/balanced": "./dist/biome.react-balanced.json",
-    "./react/recommended": "./dist/biome.react-recommended.json",
-    "./react/strict": "./dist/biome.react-strict.json",
-    "./recommended": "./dist/biome.recommended.json"
+    ".": "./dist/biome.recommended.jsonc",
+    "./react-balanced": "./dist/biome.react-balanced.jsonc",
+    "./react-recommended": "./dist/biome.react-recommended.jsonc",
+    "./react-strict": "./dist/biome.react-strict.jsonc",
+    "./react/balanced": "./dist/biome.react-balanced.jsonc",
+    "./react/recommended": "./dist/biome.react-recommended.jsonc",
+    "./react/strict": "./dist/biome.react-strict.jsonc",
+    "./recommended": "./dist/biome.recommended.jsonc"
   },
   "files": [
     "dist"
