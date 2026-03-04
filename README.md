@@ -83,140 +83,140 @@ React balanced configuration:
 
 ## Defaults
 
-### Formatter
-
-- attributePosition: `"auto"`
-- bracketSameLine: `false`
-- bracketSpacing: `true`
-- expand: `"auto"`
-- formatWithErrors: `false`
-- indentStyle: `"space"`
-- indentWidth: `2`
-- lineEnding: `"lf"`
-- lineWidth: `80`
-- useEditorconfig: `true`
-
-### Javascript
-
-- experimentalEmbeddedSnippetsEnabled: `true`
-- jsxRuntime: `"transparent"`
-
-### Javascript Formatter
-
-- arrowParentheses: `"always"`
-- jsxQuoteStyle: `"double"`
-- operatorLinebreak: `"before"`
-- quoteProperties: `"asNeeded"`
-- quoteStyle: `"single"`
-- semicolons: `"asNeeded"`
-- trailingCommas: `"es5"`
-
-### Files
-
-- includes: `["**", "!!**/dist"]`
-
-### VCS
-
-- clientKind: `"git"`
-- useIgnoreFile: `true`
-- defaultBranch: `"main"`
-
-### Assist
-
-- actions:
-  - recommended: `true`
-  - source
-    - noDuplicateClasses: `"on"`
+All configurations share the same base defaults.
 
 ### Schema
 
-- `https://biomejs.dev/schemas/2.4.4/schema.json`
+`https://biomejs.dev/schemas/2.4.5/schema.json`
+
+### Formatter
+
+| Option | Value |
+|--------|-------|
+| attributePosition | `"auto"` |
+| bracketSameLine | `false` |
+| bracketSpacing | `true` |
+| expand | `"auto"` |
+| formatWithErrors | `false` |
+| indentStyle | `"space"` |
+| indentWidth | `2` |
+| lineEnding | `"lf"` |
+| lineWidth | `80` |
+| useEditorconfig | `true` |
+
+### JavaScript
+
+| Option | Value |
+|--------|-------|
+| experimentalEmbeddedSnippetsEnabled | `true` |
+| jsxRuntime | `"transparent"` |
+
+### JavaScript Formatter
+
+| Option | Value |
+|--------|-------|
+| arrowParentheses | `"always"` |
+| jsxQuoteStyle | `"double"` |
+| operatorLinebreak | `"before"` |
+| quoteProperties | `"asNeeded"` |
+| quoteStyle | `"single"` |
+| semicolons | `"asNeeded"` |
+| trailingCommas | `"es5"` |
+
+### JSON
+
+| Option | Value |
+|--------|-------|
+| allowComments | `true` |
+| allowTrailingCommas | `true` |
+
+### HTML
+
+| Option | Value |
+|--------|-------|
+| experimentalFullSupportEnabled | `true` |
+
+### Files
+
+| Option | Value |
+|--------|-------|
+| includes | `["**", "!!**/dist"]` |
+
+### VCS
+
+| Option | Value |
+|--------|-------|
+| clientKind | `"git"` |
+| defaultBranch | `"main"` |
+| useIgnoreFile | `true` |
+
+### Assist
+
+| Option | Value |
+|--------|-------|
+| actions.recommended | `true` |
+| actions.source.noDuplicateClasses | `"on"` |
 
 ## Rules
 
-### Base recommended configuration
+### Base recommended
 
-This configuration provides a base setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files. Key features include:
-
-- **Linter Rules**
-
-  - Enables all **recommended Biome rules**, providing sensible defaults for code quality, correctness, and best practices without custom overrides.
-
-- **Formatting:**
-
-  - Enforces consistent code style across JavaScript, JSX, JSON, and HTML, including indentation, bracket spacing, quote style, trailing commas, and line width.
-  - Supports editorconfig integration to maintain consistent formatting across editors.
-
-- **Assist & Automation:**
-
-  - Enables **recommended automated actions** to streamline development and improve productivity.
-
-- **Version Control (VCS):**
-
-  - Supports Git with `.gitignore` usage and sets `main` as the default branch.
-
-- **File Management:**
-
-  - Includes all project files by default, excluding distribution directories.
+Enables all **recommended Biome rules** out of the box with no custom overrides. Provides sensible defaults for code quality, correctness, and best practices across JavaScript, JSX, JSON, and HTML.
 
 ---
 
-### React recommended configuration
+### React recommended
 
-This configuration provides setup for linting, formatting, and code consistency across JavaScript, JSX, JSON, and HTML files, optimized for React projects. Key features include:
-
-- **Linter Rules**
-
-  - **React Domain:** Applies recommended linting rules for React applications.
-  - **General:** Enables all recommended rules for consistent and safe coding practices.
-
-- **Formatting:**
-
-  - Enforces consistent indentation, line endings, bracket style, quote style, arrow function parentheses, operator line breaks, and trailing commas.
-  - Supports JavaScript, JSX, JSON, and HTML with editorconfig integration.
-
-- **Assist & Automation:**
-
-  - Enables recommended automated actions to improve developer productivity.
-
-- **Version Control (VCS):**
-
-  - Supports Git with `.gitignore` usage and sets `main` as the default branch.
-
-- **File Management:**
-
-  - Includes all project files by default, excluding distribution directories.
+Same as base recommended, plus enables the **React domain** (`"react": "recommended"`), which activates React-specific recommended rules for hooks, JSX, and component patterns.
 
 ---
 
-### React strict configuration
+### React strict
 
-This configuration enforces strict rules for linting, formatting, and code quality across JavaScript, TypeScript, JSX, JSON, and HTML files. Key features include:
+The most opinionated configuration. Enables all recommended rules plus **120+ optional and nursery rules** across 8 categories. Every non-recommended JS/TS rule available in Biome is explicitly configured.
 
-- **Linter Rules**
+- **a11y** — Selectively disables noisy rules (`useButtonType`, `useKeyWithClickEvents`, `useSemanticElements`, `noStaticElementInteractions`, `noNoninteractiveElementToInteractiveRole`) while keeping the rest at recommended defaults.
 
-  - **Accessibility (a11y):** Warns on missing or misused ARIA attributes and alt text; selectively disables certain rules for flexibility.
-  - **Complexity:** Monitors cognitive complexity, function length, nested test suites, and logic expressions to maintain readable code.
-  - **Correctness:** Ensures no undeclared variables, safe usage of globals, and proper React patterns.
-  - **Nursery / Best Practices:** Detects deprecated imports, floating promises, JSX issues, unused expressions, and enforces safer coding patterns.
-  - **Performance:** Highlights potential runtime inefficiencies (e.g., `await` in loops, barrel files, `delete` usage).
-  - **Security:** Warns on accidental inclusion of secrets in code.
-  - **Style & Consistency:** Enforces consistent syntax, naming conventions, array/object patterns, TypeScript typings, and React best practices.
-  - **Suspicious / Error-Prone Patterns:** Flags `var` usage, console calls, bitwise operators, empty blocks, and other potentially problematic constructs.
+- **complexity** (12 rules) — Monitors cognitive complexity, function length, nested test suites, and logic expressions. Warns on `forEach`, implicit coercions, `void`, and useless patterns.
 
-- **Formatting:**
+- **correctness** (12 rules) — Ensures no undeclared variables/dependencies/imports, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes.
 
-  - Configures indentation, line width, bracket style, quote style, trailing commas, and JSX formatting for consistent code appearance across the project.
-  - Supports JavaScript, JSON, HTML, and JSX with editorconfig integration.
+- **nursery** (63 rules) — Opts into all experimental rules. Highlights include:
+  - **Errors:** `noJsxPropsBind`, `noLeakedRender`, `noMisusedPromises`, `noMultiAssign`, `noParametersOnlyUsedInRecursion`
+  - **Promises:** `noFloatingPromises`, `noNestedPromises`, `useAwaitThenable`
+  - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useNullishCoalescing`
+  - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`
+  - **Playwright:** Full suite of 10 Playwright rules
+  - **Tailwind:** `useSortedClasses`, `noFloatingClasses`
+  - **Disabled:** `noTernary`, `useExplicitType`
 
-- **Assist & Automation:**
+- **performance** (6 rules) — Warns on `await` in loops, barrel files, `delete`, namespace imports, re-export all, and non-top-level regex.
 
-  - Enables recommended automated actions to improve developer productivity.
+- **security** — `noSecrets`
 
-- **Version Control (VCS):**
+- **style** (44 rules) — Enforces consistent syntax, naming conventions (`strictCase: true`), array shorthand syntax, `type` over `interface`, React function components, readonly class properties, `noDefaultExport`, `noMagicNumbers`, `noJsxLiterals`, and more.
 
-  - Supports Git with `.gitignore` usage and sets `main` as the default branch.
+- **suspicious** (22 rules) — Flags `var` (error), `console`, `alert`, bitwise operators, empty blocks, import cycles, evolving types, skipped tests, and deprecated imports.
 
-- **File Management:**
+---
 
-  - Includes all project files by default, excluding distribution directories.
+### React balanced
+
+Same rule set as strict, with **targeted relaxations** to reduce false positives and noise in real-world projects:
+
+| Rule | Strict | Balanced | Reason |
+|------|--------|----------|--------|
+| `noImplicitCoercions` | warn | off | Too noisy with `!!value` patterns |
+| `noExcessiveLinesPerFunction` | warn (default) | warn (maxLines: 100) | Higher threshold |
+| `noContinue` | warn | info | Informational only |
+| `noIncrementDecrement` | warn | warn (allowForLoopAfterthoughts) | Allows `i++` in for loops |
+| `noUselessReturn` | warn | info | Informational only |
+| `noBarrelFile` | warn | off | Common pattern in libraries |
+| `noNamespaceImport` | warn | off | Allows `import * as` |
+| `noReExportAll` | warn | off | Common pattern in libraries |
+| `noDefaultExport` | warn | off | Allows default exports |
+| `noImplicitBoolean` | warn | info | Informational only |
+| `noJsxLiterals` | warn | off | Allows inline text in JSX |
+| `noMagicNumbers` | warn | info | Informational only |
+| `noNestedTernary` | warn | off | Allows nested ternaries |
+| `useNamingConvention` | strictCase: true | strictCase: false | More lenient casing |

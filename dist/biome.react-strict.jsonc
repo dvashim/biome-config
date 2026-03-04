@@ -1,6 +1,7 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
 
+  // MARK: assist
   "assist": {
     "actions": {
       "recommended": true,
@@ -10,10 +11,12 @@
     }
   },
 
+  // MARK: files
   "files": {
     "includes": ["**", "!!**/dist"]
   },
 
+  // MARK: formatter
   "formatter": {
     "attributePosition": "auto",
     "bracketSameLine": false,
@@ -27,10 +30,12 @@
     "useEditorconfig": true
   },
 
+  // MARK: html
   "html": {
     "experimentalFullSupportEnabled": true
   },
 
+  // MARK: javascript
   "javascript": {
     "experimentalEmbeddedSnippetsEnabled": true,
     "globals": [],
@@ -51,6 +56,7 @@
     }
   },
 
+  // MARK: json
   "json": {
     "parser": {
       "allowComments": true,
@@ -58,8 +64,10 @@
     }
   },
 
+  // MARK: linter
   "linter": {
     "rules": {
+      // MARK: a11y
       "a11y": {
         "noNoninteractiveElementToInteractiveRole": "off",
         "noStaticElementInteractions": "off",
@@ -68,6 +76,7 @@
         "useKeyWithClickEvents": "off",
         "useSemanticElements": "off"
       },
+      // MARK: complexity
       "complexity": {
         "noExcessiveCognitiveComplexity": "warn",
         "noExcessiveLinesPerFunction": "warn",
@@ -82,6 +91,7 @@
         "useSimplifiedLogicExpression": "warn",
         "useWhile": "warn"
       },
+      // MARK: correctness
       "correctness": {
         "noGlobalDirnameFilename": "warn",
         "noNestedComponentDefinitions": "warn",
@@ -96,6 +106,7 @@
         "useSingleJsDocAsterisk": "warn",
         "useUniqueElementIds": "warn"
       },
+      // MARK: nursery
       "nursery": {
         "noAmbiguousAnchorText": "warn",
         "noConditionalExpect": "warn",
@@ -140,6 +151,7 @@
         "noUnknownAttribute": "warn",
         "noUnnecessaryConditions": "warn",
         "noUselessReturn": "warn",
+        "useArraySome": "warn",
         "useArraySortCompare": "warn",
         "useAwaitThenable": "warn",
         "useConsistentEnumValueType": "warn",
@@ -151,10 +163,15 @@
         "useExplicitType": "off",
         "useFind": "warn",
         "useGlobalThis": "warn",
+        "useNamedCaptureGroup": "warn",
+        "useNullishCoalescing": "warn",
         "usePlaywrightValidDescribeCallback": "warn",
         "useRegexpExec": "warn",
-        "useSpread": "warn"
+        "useSortedClasses": "warn",
+        "useSpread": "warn",
+        "useUnicodeRegex": "warn"
       },
+      // MARK: performance
       "performance": {
         "noAwaitInLoops": "warn",
         "noBarrelFile": "warn",
@@ -163,9 +180,11 @@
         "noReExportAll": "warn",
         "useTopLevelRegex": "warn"
       },
+      // MARK: security
       "security": {
         "noSecrets": "warn"
       },
+      // MARK: style
       "style": {
         "noCommonJs": "warn",
         "noDefaultExport": "warn",
@@ -240,6 +259,7 @@
           }
         }
       },
+      // MARK: suspicious
       "suspicious": {
         "noAlert": "warn",
         "noBitwiseOperators": "warn",
@@ -267,6 +287,7 @@
     }
   },
 
+  // MARK: vcs
   "vcs": {
     "clientKind": "git",
     "defaultBranch": "main",

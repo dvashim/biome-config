@@ -1,6 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
-  "extends": ["dist/biome.recommended.json"],
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
+  "extends": ["dist/biome.recommended.jsonc"],
   "files": { "includes": ["**/dist"] },
   "root": true,
   "assist": {
@@ -17,7 +17,7 @@
   },
   "overrides": [
     {
-      "includes": ["package.json"],
+      "includes": ["package.json", "./.claude/settings.local.json"],
       "json": {
         "formatter": {
           "expand": "always"
