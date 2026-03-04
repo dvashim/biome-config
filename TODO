@@ -25,6 +25,12 @@ strict / moderate:
   ✔ lint/nursery/useExpect @done(26-02-21 21:40)
   ✔ lint/nursery/usePlaywrightValidDescribeCallback @done(26-02-21 21:40)
 
+2.4.5:
+  ✔ lint/nursery/useArraySome @done(26-03-04 00:00)
+  ✔ lint/nursery/useNamedCaptureGroup @done(26-03-04 00:00)
+  ✔ lint/nursery/useNullishCoalescing @done(26-03-04 00:00)
+  ✔ lint/nursery/useUnicodeRegex @done(26-03-04 00:00)
+
 extends:
   ☐ implement nesting
     (see https://github.com/biomejs/biome/discussions/8257)
