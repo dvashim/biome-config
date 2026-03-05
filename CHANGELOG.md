@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.3.1
+
+### Patch Changes
+
+- [#64](https://github.com/dvashim/biome-config/pull/64) [`9f6acc3`](https://github.com/dvashim/biome-config/commit/9f6acc311e860f9d1f3d7cd3779fcb9b998b7fe9) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Disable `noUnresolvedImports` rule in react-strict and react-balanced configs since TypeScript already performs these checks
+
 ## 1.3.0
 
 ### Minor Changes
