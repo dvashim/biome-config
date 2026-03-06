@@ -87,7 +87,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.5/schema.json`
+`https://biomejs.dev/schemas/2.4.6/schema.json`
 
 ### Formatter
 
