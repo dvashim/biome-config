@@ -1,5 +1,16 @@
 # @dvashim/biome-config
 
+## 1.3.2
+
+### Patch Changes
+
+- [#66](https://github.com/dvashim/biome-config/pull/66) [`c08283d`](https://github.com/dvashim/biome-config/commit/c08283d7708f05b85564855b55e1ff97b6efb97e) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update Biome version to 2.4.6
+
+  - Update `@biomejs/biome` dependency and schema URLs to 2.4.6
+  - **CI:** Fix dangerous `cancel-in-progress` on release workflow, add explicit permissions, gate release on checks, add npm provenance
+  - **CI:** Add `.node-version` file and use `node-version-file` in workflows
+  - **Config:** Fix changeset access mismatch (`restricted` → `public`)
+
 ## 1.3.1
 
 ### Patch Changes
