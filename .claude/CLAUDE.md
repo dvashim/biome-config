@@ -43,6 +43,10 @@ The repo's own `biome.json` extends `dist/biome.recommended.jsonc` to dogfood th
 - `files.includes: ["**/dist"]` — Biome only processes the dist directory.
 - `overrides` for expanded JSON formatting on `package.json` and settings files.
 
+## Slash commands
+
+- `/add-rule` — Add a Biome linter rule to the dist config files. Asks for rule name (required), category (default: `nursery`), and severity (default: `warn`). Handles both inserting new rules and updating existing ones.
+
 ## Key conventions
 
 - Config files in `dist/` use JSONC format (JSON with comments) and must have keys sorted (enforced by `useSortedKeys` in `biome.json`).
