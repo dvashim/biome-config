@@ -87,7 +87,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.6/schema.json`
+`https://biomejs.dev/schemas/2.4.7/schema.json`
 
 ### Formatter
 
@@ -181,7 +181,7 @@ The most opinionated configuration. Enables all recommended rules plus **120+ op
 
 - **correctness** (12 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks.
 
-- **nursery** (63 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (67 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noJsxPropsBind`, `noLeakedRender`, `noMisusedPromises`, `noMultiAssign`, `noParametersOnlyUsedInRecursion`
   - **Promises:** `noFloatingPromises`, `noNestedPromises`, `useAwaitThenable`
   - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useNullishCoalescing`
