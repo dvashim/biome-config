@@ -10,10 +10,10 @@
     "name": "Aleksei Reznichenko"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.6",
+    "@biomejs/biome": "^2.4.7",
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
-    "validate-package-exports": "^0.19.1"
+    "validate-package-exports": "^0.21.0"
   },
   "exports": {
     ".": "./dist/biome.recommended.jsonc",
