@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.4.0
+
+### Minor Changes
+
+- [#72](https://github.com/dvashim/biome-config/pull/72) [`92cd704`](https://github.com/dvashim/biome-config/commit/92cd7043bdbbfbdcf63ae3b31e656b4dddbad15b) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add package.json expanded formatting override to all config presets
+
 ## 1.3.4
 
 ### Patch Changes
