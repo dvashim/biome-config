@@ -1,5 +1,16 @@
 # @dvashim/biome-config
 
+## 1.3.4
+
+### Patch Changes
+
+- [#70](https://github.com/dvashim/biome-config/pull/70) [`0c624fc`](https://github.com/dvashim/biome-config/commit/0c624fc6f2151936991dd4b6fb5fe6465e8c914d) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update Biome to 2.4.8 and apply minor fixes
+
+  - **Deps:** Update `@biomejs/biome` to v2.4.8 and `validate-package-exports` to v0.22.0
+  - **Rules:** Add `noDrizzleDeleteWithoutWhere` and `noDrizzleUpdateWithoutWhere` nursery rules
+  - **Fix:** Enable VCS integration (`"enabled": true`) in all dist configs
+  - **Docs:** Update schema URLs, rule counts, and add Drizzle rules to README
+
 ## 1.3.3
 
 ### Patch Changes
