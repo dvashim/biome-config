@@ -151,6 +151,12 @@ All configurations share the same base defaults.
 | defaultBranch | `"main"` |
 | useIgnoreFile | `true` |
 
+### Overrides
+
+| File pattern | Setting | Value |
+|--------------|---------|-------|
+| `package.json` | json.formatter.expand | `"always"` |
+
 ### Assist
 
 | Option | Value |
