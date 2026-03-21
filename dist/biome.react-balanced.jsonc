@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.7/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
 
   // MARK: assist
   "assist": {
@@ -117,6 +117,8 @@
         "noConditionalExpect": "warn",
         "noContinue": "info",
         "noDivRegex": "warn",
+        "noDrizzleDeleteWithoutWhere": "warn",
+        "noDrizzleUpdateWithoutWhere": "warn",
         "noDuplicateAttributes": "warn",
         "noDuplicatedSpreadProps": "warn",
         "noDuplicateEnumValueNames": "warn",
@@ -304,6 +306,7 @@
   // MARK: vcs
   "vcs": {
     "clientKind": "git",
+    "enabled": true,
     "defaultBranch": "main",
     "useIgnoreFile": true
   }

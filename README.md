@@ -87,7 +87,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.7/schema.json`
+`https://biomejs.dev/schemas/2.4.8/schema.json`
 
 ### Formatter
 
@@ -147,6 +147,7 @@ All configurations share the same base defaults.
 | Option | Value |
 |--------|-------|
 | clientKind | `"git"` |
+| enabled | `true` |
 | defaultBranch | `"main"` |
 | useIgnoreFile | `true` |
 
@@ -173,7 +174,7 @@ Same as base recommended, plus enables the **React domain** (`"react": "recommen
 
 ### React strict
 
-The most opinionated configuration. Enables all recommended rules plus **120+ optional and nursery rules** across 8 categories. Every non-recommended JS/TS rule available in Biome is explicitly configured.
+The most opinionated configuration. Enables all recommended rules plus **180+ optional and nursery rules** across 8 categories. Every non-recommended JS/TS rule available in Biome is explicitly configured.
 
 - **a11y** — Selectively disables noisy rules (`useButtonType`, `useKeyWithClickEvents`, `useSemanticElements`, `noStaticElementInteractions`, `noNoninteractiveElementToInteractiveRole`) while keeping the rest at recommended defaults.
 
@@ -181,12 +182,13 @@ The most opinionated configuration. Enables all recommended rules plus **120+ op
 
 - **correctness** (12 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks.
 
-- **nursery** (67 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (68 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noJsxPropsBind`, `noLeakedRender`, `noMisusedPromises`, `noMultiAssign`, `noParametersOnlyUsedInRecursion`
   - **Promises:** `noFloatingPromises`, `noNestedPromises`, `useAwaitThenable`
   - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useNullishCoalescing`
   - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`
   - **Playwright:** Full suite of 10 Playwright rules
+  - **Drizzle:** `noDrizzleDeleteWithoutWhere`, `noDrizzleUpdateWithoutWhere`
   - **Tailwind:** `useSortedClasses`, `noFloatingClasses`
   - **Disabled:** `noTernary`, `useExplicitType`
 
@@ -194,7 +196,7 @@ The most opinionated configuration. Enables all recommended rules plus **120+ op
 
 - **security** — `noSecrets`
 
-- **style** (44 rules) — Enforces consistent syntax, naming conventions (`strictCase: true`), array shorthand syntax, `type` over `interface`, React function components, readonly class properties, `noDefaultExport`, `noMagicNumbers`, `noJsxLiterals`, and more.
+- **style** (56 rules) — Enforces consistent syntax, naming conventions (`strictCase: true`), array shorthand syntax, `type` over `interface`, React function components, readonly class properties, `noDefaultExport`, `noMagicNumbers`, `noJsxLiterals`, and more.
 
 - **suspicious** (22 rules) — Flags `var` (error), `console`, `alert`, bitwise operators, empty blocks, import cycles, evolving types, skipped tests, and deprecated imports.
 
