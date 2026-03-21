@@ -28,7 +28,7 @@ The package exports four Biome config presets via `dist/`:
 
 ### Config hierarchy
 
-All four configs share identical formatter/VCS/files settings. They differ only in linter rules:
+All four configs share identical formatter/VCS/files/overrides settings. They differ only in linter rules:
 
 - **recommended** — Only Biome's built-in recommended rules. No domain-specific settings.
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`.
@@ -41,7 +41,7 @@ The repo's own `biome.json` extends `dist/biome.recommended.jsonc` to dogfood th
 
 - `useSortedKeys` assist for maintaining key order in the dist JSONC files.
 - `files.includes: ["**/dist"]` — Biome only processes the dist directory.
-- `overrides` for expanded JSON formatting on `package.json` and settings files.
+- `overrides` for expanded JSON formatting on `.claude/settings.local.json` (repo-specific; `package.json` override is in the dist configs).
 
 ## Slash commands
 
@@ -54,4 +54,3 @@ The repo's own `biome.json` extends `dist/biome.recommended.jsonc` to dogfood th
 - The `$schema` URL in each dist file must match the current Biome version. When upgrading Biome, update the schema URL in all four dist files, `biome.json`, and `README.md`.
 - Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change.
 - Package manager is **pnpm**.
-- `TODO` file tracks pending rules/features using a checkbox format grouped by Biome version.
