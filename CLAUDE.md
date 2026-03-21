@@ -32,7 +32,7 @@ All four configs share identical formatter/VCS/files settings. They differ only 
 
 - **recommended** — Only Biome's built-in recommended rules. No domain-specific settings.
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`.
-- **react-strict** — React domain enabled + 120+ explicit rule configurations across all categories.
+- **react-strict** — React domain enabled + 180+ explicit rule configurations across all categories.
 - **react-balanced** — Same rules as strict but with targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.).
 
 ### Root biome.json
@@ -51,7 +51,7 @@ The repo's own `biome.json` extends `dist/biome.recommended.jsonc` to dogfood th
 
 - Config files in `dist/` use JSONC format (JSON with comments) and must have keys sorted (enforced by `useSortedKeys` in `biome.json`).
 - Each section in dist JSONC files is marked with `// MARK:` comments for navigation.
-- The `$schema` URL in each dist file must match the current Biome version. When upgrading Biome, update the schema URL in all four dist files and `biome.json`.
+- The `$schema` URL in each dist file must match the current Biome version. When upgrading Biome, update the schema URL in all four dist files, `biome.json`, and `README.md`.
 - Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change.
 - Package manager is **pnpm**.
 - `TODO` file tracks pending rules/features using a checkbox format grouped by Biome version.
