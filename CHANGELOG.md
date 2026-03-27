@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.1
+
+### Patch Changes
+
+- [#76](https://github.com/dvashim/biome-config/pull/76) [`c034990`](https://github.com/dvashim/biome-config/commit/c0349901270271dc6267569ee80a1089cc94e925) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Upgrade `pnpm/action-setup` from v4 to v5 and skip check workflow on direct pushes to main
+
 ## 1.5.0
 
 ### Minor Changes
