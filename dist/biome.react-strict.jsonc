@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.9/schema.json",
 
   // MARK: assist
   "assist": {
@@ -118,6 +118,7 @@
         "noDuplicatedSpreadProps": "warn",
         "noDuplicateEnumValueNames": "warn",
         "noDuplicateEnumValues": "warn",
+        "noDuplicateSelectors": "warn",
         "noEmptyObjectKeys": "warn",
         "noEqualsToNull": "warn",
         "noExcessiveClassesPerFile": "warn",
@@ -126,6 +127,7 @@
         "noFloatingPromises": "warn",
         "noForIn": "warn",
         "noIncrementDecrement": "warn",
+        "noInlineStyles": "warn",
         "noJsxPropsBind": "error",
         "noLeakedRender": "error",
         "noMisusedPromises": "error",
@@ -154,6 +156,7 @@
         "noUndeclaredEnvVars": "warn",
         "noUnknownAttribute": "warn",
         "noUnnecessaryConditions": "warn",
+        "noUntrustedLicenses": "warn",
         "noUselessReturn": "warn",
         "useArraySome": "warn",
         "useArraySortCompare": "warn",
