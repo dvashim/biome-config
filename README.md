@@ -153,9 +153,10 @@ All configurations share the same base defaults.
 
 ### Overrides
 
-| File pattern | Setting | Value |
-|--------------|---------|-------|
-| `package.json` | json.formatter.expand | `"always"` |
+| File pattern   | Setting                              | Value      |
+|----------------|--------------------------------------|------------|
+| `package.json` | assist.actions.source.useSortedKeys  | `"off"`    |
+| `package.json` | json.formatter.expand                | `"always"` |
 
 ### Assist
 
