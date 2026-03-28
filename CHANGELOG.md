@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.3
+
+### Patch Changes
+
+- [#83](https://github.com/dvashim/biome-config/pull/83) [`ef190bb`](https://github.com/dvashim/biome-config/commit/ef190bbfd2842e3b7805160695a460f0cc258c8d) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Bump version to validate the new publishing setup
+
 ## 1.5.2
 
 ### Patch Changes
