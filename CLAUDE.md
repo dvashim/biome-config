@@ -39,8 +39,15 @@ All four configs share identical formatter/VCS/files/overrides settings. They di
 
 The repo's own `biome.json` extends `dist/biome.recommended.jsonc` to dogfood the config. Notable settings:
 
-- `useSortedKeys` assist with `groupByNesting` for maintaining key order in the dist JSONC files; disabled for `package.json` (which uses conventional, non-alphabetical key order).
+- `useSortedKeys` assist with `groupByNesting` for maintaining key order in the dist JSONC files.
 - `overrides` for expanded JSON formatting on `.claude/settings.local.json` (repo-specific; `package.json` override is in the dist configs).
+
+### Shared overrides (in dist configs)
+
+All dist configs include a `package.json` override that:
+
+- Sets `json.formatter.expand` to `"always"` (one entry per line).
+- Disables `assist.actions.source.useSortedKeys` (package.json uses conventional, non-alphabetical key order).
 
 ## Slash commands
 

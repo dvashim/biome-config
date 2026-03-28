@@ -75,6 +75,13 @@
   "overrides": [
     {
       "includes": ["package.json"],
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      },
       "json": {
         "formatter": {
           "expand": "always"
@@ -86,8 +93,8 @@
   // MARK: vcs
   "vcs": {
     "clientKind": "git",
-    "enabled": true,
     "defaultBranch": "main",
+    "enabled": true,
     "useIgnoreFile": true
   }
 }

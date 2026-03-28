@@ -25,16 +25,6 @@
           "expand": "always"
         }
       }
-    },
-    {
-      "includes": ["./package.json"],
-      "assist": {
-        "actions": {
-          "source": {
-            "useSortedKeys": "off"
-          }
-        }
-      }
     }
   ]
 }
