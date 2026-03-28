@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.4
+
+### Patch Changes
+
+- [#85](https://github.com/dvashim/biome-config/pull/85) [`028fef3`](https://github.com/dvashim/biome-config/commit/028fef3c76738e115e866b9bc06ec95601180f49) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Switch to npm Trusted Publishing and env-based provenance
+
 ## 1.5.3
 
 ### Patch Changes
