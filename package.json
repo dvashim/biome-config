@@ -44,6 +44,9 @@
     "validate-package-exports": "^0.23.0"
   },
   "packageManager": "pnpm@10.30.1",
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public"
   }
