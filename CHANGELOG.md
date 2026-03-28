@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.5
+
+### Patch Changes
+
+- [#88](https://github.com/dvashim/biome-config/pull/88) [`3a39d07`](https://github.com/dvashim/biome-config/commit/3a39d07119b04b73188bd7ee0c811cd1e49cd8a2) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add Dependabot for automated npm and GitHub Actions dependency updates
+
 ## 1.5.4
 
 ### Patch Changes
