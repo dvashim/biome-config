@@ -66,10 +66,10 @@ jobs:
         uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1
         with:
           version: pnpm changeset version
-          publish: pnpm changeset publish --provenance
+          publish: pnpm changeset publish
           commit: "chore: release packages"
           title: "chore: release packages"
           setupGitUser: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
