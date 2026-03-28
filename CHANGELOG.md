@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.2
+
+### Patch Changes
+
+- [#79](https://github.com/dvashim/biome-config/pull/79) [`fc1d8e1`](https://github.com/dvashim/biome-config/commit/fc1d8e1c9219520b9c62d1a5acbe0d090d9d14da) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Disable `useSortedKeys` assist for `package.json` in all dist configs
+
 ## 1.5.1
 
 ### Patch Changes
