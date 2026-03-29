@@ -1,6 +1,20 @@
 # Biome Configurations
 
-[![npm version](https://img.shields.io/npm/v/@dvashim/biome-config.svg?logo=npm&style=flat-square&color2=07c&label=@dvashim/biome-config)](https://www.npmjs.com/package/@dvashim/biome-config) [![npm downloads](https://img.shields.io/npm/dm/@dvashim/biome-config?logo=npm&style=flat-square&color=07c)](https://www.npmjs.com/package/@dvashim/biome-config) [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff)](https://biomejs.dev)
+[![CI][ci-badge]][ci-url]
+[![npm version][version-badge]][npm-url]
+[![npm downloads][downloads-badge]][npm-url]
+[![license][license-badge]][license-url]
+[![Checked with Biome][biome-badge]][biome-url]
+
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/dvashim/biome-config/check.yml?style=flat-square&logo=github&label=CI
+[ci-url]: https://github.com/dvashim/biome-config/actions/workflows/check.yml
+[version-badge]: https://img.shields.io/npm/v/@dvashim/biome-config.svg?logo=npm&style=flat-square&color=07c&label=@dvashim/biome-config
+[downloads-badge]: https://img.shields.io/npm/dm/@dvashim/biome-config?logo=npm&style=flat-square&color=07c
+[npm-url]: https://www.npmjs.com/package/@dvashim/biome-config
+[license-badge]: https://img.shields.io/npm/l/@dvashim/biome-config?style=flat-square&color=07c
+[license-url]: https://github.com/dvashim/biome-config/blob/main/LICENSE
+[biome-badge]: https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff
+[biome-url]: https://biomejs.dev
 
 ## Installation
 
@@ -36,6 +50,8 @@ Base recommended configuration:
 // This configuration provides a base setup for linting,
 // formatting, and code consistency across JavaScript,
 // JSX, JSON, and HTML files.
+// No files.includes is set — Biome will process all supported
+// files in the project directory by default.
 
 {
   "extends": ["@dvashim/biome-config"]
@@ -47,7 +63,8 @@ React recommended configuration:
 ```jsonc
 // biome.json (React recommended)
 // This configuration extends the base recommended configuration
-// and enables the recommended rules for the React domain
+// and enables the recommended rules for the React domain.
+// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
 {
   "extends": ["@dvashim/biome-config/react-recommended"]
@@ -61,6 +78,7 @@ React strict configuration:
 // This configuration enables recommended lint rules,
 // including React-specific recommended rules,
 // and opts into nursery (experimental) rules.
+// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
 {
   "extends": ["@dvashim/biome-config/react-strict"]
@@ -75,6 +93,7 @@ React balanced configuration:
 // including React-specific recommended rules,
 // with a few rules intentionally disabled
 // to reduce false positives / noise.
+// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
 {
   "extends": ["@dvashim/biome-config/react-balanced"]
@@ -136,7 +155,7 @@ All configurations share the same base defaults.
 |--------|-------|
 | experimentalFullSupportEnabled | `true` |
 
-### Files
+### Files (React configs only)
 
 | Option | Value |
 |--------|-------|
@@ -231,3 +250,54 @@ Same rule set as strict, with **targeted relaxations** to reduce false positives
 | `noMagicNumbers` | warn | info | Informational only |
 | `noNestedTernary` | warn | off | Allows nested ternaries |
 | `useNamingConvention` | strictCase: true | strictCase: false | More lenient casing |
+
+## FAQ
+
+### Which config should I start with?
+
+- **Non-React projects** — use `@dvashim/biome-config` (base recommended).
+- **React projects** — start with `react-balanced` for a good trade-off between strictness and practicality. Move to `react-strict` once your codebase is clean, or `react-recommended` if you only want Biome's built-in defaults.
+
+### How do I override a rule from the preset?
+
+Add a `linter.rules` section in your `biome.json`. Local settings merge with and take precedence over the preset:
+
+```jsonc
+{
+  "extends": ["@dvashim/biome-config/react-balanced"],
+  "linter": {
+    "rules": {
+      "style": {
+        "noDefaultExport": "error"
+      }
+    }
+  }
+}
+```
+
+### How do I exclude additional files or directories?
+
+The simplest approach is to add paths to your `.gitignore` — all presets enable `vcs.useIgnoreFile`, so Biome respects `.gitignore` patterns automatically.
+
+For exclusions that should not affect Git tracking, use negated patterns in `files.includes`. The `!!` prefix force-ignores paths (prevents scanning entirely), while `!` excludes matches from results:
+
+```jsonc
+{
+  "extends": ["@dvashim/biome-config"],
+  "files": {
+    "includes": ["**", "!!**/generated", "!!**/coverage"]
+  }
+}
+```
+
+### Why does the base config not set `files.includes`?
+
+The base recommended config intentionally omits `files.includes` so consumers control their own file scope. Biome processes all supported files by default when no `includes` is set. The React configs set `files.includes` to `["**", "!!**/dist"]` to explicitly exclude build output.
+
+### Can I use this with TypeScript?
+
+Yes. Biome natively supports TypeScript — no additional configuration is needed. All presets apply to `.ts` and `.tsx` files automatically.
+
+### Can I use this in a monorepo?
+
+Yes. Install the package at the root and reference it in each workspace's `biome.json`. Each workspace can extend a different preset and add its own overrides.
