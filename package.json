@@ -8,6 +8,10 @@
     "formatter",
     "lint"
   ],
+  "homepage": "https://github.com/dvashim/biome-config#readme",
+  "bugs": {
+    "url": "https://github.com/dvashim/biome-config/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/dvashim/biome-config.git"
