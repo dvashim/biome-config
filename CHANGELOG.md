@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.7
+
+### Patch Changes
+
+- [#94](https://github.com/dvashim/biome-config/pull/94) [`83766fc`](https://github.com/dvashim/biome-config/commit/83766fc30bd4dc9176351ccd59671c69afbd36fe) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Simplify CI check and release workflows
+
 ## 1.5.6
 
 ### Patch Changes
