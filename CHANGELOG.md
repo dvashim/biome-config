@@ -1,5 +1,15 @@
 # @dvashim/biome-config
 
+## 1.5.8
+
+### Patch Changes
+
+- [#96](https://github.com/dvashim/biome-config/pull/96) [`394b02f`](https://github.com/dvashim/biome-config/commit/394b02f723bdd495763f4cc3a14c3803e202c3ba) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Improve supply chain security posture
+
+  - **Metadata:** Add explicit homepage and bugs fields to package.json
+  - **CI:** Add harden-runner to check and release workflows
+  - **CI:** Add OpenSSF Scorecard workflow
+
 ## 1.5.7
 
 ### Patch Changes
