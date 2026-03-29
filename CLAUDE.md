@@ -10,10 +10,11 @@ Shared Biome configuration presets published as `@dvashim/biome-config` on npm. 
 
 - **Check all (format + exports):** `pnpm run check`
 - **Check formatting only:** `pnpm run check:format`
+- **Fix formatting:** `biome format --write`
 - **Validate package exports:** `pnpm run check:exports`
 - **Create a changeset:** `pnpm changeset`
 
-There is no build step or test suite. The `dist/` JSONC files are checked into the repo directly.
+There is no build step or test suite. The `dist/` JSONC files are checked into the repo directly. CI runs `pnpm run check` on all PR branches targeting `main`.
 
 ## Architecture
 
@@ -30,8 +31,8 @@ The package exports four Biome config presets via `dist/`:
 
 All four configs share identical formatter/VCS/files/overrides settings. They differ only in linter rules:
 
-- **recommended** — Only Biome's built-in recommended rules. No domain-specific settings.
-- **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`.
+- **recommended** — Only Biome's built-in recommended rules. No domain-specific settings. Intentionally omits a `files` section so consumers control their own includes/excludes.
+- **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
 - **react-strict** — React domain enabled + 180+ explicit rule configurations across all categories.
 - **react-balanced** — Same rules as strict but with targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.).
 
