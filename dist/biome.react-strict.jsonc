@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.9/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
 
   // MARK: assist
   "assist": {
@@ -126,6 +126,7 @@
         "noFloatingClasses": "warn",
         "noFloatingPromises": "warn",
         "noForIn": "warn",
+        "noImpliedEval": "warn",
         "noIncrementDecrement": "warn",
         "noInlineStyles": "warn",
         "noJsxPropsBind": "error",
@@ -156,6 +157,7 @@
         "noUndeclaredEnvVars": "warn",
         "noUnknownAttribute": "warn",
         "noUnnecessaryConditions": "warn",
+        "noUnsafePlusOperands": "warn",
         "noUntrustedLicenses": "warn",
         "noUselessReturn": "warn",
         "useArraySome": "warn",
