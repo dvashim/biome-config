@@ -21,6 +21,12 @@
     "name": "Aleksei Reznichenko",
     "email": "aleksei@dvashim.dev"
   },
+  "contributors": [
+    {
+      "name": "Galina Makarchuk",
+      "email": "galya.makarchuk@gmail.com"
+    }
+  ],
   "type": "module",
   "exports": {
     ".": "./dist/biome.recommended.jsonc",
