@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.9
+
+### Patch Changes
+
+- [#99](https://github.com/dvashim/biome-config/pull/99) [`2112b19`](https://github.com/dvashim/biome-config/commit/2112b19fcbcae12fc0cc032a263deb6fe4d0a553) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Bump Biome from 2.4.9 to 2.4.10. Update `$schema` URLs across all configs, `biome.json`, and README. Add two new nursery rules to `react-strict` and `react-balanced` configs: `noImpliedEval`, `noUnsafePlusOperands`.
+
 ## 1.5.8
 
 ### Patch Changes
