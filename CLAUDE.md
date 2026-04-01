@@ -38,7 +38,7 @@ All four configs share identical formatter/VCS/files/overrides settings. They di
 
 ### Root biome.json
 
-The repo's own `biome.json` extends `dist/biome.recommended.jsonc` to dogfood the config. Notable settings:
+The repo's own `biome.json` extends `dist/biome.recommended.jsonc` (with `"root": true`) to dogfood the config. Notable settings:
 
 - `useSortedKeys` assist with `groupByNesting` for maintaining key order in the dist JSONC files.
 - `overrides` for expanded JSON formatting on `.claude/settings.local.json` (repo-specific; `package.json` override is in the dist configs).
@@ -58,6 +58,6 @@ All dist configs include a `package.json` override that:
 
 - Config files in `dist/` use JSONC format (JSON with comments) and must have keys sorted (enforced by `useSortedKeys` in `biome.json`).
 - Each section in dist JSONC files is marked with `// MARK:` comments for navigation.
-- The `$schema` URL in each dist file must match the current Biome version. When upgrading Biome, update the schema URL in all four dist files, `biome.json`, and `README.md`.
-- Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change.
+- **Biome version upgrades** require updating the `$schema` URL in all four dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically).
+- Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change. The changeset config has `"commit": true`, so `pnpm changeset` auto-commits.
 - Package manager is **pnpm**.
