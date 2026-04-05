@@ -5,16 +5,19 @@
 [![npm downloads][downloads-badge]][npm-url]
 [![license][license-badge]][license-url]
 [![Checked with Biome][biome-badge]][biome-url]
+[![Socket Badge][socket-badge]][socket-url]
 
-[ci-badge]: https://img.shields.io/github/actions/workflow/status/dvashim/biome-config/check.yml?style=flat-square&logo=github&label=CI
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/dvashim/biome-config/check.yml?logo=github&label=CI
 [ci-url]: https://github.com/dvashim/biome-config/actions/workflows/check.yml
-[version-badge]: https://img.shields.io/npm/v/@dvashim/biome-config.svg?logo=npm&style=flat-square&color=07c&label=@dvashim/biome-config
-[downloads-badge]: https://img.shields.io/npm/dm/@dvashim/biome-config?logo=npm&style=flat-square&color=07c
+[version-badge]: https://img.shields.io/npm/v/@dvashim/biome-config.svg?logo=npm&color=07c&label=@dvashim/biome-config
+[downloads-badge]: https://img.shields.io/npm/dm/@dvashim/biome-config?logo=npm&color=07c
 [npm-url]: https://www.npmjs.com/package/@dvashim/biome-config
-[license-badge]: https://img.shields.io/npm/l/@dvashim/biome-config?style=flat-square&color=07c
+[license-badge]: https://img.shields.io/npm/l/@dvashim/biome-config?color=07c
 [license-url]: https://github.com/dvashim/biome-config/blob/main/LICENSE
-[biome-badge]: https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff
+[biome-badge]: https://img.shields.io/badge/Checked_with-Biome-60a5fa?logo=biome&color=07c&logoColor=fff
 [biome-url]: https://biomejs.dev
+[socket-badge]: https://socket.dev/api/badge/npm/package/@dvashim/biome-config
+[socket-url]: https://socket.dev/npm/package/@dvashim/biome-config
 
 ## Installation
 
