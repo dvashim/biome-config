@@ -1,7 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
 
-  // MARK: assist
   "assist": {
     "actions": {
       "recommended": true,
@@ -11,7 +10,6 @@
     }
   },
 
-  // MARK: formatter
   "formatter": {
     "attributePosition": "auto",
     "bracketSameLine": false,
@@ -25,12 +23,10 @@
     "useEditorconfig": true
   },
 
-  // MARK: html
   "html": {
     "experimentalFullSupportEnabled": true
   },
 
-  // MARK: javascript
   "javascript": {
     "experimentalEmbeddedSnippetsEnabled": true,
     "globals": [],
@@ -51,7 +47,6 @@
     }
   },
 
-  // MARK: json
   "json": {
     "parser": {
       "allowComments": true,
@@ -59,14 +54,12 @@
     }
   },
 
-  // MARK: linter
   "linter": {
     "rules": {
       "recommended": true
     }
   },
 
-  // MARK: overrides
   "overrides": [
     {
       "includes": ["package.json"],
@@ -85,7 +78,6 @@
     }
   ],
 
-  // MARK: vcs
   "vcs": {
     "clientKind": "git",
     "defaultBranch": "main",
