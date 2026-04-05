@@ -16,7 +16,7 @@ If the rule name is missing, ask the user and wait for a response before proceed
 Once you have all three values, follow these steps:
 
 1. Read the dist config files that contain the specified category:
-   - `dist/*.jsonc`
+   - `dist/*.json`
 
 2. Check if the rule already exists in any of the matched files. If it does, update its severity to the new value instead of adding a duplicate entry.
 

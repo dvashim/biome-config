@@ -1,7 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
 
-  // MARK: assist
   "assist": {
     "actions": {
       "recommended": true,
@@ -11,12 +10,10 @@
     }
   },
 
-  // MARK: files
   "files": {
     "includes": ["**", "!!**/dist"]
   },
 
-  // MARK: formatter
   "formatter": {
     "attributePosition": "auto",
     "bracketSameLine": false,
@@ -30,12 +27,10 @@
     "useEditorconfig": true
   },
 
-  // MARK: html
   "html": {
     "experimentalFullSupportEnabled": true
   },
 
-  // MARK: javascript
   "javascript": {
     "experimentalEmbeddedSnippetsEnabled": true,
     "globals": [],
@@ -56,7 +51,6 @@
     }
   },
 
-  // MARK: json
   "json": {
     "parser": {
       "allowComments": true,
@@ -64,10 +58,8 @@
     }
   },
 
-  // MARK: linter
   "linter": {
     "rules": {
-      // MARK: a11y
       "a11y": {
         "noNoninteractiveElementToInteractiveRole": "off",
         "noStaticElementInteractions": "off",
@@ -76,27 +68,20 @@
         "useKeyWithClickEvents": "off",
         "useSemanticElements": "off"
       },
-      // MARK: complexity
       "complexity": {
         "noExcessiveCognitiveComplexity": "warn",
+        "noExcessiveLinesPerFunction": "warn",
         "noExcessiveNestedTestSuites": "warn",
         "noForEach": "warn",
-        "noImplicitCoercions": "off",
+        "noImplicitCoercions": "warn",
         "noUselessCatchBinding": "warn",
         "noUselessStringConcat": "warn",
         "noUselessUndefined": "warn",
         "noVoid": "warn",
         "useMaxParams": "warn",
         "useSimplifiedLogicExpression": "warn",
-        "useWhile": "warn",
-        "noExcessiveLinesPerFunction": {
-          "level": "warn",
-          "options": {
-            "maxLines": 100
-          }
-        }
+        "useWhile": "warn"
       },
-      // MARK: correctness
       "correctness": {
         "noGlobalDirnameFilename": "warn",
         "noNestedComponentDefinitions": "warn",
@@ -111,11 +96,10 @@
         "useSingleJsDocAsterisk": "warn",
         "useUniqueElementIds": "warn"
       },
-      // MARK: nursery
       "nursery": {
         "noAmbiguousAnchorText": "warn",
         "noConditionalExpect": "warn",
-        "noContinue": "info",
+        "noContinue": "warn",
         "noDivRegex": "warn",
         "noDrizzleDeleteWithoutWhere": "warn",
         "noDrizzleUpdateWithoutWhere": "warn",
@@ -132,6 +116,7 @@
         "noFloatingPromises": "warn",
         "noForIn": "warn",
         "noImpliedEval": "warn",
+        "noIncrementDecrement": "warn",
         "noInlineStyles": "warn",
         "noJsxPropsBind": "error",
         "noLeakedRender": "error",
@@ -163,7 +148,7 @@
         "noUnnecessaryConditions": "warn",
         "noUnsafePlusOperands": "warn",
         "noUntrustedLicenses": "warn",
-        "noUselessReturn": "info",
+        "noUselessReturn": "warn",
         "useArraySome": "warn",
         "useArraySortCompare": "warn",
         "useAwaitThenable": "warn",
@@ -184,41 +169,32 @@
         "useRegexpExec": "warn",
         "useSortedClasses": "warn",
         "useSpread": "warn",
-        "useUnicodeRegex": "warn",
-        "noIncrementDecrement": {
-          "level": "warn",
-          "options": {
-            "allowForLoopAfterthoughts": true
-          }
-        }
+        "useUnicodeRegex": "warn"
       },
-      // MARK: performance
       "performance": {
         "noAwaitInLoops": "warn",
-        "noBarrelFile": "off",
+        "noBarrelFile": "warn",
         "noDelete": "warn",
-        "noNamespaceImport": "off",
-        "noReExportAll": "off",
+        "noNamespaceImport": "warn",
+        "noReExportAll": "warn",
         "useTopLevelRegex": "warn"
       },
-      // MARK: security
       "security": {
         "noSecrets": "warn"
       },
-      // MARK: style
       "style": {
         "noCommonJs": "warn",
-        "noDefaultExport": "off",
+        "noDefaultExport": "warn",
         "noDoneCallback": "warn",
         "noEnum": "warn",
         "noExportedImports": "warn",
-        "noImplicitBoolean": "info",
+        "noImplicitBoolean": "warn",
         "noInferrableTypes": "warn",
-        "noJsxLiterals": "off",
-        "noMagicNumbers": "info",
+        "noJsxLiterals": "warn",
+        "noMagicNumbers": "warn",
         "noNamespace": "warn",
         "noNegationElse": "warn",
-        "noNestedTernary": "off",
+        "noNestedTernary": "warn",
         "noParameterAssign": "warn",
         "noParameterProperties": "warn",
         "noProcessEnv": "warn",
@@ -276,11 +252,10 @@
           "level": "warn",
           "options": {
             "requireAscii": true,
-            "strictCase": false
+            "strictCase": true
           }
         }
       },
-      // MARK: suspicious
       "suspicious": {
         "noAlert": "warn",
         "noBitwiseOperators": "warn",
@@ -308,7 +283,6 @@
     }
   },
 
-  // MARK: overrides
   "overrides": [
     {
       "includes": ["package.json"],
@@ -327,7 +301,6 @@
     }
   ],
 
-  // MARK: vcs
   "vcs": {
     "clientKind": "git",
     "defaultBranch": "main",
