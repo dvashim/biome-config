@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.11
+
+### Patch Changes
+
+- [#106](https://github.com/dvashim/biome-config/pull/106) [`bfe6ac2`](https://github.com/dvashim/biome-config/commit/bfe6ac2d12c7e8a07e6cf509074980d0de31df39) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add socket.dev badge and switch shields.io badges to default style
+
 ## 1.5.10
 
 ### Patch Changes
