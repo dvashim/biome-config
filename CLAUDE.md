@@ -56,8 +56,7 @@ All dist configs include a `package.json` override that:
 
 ## Key conventions
 
-- Config files in `dist/` use JSONC format (JSON with comments) and must have keys sorted (enforced by `useSortedKeys` in `biome.json`).
-- Each section in dist JSONC files is marked with `// MARK:` comments for navigation.
+- Config files in `dist/` use JSONC extension and must have keys sorted (enforced by `useSortedKeys` in `biome.json`).
 - **Biome version upgrades** require updating the `$schema` URL in all four dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically).
 - Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change. The changeset config has `"commit": true`, so `pnpm changeset` auto-commits.
 - Package manager is **pnpm**.
