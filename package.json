@@ -29,14 +29,14 @@
   ],
   "type": "module",
   "exports": {
-    ".": "./dist/biome.recommended.jsonc",
-    "./react-balanced": "./dist/biome.react-balanced.jsonc",
-    "./react-recommended": "./dist/biome.react-recommended.jsonc",
-    "./react-strict": "./dist/biome.react-strict.jsonc",
-    "./react/balanced": "./dist/biome.react-balanced.jsonc",
-    "./react/recommended": "./dist/biome.react-recommended.jsonc",
-    "./react/strict": "./dist/biome.react-strict.jsonc",
-    "./recommended": "./dist/biome.recommended.jsonc"
+    ".": "./dist/biome.recommended.json",
+    "./react-balanced": "./dist/biome.react-balanced.json",
+    "./react-recommended": "./dist/biome.react-recommended.json",
+    "./react-strict": "./dist/biome.react-strict.json",
+    "./react/balanced": "./dist/biome.react-balanced.json",
+    "./react/recommended": "./dist/biome.react-recommended.json",
+    "./react/strict": "./dist/biome.react-strict.json",
+    "./recommended": "./dist/biome.recommended.json"
   },
   "files": [
     "dist"
