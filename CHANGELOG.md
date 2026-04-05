@@ -1,5 +1,15 @@
 # @dvashim/biome-config
 
+## 1.5.10
+
+### Patch Changes
+
+- [#104](https://github.com/dvashim/biome-config/pull/104) [`c2a3705`](https://github.com/dvashim/biome-config/commit/c2a3705757fcc350dfd2e843ff959ef10b5a528f) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Remove comments from dist config files and rename from .jsonc to .json
+
+  - **Refactor:** Remove all `// MARK:` comments from dist config files
+  - **Refactor:** Rename dist config files from `.jsonc` to `.json`
+  - **Docs:** Update CLAUDE.md to reflect comment removal and file rename
+
 ## 1.5.9
 
 ### Patch Changes
