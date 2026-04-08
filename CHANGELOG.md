@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.12
+
+### Patch Changes
+
+- [#108](https://github.com/dvashim/biome-config/pull/108) [`8cd8f09`](https://github.com/dvashim/biome-config/commit/8cd8f09984748d17fa2962493a34bcca59bdf7f6) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Fix package.json overrides to match all monorepo files using `**/package.json` glob pattern
+
 ## 1.5.11
 
 ### Patch Changes
