@@ -57,6 +57,7 @@ Base recommended configuration:
 // files in the project directory by default.
 
 {
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@dvashim/biome-config"]
 }
 ```
@@ -70,6 +71,7 @@ React recommended configuration:
 // Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
 {
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@dvashim/biome-config/react-recommended"]
 }
 ```
@@ -84,6 +86,7 @@ React strict configuration:
 // Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
 {
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@dvashim/biome-config/react-strict"]
 }
 ```
@@ -99,6 +102,7 @@ React balanced configuration:
 // Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
 {
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"]
 }
 ```
@@ -269,6 +273,7 @@ Add a `linter.rules` section in your `biome.json`. Local settings merge with and
 
 ```jsonc
 {
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"],
   "linter": {
     "rules": {
@@ -288,6 +293,7 @@ For exclusions that should not affect Git tracking, use negated patterns in `fil
 
 ```jsonc
 {
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@dvashim/biome-config"],
   "files": {
     "includes": ["**", "!!**/generated", "!!**/coverage"]
