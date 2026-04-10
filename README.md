@@ -109,7 +109,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.10/schema.json`
+`https://biomejs.dev/schemas/2.4.11/schema.json`
 
 ### Formatter
 
@@ -211,12 +211,14 @@ The most opinionated configuration. Enables all recommended rules plus **180+ op
 
 - **correctness** (12 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks.
 
-- **nursery** (73 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (78 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noJsxPropsBind`, `noLeakedRender`, `noMisusedPromises`, `noMultiAssign`, `noParametersOnlyUsedInRecursion`
   - **Promises:** `noFloatingPromises`, `noNestedPromises`, `useAwaitThenable`
-  - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useNullishCoalescing`
+  - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`
+  - **Resource management:** `useDisposables` (enforces `using` for `Disposable`/`AsyncDisposable`)
   - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`
   - **Styling:** `noDuplicateSelectors`, `noInlineStyles`
+  - **Testing:** `useConsistentTestIt`, `useExpect`, `noConditionalExpect`
   - **Playwright:** Full suite of 10 Playwright rules
   - **Drizzle:** `noDrizzleDeleteWithoutWhere`, `noDrizzleUpdateWithoutWhere`
   - **Tailwind:** `useSortedClasses`, `noFloatingClasses`
