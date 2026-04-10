@@ -50,6 +50,7 @@ Base recommended configuration:
 
 ```jsonc
 // biome.json (Base recommended)
+// ────────────────────────────────────────
 // This configuration provides a base setup for linting,
 // formatting, and code consistency across JavaScript,
 // JSX, JSON, and HTML files.
@@ -66,6 +67,7 @@ React recommended configuration:
 
 ```jsonc
 // biome.json (React recommended)
+// ────────────────────────────────────────
 // This configuration extends the base recommended configuration
 // and enables the recommended rules for the React domain.
 // Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
@@ -80,6 +82,7 @@ React strict configuration:
 
 ```jsonc
 // biome.json (React strict)
+// ────────────────────────────────────────
 // This configuration enables recommended lint rules,
 // including React-specific recommended rules,
 // and opts into nursery (experimental) rules.
@@ -95,6 +98,7 @@ React balanced configuration:
 
 ```jsonc
 // biome.json (React balanced)
+// ────────────────────────────────────────
 // This configuration enables recommended lint rules,
 // including React-specific recommended rules,
 // with a few rules intentionally disabled
