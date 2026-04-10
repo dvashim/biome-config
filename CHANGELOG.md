@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.5.13
+
+### Patch Changes
+
+- [#111](https://github.com/dvashim/biome-config/pull/111) [`e3a91db`](https://github.com/dvashim/biome-config/commit/e3a91db8d8a638b590ac35a4bf6af3fff4a63d16) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Bump Biome from 2.4.10 to 2.4.11. Update `$schema` URLs across all configs, `biome.json`, and README. Add five new nursery rules to `react-strict` and `react-balanced` configs: `useConsistentTestIt`, `useExplicitReturnType`, `noMisleadingReturnType`, `useDisposables`, `noUselessTypeConversion`.
+
 ## 1.5.12
 
 ### Patch Changes
