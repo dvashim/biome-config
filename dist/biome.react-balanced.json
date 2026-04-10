@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
 
   "assist": {
     "actions": {
@@ -124,6 +124,7 @@
         "noInlineStyles": "warn",
         "noJsxPropsBind": "error",
         "noLeakedRender": "error",
+        "noMisleadingReturnType": "warn",
         "noMisusedPromises": "error",
         "noMultiAssign": "error",
         "noMultiStr": "error",
@@ -153,16 +154,20 @@
         "noUnsafePlusOperands": "warn",
         "noUntrustedLicenses": "warn",
         "noUselessReturn": "info",
+        "noUselessTypeConversion": "warn",
         "useArraySome": "warn",
         "useArraySortCompare": "warn",
         "useAwaitThenable": "warn",
         "useBaseline": "warn",
         "useConsistentEnumValueType": "warn",
         "useConsistentMethodSignatures": "warn",
+        "useConsistentTestIt": "warn",
         "useDestructuring": "warn",
+        "useDisposables": "warn",
         "useErrorCause": "warn",
         "useExhaustiveSwitchCases": "warn",
         "useExpect": "warn",
+        "useExplicitReturnType": "warn",
         "useExplicitType": "off",
         "useFind": "warn",
         "useGlobalThis": "warn",
