@@ -1,5 +1,15 @@
 # @dvashim/biome-config
 
+## 1.6.0
+
+### Minor Changes
+
+- [#117](https://github.com/dvashim/biome-config/pull/117) [`d93241a`](https://github.com/dvashim/biome-config/commit/d93241a7bb20d65dd9ae16cf32fb861b59ddd036) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add stable config variants and upgrade Biome to 2.4.12
+
+  - **New configs:** Add `react-strict-stable` and `react-balanced-stable` presets — same as their parent configs but without nursery (experimental) rules
+  - **Upgrade:** Bump Biome from 2.4.11 to 2.4.12
+  - **New rules:** Add 9 new nursery rules to strict and balanced configs
+
 ## 1.5.13
 
 ### Patch Changes
