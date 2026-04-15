@@ -26,6 +26,8 @@ The package exports four Biome config presets via `dist/`:
 | `./react-recommended` / `./react/recommended` | `dist/biome.react-recommended.json` |
 | `./react-balanced` / `./react/balanced` | `dist/biome.react-balanced.json` |
 | `./react-strict` / `./react/strict` | `dist/biome.react-strict.json` |
+| `./react-strict-stable` / `./react/strict-stable` | `dist/biome.react-strict-stable.json` |
+| `./react-balanced-stable` / `./react/balanced-stable` | `dist/biome.react-balanced-stable.json` |
 
 ### Config hierarchy
 
@@ -33,8 +35,10 @@ All four configs share identical formatter/VCS/files/overrides settings. They di
 
 - **recommended** — Only Biome's built-in recommended rules. No domain-specific settings. Intentionally omits a `files` section so consumers control their own includes/excludes.
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
-- **react-strict** — React domain enabled + 180+ explicit rule configurations across all categories.
+- **react-strict** — React domain enabled + 200+ explicit rule configurations across all categories.
 - **react-balanced** — Same rules as strict but with targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.).
+- **react-strict-stable** — Same as react-strict but without nursery (experimental) rules.
+- **react-balanced-stable** — Same as react-balanced but without nursery (experimental) rules.
 
 ### Root biome.json
 

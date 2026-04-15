@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
 
   "assist": {
     "actions": {
@@ -98,6 +98,7 @@
       },
       "nursery": {
         "noAmbiguousAnchorText": "warn",
+        "noComponentHookFactories": "warn",
         "noConditionalExpect": "warn",
         "noContinue": "warn",
         "noDivRegex": "warn",
@@ -112,12 +113,15 @@
         "noEqualsToNull": "warn",
         "noExcessiveClassesPerFile": "warn",
         "noExcessiveLinesPerFile": "warn",
+        "noExcessiveSelectorClasses": "warn",
         "noFloatingClasses": "warn",
         "noFloatingPromises": "warn",
         "noForIn": "warn",
+        "noIdenticalTestTitle": "warn",
         "noImpliedEval": "warn",
         "noIncrementDecrement": "warn",
         "noInlineStyles": "warn",
+        "noJsxNamespace": "warn",
         "noJsxPropsBind": "error",
         "noLeakedRender": "error",
         "noMisleadingReturnType": "warn",
@@ -167,14 +171,19 @@
         "useExplicitType": "off",
         "useFind": "warn",
         "useGlobalThis": "warn",
+        "useIframeSandbox": "warn",
         "useImportsFirst": "warn",
         "useNamedCaptureGroup": "warn",
         "useNullishCoalescing": "warn",
         "usePlaywrightValidDescribeCallback": "warn",
+        "useReactAsyncServerFunction": "warn",
+        "useReduceTypeParameter": "warn",
         "useRegexpExec": "warn",
         "useSortedClasses": "warn",
         "useSpread": "warn",
-        "useUnicodeRegex": "warn"
+        "useStringStartsEndsWith": "warn",
+        "useUnicodeRegex": "warn",
+        "useVarsOnTop": "warn"
       },
       "performance": {
         "noAwaitInLoops": "warn",

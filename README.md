@@ -39,10 +39,11 @@ pnpm add -D @dvashim/biome-config
 |--------|------------|------|
 | Base | recommended | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
 | React | recommended | `@dvashim/biome-config/react-recommended` |
-| React | balanced | `@dvashim/biome-config/react-balanced` |
 | React | strict | `@dvashim/biome-config/react-strict` |
+| React | strict-stable | `@dvashim/biome-config/react-strict-stable` |
+| React | balanced | `@dvashim/biome-config/react-balanced` |
+| React | balanced-stable | `@dvashim/biome-config/react-balanced-stable` |
 
-<br>
 
 ## Use
 
@@ -83,9 +84,8 @@ React strict configuration:
 ```jsonc
 // biome.json (React strict)
 // ────────────────────────────────────────
-// This configuration enables recommended lint rules,
-// including React-specific recommended rules,
-// and opts into nursery (experimental) rules.
+// The most opinionated configuration — enables recommended rules,
+// React-specific rules, and 200+ optional and nursery (experimental) rules.
 // Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
 {
@@ -94,14 +94,26 @@ React strict configuration:
 }
 ```
 
+React strict-stable configuration:
+
+```jsonc
+// biome.json (React strict-stable)
+// ────────────────────────────────────────
+// Same as React strict, but without nursery (experimental) rules.
+// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
+
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "extends": ["@dvashim/biome-config/react-strict-stable"]
+}
+```
+
 React balanced configuration:
 
 ```jsonc
 // biome.json (React balanced)
 // ────────────────────────────────────────
-// This configuration enables recommended lint rules,
-// including React-specific recommended rules,
-// with a few rules intentionally disabled
+// Same as React strict, with targeted relaxations
 // to reduce false positives / noise.
 // Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
 
@@ -111,13 +123,27 @@ React balanced configuration:
 }
 ```
 
+React balanced-stable configuration:
+
+```jsonc
+// biome.json (React balanced-stable)
+// ────────────────────────────────────────
+// Same as React balanced, but without nursery (experimental) rules.
+// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
+
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "extends": ["@dvashim/biome-config/react-balanced-stable"]
+}
+```
+
 ## Defaults
 
 All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.11/schema.json`
+`https://biomejs.dev/schemas/2.4.12/schema.json`
 
 ### Formatter
 
@@ -211,7 +237,7 @@ Same as base recommended, plus enables the **React domain** (`"react": "recommen
 
 ### React strict
 
-The most opinionated configuration. Enables all recommended rules plus **180+ optional and nursery rules** across 8 categories. Every non-recommended JS/TS rule available in Biome is explicitly configured.
+The most opinionated configuration. Enables all recommended rules plus **200+ optional and nursery rules** across 8 categories. Every non-recommended JS/TS rule available in Biome is explicitly configured.
 
 - **a11y** — Selectively disables noisy rules (`useButtonType`, `useKeyWithClickEvents`, `useSemanticElements`, `noStaticElementInteractions`, `noNoninteractiveElementToInteractiveRole`) while keeping the rest at recommended defaults.
 
@@ -219,17 +245,19 @@ The most opinionated configuration. Enables all recommended rules plus **180+ op
 
 - **correctness** (12 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks.
 
-- **nursery** (78 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (87 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noJsxPropsBind`, `noLeakedRender`, `noMisusedPromises`, `noMultiAssign`, `noParametersOnlyUsedInRecursion`
   - **Promises:** `noFloatingPromises`, `noNestedPromises`, `useAwaitThenable`
-  - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`
+  - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`, `useReduceTypeParameter`
   - **Resource management:** `useDisposables` (enforces `using` for `Disposable`/`AsyncDisposable`)
   - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`
-  - **Styling:** `noDuplicateSelectors`, `noInlineStyles`
-  - **Testing:** `useConsistentTestIt`, `useExpect`, `noConditionalExpect`
+  - **Styling:** `noDuplicateSelectors`, `noInlineStyles`, `noExcessiveSelectorClasses`
+  - **Testing:** `useConsistentTestIt`, `useExpect`, `noConditionalExpect`, `noIdenticalTestTitle`
   - **Playwright:** Full suite of 10 Playwright rules
   - **Drizzle:** `noDrizzleDeleteWithoutWhere`, `noDrizzleUpdateWithoutWhere`
   - **Tailwind:** `useSortedClasses`, `noFloatingClasses`
+  - **React:** `useReactAsyncServerFunction`, `noComponentHookFactories`, `noJsxNamespace`
+  - **Security:** `useIframeSandbox`
   - **Dependencies:** `noUntrustedLicenses`
   - **Disabled:** `noTernary`, `useExplicitType`
 
@@ -240,6 +268,12 @@ The most opinionated configuration. Enables all recommended rules plus **180+ op
 - **style** (56 rules) — Enforces consistent syntax, naming conventions (`strictCase: true`), array shorthand syntax, `type` over `interface`, React function components, readonly class properties, `noDefaultExport`, `noMagicNumbers`, `noJsxLiterals`, and more.
 
 - **suspicious** (22 rules) — Flags `var` (error), `console`, `alert`, bitwise operators, empty blocks, import cycles, evolving types, skipped tests, and deprecated imports.
+
+---
+
+### React strict-stable
+
+Same as React strict, but **without nursery (experimental) rules**. Includes rules from 7 categories: a11y, complexity, correctness, performance, security, style, and suspicious.
 
 ---
 
@@ -264,12 +298,20 @@ Same rule set as strict, with **targeted relaxations** to reduce false positives
 | `noNestedTernary` | warn | off | Allows nested ternaries |
 | `useNamingConvention` | strictCase: true | strictCase: false | More lenient casing |
 
+> `noContinue`, `noIncrementDecrement`, and `noUselessReturn` are nursery rules — they are not present in the `-stable` variants.
+
+---
+
+### React balanced-stable
+
+Same as React balanced, but **without nursery (experimental) rules**. All non-nursery relaxations from the table above still apply.
+
 ## FAQ
 
 ### Which config should I start with?
 
 - **Non-React projects** — use `@dvashim/biome-config` (base recommended).
-- **React projects** — start with `react-balanced` for a good trade-off between strictness and practicality. Move to `react-strict` once your codebase is clean, or `react-recommended` if you only want Biome's built-in defaults.
+- **React projects** — start with `react-balanced` for a good trade-off between strictness and practicality. Move to `react-strict` once your codebase is clean, or `react-recommended` if you only want Biome's built-in defaults. Use the `-stable` variants if you want to avoid nursery (experimental) rules.
 
 ### How do I override a rule from the preset?
 
