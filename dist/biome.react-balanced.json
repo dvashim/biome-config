@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
 
   "assist": {
     "actions": {
@@ -125,9 +125,11 @@
         "noIdenticalTestTitle": "warn",
         "noImpliedEval": "warn",
         "noInlineStyles": "warn",
+        "noJsxLeakedDollar": "warn",
         "noJsxNamespace": "warn",
         "noJsxPropsBind": "error",
         "noLeakedRender": "error",
+        "noLoopFunc": "warn",
         "noMisleadingReturnType": "warn",
         "noMisusedPromises": "error",
         "noMultiAssign": "error",
@@ -155,6 +157,7 @@
         "noUndeclaredEnvVars": "warn",
         "noUnknownAttribute": "warn",
         "noUnnecessaryConditions": "warn",
+        "noUnnecessaryTemplateExpression": "warn",
         "noUnsafePlusOperands": "warn",
         "noUntrustedLicenses": "warn",
         "noUselessReturn": "info",
@@ -168,6 +171,8 @@
         "useConsistentTestIt": "warn",
         "useDestructuring": "warn",
         "useDisposables": "warn",
+        "useDomNodeTextContent": "warn",
+        "useDomQuerySelector": "warn",
         "useErrorCause": "warn",
         "useExhaustiveSwitchCases": "warn",
         "useExpect": "warn",
@@ -183,6 +188,7 @@
         "useReactAsyncServerFunction": "warn",
         "useReduceTypeParameter": "warn",
         "useRegexpExec": "warn",
+        "useRegexpTest": "warn",
         "useSortedClasses": "warn",
         "useSpread": "warn",
         "useStringStartsEndsWith": "warn",

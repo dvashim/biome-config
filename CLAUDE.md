@@ -18,7 +18,7 @@ There is no build step or test suite. The `dist/` JSON files are checked into th
 
 ## Architecture
 
-The package exports four Biome config presets via `dist/`:
+The package exports six Biome config presets via `dist/`:
 
 | Export path | File |
 |---|---|
@@ -31,7 +31,7 @@ The package exports four Biome config presets via `dist/`:
 
 ### Config hierarchy
 
-All four configs share identical formatter/VCS/files/overrides settings. They differ only in linter rules:
+All six configs share identical formatter/VCS/files/overrides settings. They differ only in linter rules:
 
 - **recommended** — Only Biome's built-in recommended rules. No domain-specific settings. Intentionally omits a `files` section so consumers control their own includes/excludes.
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
@@ -60,7 +60,7 @@ All dist configs include a `package.json` override that:
 
 ## Key conventions
 
-- Config files in `dist/` must have keys sorted (enforced by `useSortedKeys` in `biome.json`).
-- **Biome version upgrades** require updating the `$schema` URL in all four dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically).
+- Config files in `dist/` must have keys sorted (enforced by `useSortedKeys` in `biome.json`). Because of `groupByNesting`, rules with simple string values (e.g. `"warn"`) must appear **before** rules with object values (e.g. `{ "level": "warn", "options": { ... } }`) within the same category — see `noIncrementDecrement` at the end of nursery in `react-balanced.json` for an example.
+- **Biome version upgrades** require updating the `$schema` URL in all six dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically). The `-stable` variants are manually kept in sync with their non-stable counterparts minus nursery rules.
 - Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change. The changeset config has `"commit": true`, so `pnpm changeset` auto-commits.
 - Package manager is **pnpm**.
