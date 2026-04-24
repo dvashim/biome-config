@@ -143,7 +143,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.12/schema.json`
+`https://biomejs.dev/schemas/2.4.13/schema.json`
 
 ### Formatter
 
@@ -245,12 +245,13 @@ The most opinionated configuration. Enables all recommended rules plus **200+ op
 
 - **correctness** (12 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks.
 
-- **nursery** (87 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (93 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noJsxPropsBind`, `noLeakedRender`, `noMisusedPromises`, `noMultiAssign`, `noParametersOnlyUsedInRecursion`
   - **Promises:** `noFloatingPromises`, `noNestedPromises`, `useAwaitThenable`
   - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`, `useReduceTypeParameter`
   - **Resource management:** `useDisposables` (enforces `using` for `Disposable`/`AsyncDisposable`)
-  - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`
+  - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`, `useRegexpTest`
+  - **DOM:** `useDomNodeTextContent`, `useDomQuerySelector`
   - **Styling:** `noDuplicateSelectors`, `noInlineStyles`, `noExcessiveSelectorClasses`
   - **Testing:** `useConsistentTestIt`, `useExpect`, `noConditionalExpect`, `noIdenticalTestTitle`
   - **Playwright:** Full suite of 10 Playwright rules
