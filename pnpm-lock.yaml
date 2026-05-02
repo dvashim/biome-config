@@ -18,8 +18,8 @@ importers:
         specifier: ^2.31.0
         version: 2.31.0
       validate-package-exports:
-        specifier: ^0.23.0
-        version: 0.23.0
+        specifier: ^0.24.0
+        version: 0.24.0
 
 packages:
 
@@ -276,8 +276,8 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@webdeveric/utils@0.76.0':
-    resolution: {integrity: sha512-PlQNbXni9dNXEU9YYTdDPM2rpFCBL6UIoJ2QESEI4Fd3z8yO+M5ASEqlIOEN0CDDg7AZ9Ylp+XmdITpsS90Dgg==}
+  '@webdeveric/utils@0.78.0':
+    resolution: {integrity: sha512-y1D2wS2a4MtLRZ0mDxKsLLhMh1Xi5OECBVvHhKslw0wBdP/glrGdzcYjebfzqj7ktmW5NlB4e2MsGJALyf3w6A==}
     engines: {node: '>=18.0.0'}
 
   abbrev@4.0.0:
@@ -451,8 +451,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  hosted-git-info@9.0.2:
-    resolution: {integrity: sha512-M422h7o/BR3rmCQ8UHi7cyyMqKltdP9Uo+J2fXK+RSAY+wTcKOIRyhTuKv4qn+DJf3g+PL890AzId5KZpX+CBg==}
+  hosted-git-info@9.0.3:
+    resolution: {integrity: sha512-Hc+ghLoSt6QaYZUv0WBiIvmMDZuZZ7oaDvdH8MbfOO4lOsxdXLEvuC6ePoGs9H1X9oCLyq6+NVN0MKqD+ydxyg==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
   http-cache-semantics@4.2.0:
@@ -490,8 +490,8 @@ packages:
     resolution: {integrity: sha512-IBTdIkzZNOpqm7q3dRqJvMaldXjDHWkEDfrwGEQTs5eaQMWV+djAhR+wahyNNMAa+qpbDUhBMVt4ZKNwpPm7xQ==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  ip-address@10.1.0:
-    resolution: {integrity: sha512-XXADHxXmvT9+CRxhXg56LJovE+bmWnEWB78LB83VZTprKTmaC5QfruXocxzTZ2Kl0DNwKuBdlIhjL8LeY8Sf8Q==}
+  ip-address@10.2.0:
+    resolution: {integrity: sha512-/+S6j4E9AHvW9SWMSEY9Xfy66O5PWvVEJ08O0y5JGyEKQpojb0K0GKpz/v5HJ/G0vi3D2sjGK78119oXZeE0qA==}
     engines: {node: '>= 12'}
 
   is-extglob@2.1.1:
@@ -820,8 +820,8 @@ packages:
     resolution: {integrity: sha512-HehCEsotFqbPW9sJ8WVYB6UbmIMv7kUUORIF2Nncq4VQvBfNBLibW9YZR5dlYCSUhwcD628pRllm7n+E+YTzJw==}
     engines: {node: '>= 14'}
 
-  socks@2.8.7:
-    resolution: {integrity: sha512-HLpt+uLy/pxB+bum/9DzAgiKS8CX1EvbWxI4zlmgGCExImLdiad2iCwXT5Z4c9c3Eq8rP2318mPW2c+QbtjK8A==}
+  socks@2.8.8:
+    resolution: {integrity: sha512-NlGELfPrgX2f1TAAcz0WawlLn+0r3FyhhCRpFFK2CemXenPYvzMWWZINv3eDNo9ucdwme7oCHRY0Jnbs4aIkog==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
 
   spawndamnit@3.0.1:
@@ -893,8 +893,8 @@ packages:
     resolution: {integrity: sha512-hVDIBwsRruT73PbK7uP5ebUt+ezEtCmzZz3F59BSr2F6OVFnJ/6h8liuvdLrQ88Xmnk6/+xGGuq+pG9WwTuy3A==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  validate-package-exports@0.23.0:
-    resolution: {integrity: sha512-0SwnVCh+6i8UVuXYVvkF9RD8/mD7GvPVIJ9GNuGD/DWeX3vkuepaIsOUzp03k4gdLiQt1EsWcBWEjjaPZnZCpQ==}
+  validate-package-exports@0.24.0:
+    resolution: {integrity: sha512-CaXGZ/f7RSa76WHCvyiehKZf9eeHUCkGMWrqpESxyZVDJ0gPFiVC/A3bNXCUgIqMIq0MQTVmqXnInSjSH6FwUA==}
     engines: {node: '>=20.17.0'}
     hasBin: true
 
@@ -1194,7 +1194,7 @@ snapshots:
       bin-links: 6.0.0
       cacache: 20.0.4
       common-ancestor-path: 2.0.0
-      hosted-git-info: 9.0.2
+      hosted-git-info: 9.0.3
       json-stringify-nice: 1.1.4
       lru-cache: 11.3.5
       minimatch: 10.2.5
@@ -1261,7 +1261,7 @@ snapshots:
     dependencies:
       '@npmcli/git': 7.0.2
       glob: 13.0.6
-      hosted-git-info: 9.0.2
+      hosted-git-info: 9.0.3
       json-parse-even-better-errors: 5.0.0
       proc-log: 6.1.0
       semver: 7.7.4
@@ -1326,7 +1326,7 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@webdeveric/utils@0.76.0': {}
+  '@webdeveric/utils@0.78.0': {}
 
   abbrev@4.0.0: {}
 
@@ -1489,7 +1489,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  hosted-git-info@9.0.2:
+  hosted-git-info@9.0.3:
     dependencies:
       lru-cache: 11.3.5
 
@@ -1528,7 +1528,7 @@ snapshots:
 
   ini@6.0.0: {}
 
-  ip-address@10.1.0: {}
+  ip-address@10.2.0: {}
 
   is-extglob@2.1.1: {}
 
@@ -1682,7 +1682,7 @@ snapshots:
 
   npm-package-arg@13.0.2:
     dependencies:
-      hosted-git-info: 9.0.2
+      hosted-git-info: 9.0.3
       proc-log: 6.1.0
       semver: 7.7.4
       validate-npm-package-name: 7.0.2
@@ -1850,13 +1850,13 @@ snapshots:
     dependencies:
       agent-base: 7.1.4
       debug: 4.4.3
-      socks: 2.8.7
+      socks: 2.8.8
     transitivePeerDependencies:
       - supports-color
 
-  socks@2.8.7:
+  socks@2.8.8:
     dependencies:
-      ip-address: 10.1.0
+      ip-address: 10.2.0
       smart-buffer: 4.2.0
 
   spawndamnit@3.0.1:
@@ -1924,10 +1924,10 @@ snapshots:
 
   validate-npm-package-name@7.0.2: {}
 
-  validate-package-exports@0.23.0:
+  validate-package-exports@0.24.0:
     dependencies:
       '@npmcli/arborist': 9.4.3
-      '@webdeveric/utils': 0.76.0
+      '@webdeveric/utils': 0.78.0
       npm-packlist: 10.0.4
     transitivePeerDependencies:
       - supports-color
