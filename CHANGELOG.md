@@ -1,5 +1,16 @@
 # @dvashim/biome-config
 
+## 1.8.0
+
+### Minor Changes
+
+- [#132](https://github.com/dvashim/biome-config/pull/132) [`20b1fea`](https://github.com/dvashim/biome-config/commit/20b1fea9d660fc4c2375509dc18818d295840f9d) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Bump Biome from 2.4.13 to 2.4.14. Update `$schema` URLs across all configs, `biome.json`, and README. Add four new nursery rules to `react-strict` and `react-balanced` configs:
+
+  - `noExcessiveNestedCallbacks` — disallow callbacks nested deeper than the configured maximum, reducing hard-to-follow "callback hell" patterns.
+  - `noReactStringRefs` — disallow legacy React string refs (`ref="hello"`, `this.refs.hello`) and template-literal refs (`` ref={`hello`} ``); prefer callback refs, `createRef()`, or `useRef()` since string refs are deprecated.
+  - `useMathMinMax` — prefer `Math.min()` / `Math.max()` over equivalent ternary comparisons (e.g. `a < b ? a : b` → `Math.min(a, b)`) for readability.
+  - `useTestHooksOnTop` — flag lifecycle hooks (`beforeEach`, `beforeAll`, `afterEach`, `afterAll`) that appear after test cases in the same block; ensures hooks are defined before any test for clearer setup ordering.
+
 ## 1.7.0
 
 ### Minor Changes
