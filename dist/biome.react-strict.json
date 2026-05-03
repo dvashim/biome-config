@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.14/schema.json",
 
   "assist": {
     "actions": {
@@ -113,6 +113,7 @@
         "noEqualsToNull": "warn",
         "noExcessiveClassesPerFile": "warn",
         "noExcessiveLinesPerFile": "warn",
+        "noExcessiveNestedCallbacks": "warn",
         "noExcessiveSelectorClasses": "warn",
         "noFloatingClasses": "warn",
         "noFloatingPromises": "warn",
@@ -143,6 +144,7 @@
         "noPlaywrightWaitForSelector": "warn",
         "noPlaywrightWaitForTimeout": "warn",
         "noProto": "warn",
+        "noReactStringRefs": "warn",
         "noRedundantDefaultExport": "warn",
         "noReturnAssign": "warn",
         "noScriptUrl": "warn",
@@ -178,6 +180,7 @@
         "useGlobalThis": "warn",
         "useIframeSandbox": "warn",
         "useImportsFirst": "warn",
+        "useMathMinMax": "warn",
         "useNamedCaptureGroup": "warn",
         "useNullishCoalescing": "warn",
         "usePlaywrightValidDescribeCallback": "warn",
@@ -188,6 +191,7 @@
         "useSortedClasses": "warn",
         "useSpread": "warn",
         "useStringStartsEndsWith": "warn",
+        "useTestHooksOnTop": "warn",
         "useUnicodeRegex": "warn",
         "useVarsOnTop": "warn"
       },
