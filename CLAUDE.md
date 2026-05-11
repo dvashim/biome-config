@@ -8,10 +8,11 @@ Shared Biome configuration presets published as `@dvashim/biome-config` on npm. 
 
 ## Commands
 
-- **Check all (format + exports):** `pnpm run check`
+- **Check all (format + exports + stable sync):** `pnpm run check`
 - **Check formatting only:** `pnpm run check:format`
 - **Fix formatting:** `biome format --write`
 - **Validate package exports:** `pnpm run check:exports`
+- **Regenerate `-stable` variants from their parents:** `pnpm run sync-stable`
 - **Create a changeset:** `pnpm changeset`
 
 There is no build step or test suite. The `dist/` JSON files are checked into the repo directly. CI runs `pnpm run check` on all PR branches targeting `main`.
@@ -37,8 +38,8 @@ All six configs share identical formatter/VCS/files/overrides settings. They dif
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
 - **react-strict** — React domain enabled + 200+ explicit rule configurations across all categories.
 - **react-balanced** — Same rules as strict but with targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.).
-- **react-strict-stable** — Same as react-strict but without nursery (experimental) rules.
-- **react-balanced-stable** — Same as react-balanced but without nursery (experimental) rules.
+- **react-strict-stable** — Same as react-strict but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.mjs`; do not edit by hand.
+- **react-balanced-stable** — Same as react-balanced but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.mjs`; do not edit by hand.
 
 ### Root biome.json
 
@@ -61,6 +62,6 @@ All dist configs include a `package.json` override that:
 ## Key conventions
 
 - Config files in `dist/` must have keys sorted (enforced by `useSortedKeys` in `biome.json`). Because of `groupByNesting`, rules with simple string values (e.g. `"warn"`) must appear **before** rules with object values (e.g. `{ "level": "warn", "options": { ... } }`) within the same category — see `noIncrementDecrement` at the end of nursery in `react-balanced.json` for an example.
-- **Biome version upgrades** require updating the `$schema` URL in all six dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically). The `-stable` variants are manually kept in sync with their non-stable counterparts minus nursery rules.
+- **Biome version upgrades** require updating the `$schema` URL in all six dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically). After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` to regenerate the `-stable` variants; `pnpm check` fails on drift via `check:sync-stable`.
 - Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change. The changeset config has `"commit": true`, so `pnpm changeset` auto-commits.
 - Package manager is **pnpm**.

@@ -143,7 +143,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.14/schema.json`
+`https://biomejs.dev/schemas/2.4.15/schema.json`
 
 ### Formatter
 
@@ -245,17 +245,18 @@ The most opinionated configuration. Enables all recommended rules plus **200+ op
 
 - **correctness** (12 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks.
 
-- **nursery** (97 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (100 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noJsxPropsBind`, `noLeakedRender`, `noMisusedPromises`, `noMultiAssign`, `noMultiStr`, `noParametersOnlyUsedInRecursion`
   - **Complexity:** `noExcessiveClassesPerFile`, `noExcessiveLinesPerFile`, `noExcessiveNestedCallbacks`
   - **Promises:** `noFloatingPromises`, `noNestedPromises`, `useAwaitThenable`
   - **TypeScript:** `useConsistentEnumValueType`, `useConsistentMethodSignatures`, `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`, `useReduceTypeParameter`
+  - **Object/class hygiene:** `noBaseToString` (catches accidental `"[object Object]"` stringification), `useThisInClassMethods`
   - **Resource management:** `useDisposables` (enforces `using` for `Disposable`/`AsyncDisposable`)
   - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`, `useRegexpTest`
   - **DOM:** `useDomNodeTextContent`, `useDomQuerySelector`
   - **Math:** `useMathMinMax`
   - **Styling:** `noDuplicateSelectors`, `noInlineStyles`, `noExcessiveSelectorClasses`
-  - **Testing:** `useConsistentTestIt`, `useExpect`, `noConditionalExpect`, `noIdenticalTestTitle`, `useTestHooksOnTop`
+  - **Testing:** `useConsistentTestIt`, `useExpect`, `noConditionalExpect`, `noIdenticalTestTitle`, `useTestHooksInOrder`, `useTestHooksOnTop`
   - **Playwright:** Full suite of 11 Playwright rules
   - **Drizzle:** `noDrizzleDeleteWithoutWhere`, `noDrizzleUpdateWithoutWhere`
   - **Tailwind:** `useSortedClasses`, `noFloatingClasses`

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.14/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
 
   "assist": {
     "actions": {
@@ -98,6 +98,7 @@
       },
       "nursery": {
         "noAmbiguousAnchorText": "warn",
+        "noBaseToString": "warn",
         "noComponentHookFactories": "warn",
         "noConditionalExpect": "warn",
         "noContinue": "warn",
@@ -191,7 +192,9 @@
         "useSortedClasses": "warn",
         "useSpread": "warn",
         "useStringStartsEndsWith": "warn",
+        "useTestHooksInOrder": "warn",
         "useTestHooksOnTop": "warn",
+        "useThisInClassMethods": "warn",
         "useUnicodeRegex": "warn",
         "useVarsOnTop": "warn"
       },
