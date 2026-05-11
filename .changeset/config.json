@@ -10,6 +10,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
+      "disableThanks": true,
       "repo": "dvashim/biome-config"
     }
   ]
