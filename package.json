@@ -49,7 +49,9 @@
     "changeset": "changeset",
     "check": "pnpm run \"/^check:.*/\"",
     "check:exports": "validate-package-exports --check",
-    "check:format": "biome format"
+    "check:format": "biome format",
+    "check:sync-stable": "node scripts/sync-stable.mjs --check",
+    "sync-stable": "node scripts/sync-stable.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",
