@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { spawn } from 'node:child_process'
+import { execFile } from 'node:child_process'
 import { readFile, writeFile } from 'node:fs/promises'
 import { dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { promisify } from 'node:util'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -11,29 +12,16 @@ const PAIRS = [
   ['dist/biome.react-balanced.json', 'dist/biome.react-balanced-stable.json'],
 ]
 
+const execFileAsync = promisify(execFile)
+
 function biomeFormat(text, virtualPath) {
-  return new Promise((res, rej) => {
-    const child = spawn(
-      'pnpm',
-      ['exec', 'biome', 'format', `--stdin-file-path=${virtualPath}`],
-      { cwd: root }
-    )
-    let stdout = ''
-    let stderr = ''
-    child.stdout.on('data', (d) => {
-      stdout += d
-    })
-    child.stderr.on('data', (d) => {
-      stderr += d
-    })
-    child.on('error', rej)
-    child.on('exit', (code) => {
-      if (code === 0) res(stdout)
-      else rej(new Error(`biome format exited ${code}\n${stderr}`))
-    })
-    child.stdin.write(text)
-    child.stdin.end()
-  })
+  const promise = execFileAsync(
+    'pnpm',
+    ['exec', 'biome', 'format', `--stdin-file-path=${virtualPath}`],
+    { cwd: root }
+  )
+  promise.child.stdin.end(text)
+  return promise.then(({ stdout }) => stdout)
 }
 
 function addSectionBreaks(text) {
@@ -55,9 +43,7 @@ function addSectionBreaks(text) {
 
 async function deriveStable(srcAbs, destAbs) {
   const obj = JSON.parse(await readFile(srcAbs, 'utf8'))
-  if (obj.linter?.rules?.nursery !== undefined) {
-    delete obj.linter.rules.nursery
-  }
+  delete obj.linter?.rules?.nursery
   const naive = `${JSON.stringify(obj, null, 2)}\n`
   const formatted = await biomeFormat(naive, relative(root, destAbs))
   return addSectionBreaks(formatted)
