@@ -1,5 +1,7 @@
 # Biome Configurations
 
+Shared [Biome](https://biomejs.dev) configuration presets — a base recommended config plus a family of React presets (`recommended`, `strict`, `balanced`, and nursery-free `-stable` variants) that you extend in your own `biome.json`.
+
 [![CI][ci-badge]][ci-url]
 [![npm version][version-badge]][npm-url]
 [![npm downloads][downloads-badge]][npm-url]
@@ -19,123 +21,63 @@
 [socket-badge]: https://socket.dev/api/badge/npm/package/@dvashim/biome-config
 [socket-url]: https://socket.dev/npm/package/@dvashim/biome-config
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Configurations](#configurations)
+- [Usage](#usage)
+- [Defaults](#defaults)
+- [Rules](#rules)
+- [FAQ](#faq)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Installation
+
+Install the presets together with [Biome](https://biomejs.dev) (which is not bundled) as dev dependencies.
 
 npm:
 
 ```bash
-npm install -D @dvashim/biome-config
+npm install -D @dvashim/biome-config @biomejs/biome
 ```
 
 or pnpm:
 
 ```bash
-pnpm add -D @dvashim/biome-config
+pnpm add -D @dvashim/biome-config @biomejs/biome
 ```
+
+> **Requirements:** Biome **2.4.16+** (the version these presets target) and Node.js **>= 24**.
 
 ## Configurations
 
 | Domain | Level | Path |
-|--------|------------|------|
-| Base | recommended | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
-| React | recommended | `@dvashim/biome-config/react-recommended` |
-| React | strict | `@dvashim/biome-config/react-strict` |
-| React | strict-stable | `@dvashim/biome-config/react-strict-stable` |
-| React | balanced | `@dvashim/biome-config/react-balanced` |
-| React | balanced-stable | `@dvashim/biome-config/react-balanced-stable` |
+|--------|-------|------|
+| Base | [recommended](#base-recommended) | `@dvashim/biome-config` or `@dvashim/biome-config/recommended` |
+| React | [recommended](#react-recommended) | `@dvashim/biome-config/react-recommended` |
+| React | [strict](#react-strict) | `@dvashim/biome-config/react-strict` |
+| React | [strict-stable](#react-strict-stable) | `@dvashim/biome-config/react-strict-stable` |
+| React | [balanced](#react-balanced) | `@dvashim/biome-config/react-balanced` |
+| React | [balanced-stable](#react-balanced-stable) | `@dvashim/biome-config/react-balanced-stable` |
 
+_Not sure which to pick? See [Which config should I start with?](#which-config-should-i-start-with) in the FAQ._
 
-## Use
+## Usage
 
-Base recommended configuration:
+Add a `biome.json` to your project root and extend a preset. The only line you change between presets is the `extends` path:
 
 ```jsonc
-// biome.json (Base recommended)
-// ────────────────────────────────────────
-// This configuration provides a base setup for linting,
-// formatting, and code consistency across JavaScript,
-// JSX, JSON, and HTML files.
-// No files.includes is set — Biome will process all supported
-// files in the project directory by default.
-
+// biome.json
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@dvashim/biome-config"]
 }
 ```
 
-React recommended configuration:
+To use a different preset, swap the `extends` value for any path from the [Configurations](#configurations) table above — for example `"@dvashim/biome-config/react-balanced"`. The React presets automatically exclude build output (`files.includes: ["**", "!!**/dist"]`); the base preset sets no `files.includes`, so Biome processes all supported files by default.
 
-```jsonc
-// biome.json (React recommended)
-// ────────────────────────────────────────
-// This configuration extends the base recommended configuration
-// and enables the recommended rules for the React domain.
-// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
-
-{
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "extends": ["@dvashim/biome-config/react-recommended"]
-}
-```
-
-React strict configuration:
-
-```jsonc
-// biome.json (React strict)
-// ────────────────────────────────────────
-// The most opinionated configuration — enables recommended rules,
-// React-specific rules, and 200+ optional and nursery (experimental) rules.
-// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
-
-{
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "extends": ["@dvashim/biome-config/react-strict"]
-}
-```
-
-React strict-stable configuration:
-
-```jsonc
-// biome.json (React strict-stable)
-// ────────────────────────────────────────
-// Same as React strict, but without nursery (experimental) rules.
-// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
-
-{
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "extends": ["@dvashim/biome-config/react-strict-stable"]
-}
-```
-
-React balanced configuration:
-
-```jsonc
-// biome.json (React balanced)
-// ────────────────────────────────────────
-// Same as React strict, with targeted relaxations
-// to reduce false positives / noise.
-// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
-
-{
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "extends": ["@dvashim/biome-config/react-balanced"]
-}
-```
-
-React balanced-stable configuration:
-
-```jsonc
-// biome.json (React balanced-stable)
-// ────────────────────────────────────────
-// Same as React balanced, but without nursery (experimental) rules.
-// Includes all files except dist/ (files.includes: ["**", "!!**/dist"]).
-
-{
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "extends": ["@dvashim/biome-config/react-balanced-stable"]
-}
-```
+> The examples use the `latest` schema URL for convenience. To match a preset exactly and silence editor warnings about unknown fields, pin it to the version shown under [Defaults → Schema](#schema).
 
 ## Defaults
 
@@ -143,7 +85,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.4.15/schema.json`
+`https://biomejs.dev/schemas/2.4.16/schema.json`
 
 ### Formatter
 
@@ -209,10 +151,10 @@ All configurations share the same base defaults.
 
 ### Overrides
 
-| File pattern         | Setting                              | Value      |
-|----------------------|--------------------------------------|------------|
-| `**/package.json` | assist.actions.source.useSortedKeys  | `"off"`    |
-| `**/package.json` | json.formatter.expand                | `"always"` |
+| File pattern | Setting | Value |
+|------|---------|-------|
+| `**/package.json` | assist.actions.source.useSortedKeys | `"off"` |
+| `**/package.json` | json.formatter.expand | `"always"` |
 
 ### Assist
 
@@ -239,7 +181,7 @@ Same as base recommended, plus enables the **React domain** (`"react": "recommen
 
 The most opinionated configuration. Enables all recommended rules plus **200+ optional and nursery rules** across 8 categories. Every non-recommended JS/TS rule available in Biome is explicitly configured.
 
-- **a11y** — Selectively disables noisy rules (`useButtonType`, `useKeyWithClickEvents`, `useSemanticElements`, `noStaticElementInteractions`, `noNoninteractiveElementToInteractiveRole`) while keeping the rest at recommended defaults.
+- **a11y** — Selectively disables noisy rules (`useButtonType`, `useKeyWithClickEvents`, `useSemanticElements`, `noStaticElementInteractions`, `noNoninteractiveElementToInteractiveRole`) and downgrades `useFocusableInteractive` to `info`, while keeping the rest at recommended defaults.
 
 - **complexity** (12 rules) — Monitors cognitive complexity, function length, nested test suites, and logic expressions. Warns on `forEach`, implicit coercions, `void`, and useless patterns.
 
@@ -317,6 +259,16 @@ Same as React balanced, but **without nursery (experimental) rules**. All non-nu
 - **Non-React projects** — use `@dvashim/biome-config` (base recommended).
 - **React projects** — start with `react-balanced` for a good trade-off between strictness and practicality. Move to `react-strict` once your codebase is clean, or `react-recommended` if you only want Biome's built-in defaults. Use the `-stable` variants if you want to avoid nursery (experimental) rules.
 
+### What version of Biome and Node do I need?
+
+These presets are built and tested against **Biome 2.4.16** — the version their `$schema` is pinned to (see [Defaults → Schema](#schema)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
+
+```bash
+pnpm add -D @biomejs/biome@^2.4.16
+```
+
+The `$schema` in the examples uses `.../schemas/latest/schema.json` for convenience; pin it to `.../schemas/2.4.16/schema.json` to match the presets exactly and silence editor warnings about unknown fields.
+
 ### How do I override a rule from the preset?
 
 Add a `linter.rules` section in your `biome.json`. Local settings merge with and take precedence over the preset:
@@ -362,3 +314,16 @@ Yes. Biome natively supports TypeScript — no additional configuration is neede
 ### Can I use this in a monorepo?
 
 Yes. Install the package at the root and reference it in each workspace's `biome.json`. Each workspace can extend a different preset and add its own overrides.
+
+## Contributing
+
+Issues and pull requests are welcome. The repo uses [pnpm](https://pnpm.io) and [Changesets](https://github.com/changesets/changesets):
+
+1. `pnpm install`
+2. Edit the presets in `dist/` — they are checked in directly, so there is no build step. After changing `react-strict` or `react-balanced`, run `pnpm run sync-stable` to regenerate the `-stable` variants.
+3. `pnpm run check` to validate formatting, package exports, and `-stable` sync.
+4. `pnpm changeset` to record a user-facing change.
+
+## License
+
+[MIT](LICENSE)
