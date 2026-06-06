@@ -19,7 +19,7 @@ importers:
         version: 2.31.0
       validate-package-exports:
         specifier: ^1.0.0
-        version: 1.0.0
+        version: 1.0.1
 
 packages:
 
@@ -625,8 +625,8 @@ packages:
       encoding:
         optional: true
 
-  node-gyp@12.3.0:
-    resolution: {integrity: sha512-QNcUWM+HgJplcPzBvFBZ9VXacyGZ4+VTOb80PwWR+TlVzoHbRKULNEzpRsnaoxG3Wzr7Qh7BYxGDU3CbKib2Yg==}
+  node-gyp@12.4.0:
+    resolution: {integrity: sha512-OMcPNvqTCFUnNaBlmdgq+lfNqY7gTiSmNRDjY3uAXRyudeKZEZxu3CLtjMQrx4zZxCX2b/mpNqTtwuCJgXhHkw==}
     engines: {node: ^20.17.0 || >=22.9.0}
     hasBin: true
 
@@ -655,8 +655,8 @@ packages:
     resolution: {integrity: sha512-uMW73iajD8hiH4ZBxEV3HC+eTnppIqwakjOYuvgddnalIw2lJguKviK1pcUJDlIWm1wSJkchpDZDSVVsZEYRng==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  npm-packlist@11.1.0:
-    resolution: {integrity: sha512-9BzCKl8d/rAuJpECzNycM23OkN8U2HvS2gCncuO2Nc+9eYN07OXoaxAWhgoqAU+8K5yg7VIgrGDDQwECSpa6bQ==}
+  npm-packlist@11.2.0:
+    resolution: {integrity: sha512-TEuN5ZCDBmJ2kcoW7IgRRt3P09sL9mAC5gg1FWQcJVkEdIuAAgy1e459JahGKAjScLqqSodAJtYJ578kQGY+Ng==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
   npm-pick-manifest@11.0.3:
@@ -797,6 +797,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.8.2:
+    resolution: {integrity: sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
     engines: {node: '>=8'}
@@ -856,16 +861,16 @@ packages:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
     engines: {node: '>=4'}
 
-  tar@7.5.15:
-    resolution: {integrity: sha512-dzGK0boVlC4W5QFuQN1EFSl3bIDYsk7Tj40U6eIBnK2k/8ml7TZ5agbI5j5+qnoVcAA+rNtBml8SEiLxZpNqRQ==}
+  tar@7.5.16:
+    resolution: {integrity: sha512-56adEpPMouktRlBLXiaYFFzZ/3+JXa8P9n7WbR+ibIjtviN55mEaOkiysCnPnWm+7kkui1Dn8J9l+g6zV8731w==}
     engines: {node: '>=18'}
 
   term-size@2.2.1:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
     engines: {node: '>=8'}
 
-  tinyglobby@0.2.16:
-    resolution: {integrity: sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==}
+  tinyglobby@0.2.17:
+    resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
 
   to-regex-range@5.0.1:
@@ -898,8 +903,8 @@ packages:
     resolution: {integrity: sha512-hVDIBwsRruT73PbK7uP5ebUt+ezEtCmzZz3F59BSr2F6OVFnJ/6h8liuvdLrQ88Xmnk6/+xGGuq+pG9WwTuy3A==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  validate-package-exports@1.0.0:
-    resolution: {integrity: sha512-vyyl8CXWTvtdJG1o8KbreviCEKbBdre9kCKu+plxqMdmBdw4GUhn0gGdzmCAjuG+kXs0AnCnVHn8uULP2EdNgQ==}
+  validate-package-exports@1.0.1:
+    resolution: {integrity: sha512-wd6TJDE3Li81mzM8h6IcqQfiBySIk5rfrATZLeKpkPxpU9SaFRh9Kyj0Tj7LMYyuT+1CaYLOhaCrC9gI8D2/jw==}
     engines: {node: '>=22.22.2'}
     hasBin: true
 
@@ -1214,7 +1219,7 @@ snapshots:
       proggy: 4.0.0
       promise-all-reject-late: 1.0.1
       promise-call-limit: 3.0.2
-      semver: 7.8.1
+      semver: 7.8.2
       ssri: 13.0.1
       treeverse: 3.0.0
       walk-up-path: 4.0.0
@@ -1223,7 +1228,7 @@ snapshots:
 
   '@npmcli/fs@5.0.0':
     dependencies:
-      semver: 7.8.1
+      semver: 7.8.2
 
   '@npmcli/git@7.0.2':
     dependencies:
@@ -1233,7 +1238,7 @@ snapshots:
       lru-cache: 11.5.1
       npm-pick-manifest: 11.0.3
       proc-log: 6.1.0
-      semver: 7.8.1
+      semver: 7.8.2
       which: 6.0.1
 
   '@npmcli/installed-package-contents@4.0.0':
@@ -1254,7 +1259,7 @@ snapshots:
       json-parse-even-better-errors: 5.0.0
       pacote: 21.5.0
       proc-log: 6.1.0
-      semver: 7.8.1
+      semver: 7.8.2
     transitivePeerDependencies:
       - supports-color
 
@@ -1269,7 +1274,7 @@ snapshots:
       hosted-git-info: 9.0.3
       json-parse-even-better-errors: 5.0.0
       proc-log: 6.1.0
-      semver: 7.8.1
+      semver: 7.8.2
       spdx-expression-parse: 4.0.0
 
   '@npmcli/promise-spawn@9.0.1':
@@ -1287,7 +1292,7 @@ snapshots:
       '@npmcli/node-gyp': 5.0.0
       '@npmcli/package-json': 7.0.5
       '@npmcli/promise-spawn': 9.0.1
-      node-gyp: 12.3.0
+      node-gyp: 12.4.0
       proc-log: 6.1.0
 
   '@sigstore/bundle@4.0.0':
@@ -1650,16 +1655,16 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
-  node-gyp@12.3.0:
+  node-gyp@12.4.0:
     dependencies:
       env-paths: 2.2.1
       exponential-backoff: 3.1.3
       graceful-fs: 4.2.11
       nopt: 9.0.0
       proc-log: 6.1.0
-      semver: 7.8.1
-      tar: 7.5.15
-      tinyglobby: 0.2.16
+      semver: 7.8.2
+      tar: 7.5.16
+      tinyglobby: 0.2.17
       undici: 6.26.0
       which: 6.0.1
 
@@ -1673,7 +1678,7 @@ snapshots:
 
   npm-install-checks@8.0.0:
     dependencies:
-      semver: 7.8.1
+      semver: 7.8.2
 
   npm-normalize-package-bin@5.0.0: {}
 
@@ -1681,7 +1686,7 @@ snapshots:
     dependencies:
       hosted-git-info: 9.0.3
       proc-log: 6.1.0
-      semver: 7.8.1
+      semver: 7.8.2
       validate-npm-package-name: 7.0.2
 
   npm-packlist@10.0.4:
@@ -1689,7 +1694,7 @@ snapshots:
       ignore-walk: 8.0.0
       proc-log: 6.1.0
 
-  npm-packlist@11.1.0:
+  npm-packlist@11.2.0:
     dependencies:
       glob: 13.0.6
       ignore-walk: 9.0.0
@@ -1700,7 +1705,7 @@ snapshots:
       npm-install-checks: 8.0.0
       npm-normalize-package-bin: 5.0.0
       npm-package-arg: 13.0.2
-      semver: 7.8.1
+      semver: 7.8.2
 
   npm-registry-fetch@19.1.1:
     dependencies:
@@ -1757,7 +1762,7 @@ snapshots:
       proc-log: 6.1.0
       sigstore: 4.1.1
       ssri: 13.0.1
-      tar: 7.5.15
+      tar: 7.5.16
     transitivePeerDependencies:
       - supports-color
 
@@ -1828,6 +1833,8 @@ snapshots:
 
   semver@7.8.1: {}
 
+  semver@7.8.2: {}
+
   shebang-command@2.0.0:
     dependencies:
       shebang-regex: 3.0.0
@@ -1890,7 +1897,7 @@ snapshots:
 
   strip-bom@3.0.0: {}
 
-  tar@7.5.15:
+  tar@7.5.16:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
@@ -1900,7 +1907,7 @@ snapshots:
 
   term-size@2.2.1: {}
 
-  tinyglobby@0.2.16:
+  tinyglobby@0.2.17:
     dependencies:
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
@@ -1929,11 +1936,11 @@ snapshots:
 
   validate-npm-package-name@7.0.2: {}
 
-  validate-package-exports@1.0.0:
+  validate-package-exports@1.0.1:
     dependencies:
       '@npmcli/arborist': 9.7.0
       '@webdeveric/utils': 0.79.0
-      npm-packlist: 11.1.0
+      npm-packlist: 11.2.0
     transitivePeerDependencies:
       - supports-color
 
