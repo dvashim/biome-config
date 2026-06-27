@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.10.1
+
+### Patch Changes
+
+- [#159](https://github.com/dvashim/biome-config/pull/159) [`d43d12b`](https://github.com/dvashim/biome-config/commit/d43d12bfb3b41a289d1d368238ae00e93904dfbb) - Internal release-tooling cleanup — no changes to the published config presets.
+
 ## 1.10.0
 
 ### Minor Changes
