@@ -11,6 +11,7 @@ Shared Biome configuration presets published as `@dvashim/biome-config` on npm. 
 - **Check all (format + exports + stable sync):** `pnpm run check`
 - **Check formatting only:** `pnpm run check:format`
 - **Fix formatting:** `biome format --write`
+- **Fix formatting + key order (applies the `useSortedKeys` assist):** `biome check --write`
 - **Validate package exports:** `pnpm run check:exports`
 - **Regenerate `-stable` variants from their parents:** `pnpm run sync-stable`
 - **Create a changeset:** `pnpm changeset`
@@ -36,10 +37,14 @@ All six configs share identical formatter/VCS/files/overrides settings. They dif
 
 - **recommended** — Only Biome's built-in recommended rules. No domain-specific settings. Intentionally omits a `files` section so consumers control their own includes/excludes.
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
-- **react-strict** — React domain enabled + 200+ explicit rule configurations across all categories.
+- **react-strict** — ~250 explicit rule configurations across all categories. Unlike `react-recommended`, strict/balanced set **no** `domains` key; React / Next.js / React Native rules are enabled by listing them individually.
 - **react-balanced** — Same rules as strict but with targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.).
 - **react-strict-stable** — Same as react-strict but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.mjs`; do not edit by hand.
 - **react-balanced-stable** — Same as react-balanced but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.mjs`; do not edit by hand.
+
+### Rule-list design
+
+`react-strict` / `react-balanced` do **not** set `linter.rules.recommended` (so Biome's implicit `recommended: true` baseline applies) and set no `domains` key. Their explicit lists therefore hold only **opt-in** rules: non-recommended rules they enable, plus deliberate overrides of recommended rules (a non-default severity, options, or `"off"` to disable one). A recommended **stable** rule listed at its default severity is redundant and should not appear. **Nursery rules are always opt-in** — `recommended: true` never enables nursery, which is also why the `-stable` variants (nursery stripped) drop to Biome's recommended baseline plus the stable opt-ins. Use `biome explain <rule>` for a rule's diagnostic category, default severity, recommended status, and domains.
 
 ### Root biome.json
 
@@ -61,7 +66,7 @@ All dist configs include a `package.json` override that:
 
 ## Key conventions
 
-- Config files in `dist/` must have keys sorted (enforced by `useSortedKeys` in `biome.json`). Because of `groupByNesting`, rules with simple string values (e.g. `"warn"`) must appear **before** rules with object values (e.g. `{ "level": "warn", "options": { ... } }`) within the same category — see `noIncrementDecrement` at the end of nursery in `react-balanced.json` for an example.
-- **Biome version upgrades** require updating the `$schema` URL in all six dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically). After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` to regenerate the `-stable` variants; `pnpm check` fails on drift via `check:sync-stable`.
+- Config files in `dist/` must have keys sorted (via the `useSortedKeys` assist in `biome.json`). Because of `groupByNesting`, rules with simple string values (e.g. `"warn"`) must appear **before** rules with object values (e.g. `{ "level": "warn", "options": { ... } }`) within the same category — see `noIncrementDecrement` at the end of nursery in `react-balanced.json` for an example. Note: `pnpm check` runs `biome format` and does **not** verify key order; run `biome check --write` (not just `biome format --write`) to actually apply the sort.
+- **Biome version upgrades** require updating the `$schema` URL in all six dist files, `biome.json`, and `README.md`. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` configs (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically). Across a Biome minor/major upgrade, also reconcile rules that **graduated** from `nursery` to a stable category (relocate the entry, preserving each preset's severity — it then starts appearing in the `-stable` variants), were **renamed** (migrate to the new name, preserving severity), or were **removed** (drop them). After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` to regenerate the `-stable` variants; `pnpm check` fails on drift via `check:sync-stable`.
 - Versioning uses [Changesets](https://github.com/changesets/changesets) — create a changeset for any user-facing change. The changeset config has `"commit": true`, so `pnpm changeset` auto-commits.
 - Package manager is **pnpm**.
