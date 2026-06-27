@@ -28,7 +28,10 @@ jobs:
       - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version-file: '.node-version'
+          # Pinned to Node 22 (prior LTS): Node 24.17.0's bundled undici breaks the
+          # @changesets/changelog-github GraphQL call with "Premature close" during
+          # `changeset version`. Revert to '.node-version' once that regression clears.
+          node-version: '22'
           cache: 'pnpm'
       - run: pnpm ci
       - run: pnpm run check
