@@ -19,7 +19,7 @@ importers:
         version: 2.31.0
       validate-package-exports:
         specifier: ^1.1.0
-        version: 1.1.0
+        version: 1.2.0
 
 packages:
 
@@ -187,8 +187,8 @@ packages:
     resolution: {integrity: sha512-EUEuWAxnL07Sp5/iC/1X6Xj+XThUvnbei9zfRWZdEXa7lss9RTHMhAHBeg+MZ5To9s/gGaSI+UwZTPdYMvKSeg==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  '@npmcli/arborist@9.8.0':
-    resolution: {integrity: sha512-bqjei/1+uait6wA30G7IElMs5VCyGpuVPFQYsvzqhTEEAVmDMsHBCFstcT2lLfeQDvi8MeUQHStfHSArvdTQuw==}
+  '@npmcli/arborist@9.9.0':
+    resolution: {integrity: sha512-tzsb1R8mx0k0drlLDT/9ckEYaQHIaWnUti/ci2IaFoQqdqwfmYrc+90p1+QEZC/ocvqcxBep9P1xKw4FbAGofw==}
     engines: {node: ^20.17.0 || >=22.9.0}
     hasBin: true
 
@@ -276,8 +276,8 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@webdeveric/utils@0.79.0':
-    resolution: {integrity: sha512-1ANvex1ghT2JlK/Z6QqT1BR48RVFh1+gLYAL2A658FPrfbRCfxLj6FPKW1tGrgT6ucjq2EnCMhgmHY7KAowfww==}
+  '@webdeveric/utils@0.81.0':
+    resolution: {integrity: sha512-LJylmoQ13+qWM10ohDf/gvlyP/jNE3dZZ+opapy9tcW7p1Um3f1AibmNSsmVqJB6Gbd14vmQ++MaafQFimZ2Hw==}
     engines: {node: '>=18.0.0'}
 
   abbrev@4.0.0:
@@ -318,8 +318,8 @@ packages:
     resolution: {integrity: sha512-frE1t78WOwJ45PKV2cF2tNPjTcs9L1J9s6VkrV59wanRP4GlaomuxYPVma7BwthMg8WnfSory4w5PTE6FZZ81w==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  brace-expansion@5.0.6:
-    resolution: {integrity: sha512-kLpxurY4Z4r9sgMsyG0Z9uzsBlgiU/EFKhj/h91/8yHu0edo7XuixOIH3VcJ8kkxs6/jPzoI6U9Vj3WqbMQ94g==}
+  brace-expansion@5.0.7:
+    resolution: {integrity: sha512-7oFy703dxfY3/NLxC1fh2SUCQ0H9rmAY+5EpDVfXjUTTs+HEwR2nYaqLv+GWcTsumwxPfiz6CzCNkwXwBUwqCA==}
     engines: {node: 18 || 20 || >=22}
 
   braces@3.0.3:
@@ -686,8 +686,8 @@ packages:
     resolution: {integrity: sha512-y3b8Kpd8OAN444hxfBbFfj1FY/RjtTd8tzYwhUqNYXx0fXx2iX4maP4Qr6qhIKbQXI02wTLAda4fYUbDagTUFw==}
     engines: {node: '>=6'}
 
-  p-map@7.0.4:
-    resolution: {integrity: sha512-tkAQEw8ysMzmkhgw8k+1U/iPhWNhykKnSk4Rd5zLoPJCuJaGRPo6YposrZgaxHKzDHdDWWZvE/Sk7hsL2X/CpQ==}
+  p-map@7.0.5:
+    resolution: {integrity: sha512-e8vJF4XdVkzqqSHguEMz41mQO1wKwxKm5ENrUJQUu9kLDCtn83cxbyHZcszr4QC5zEA7WffRRC4gsTecC7J9oA==}
     engines: {node: '>=18'}
 
   p-try@2.2.0:
@@ -729,8 +729,8 @@ packages:
     resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
 
-  picomatch@4.0.4:
-    resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
+  picomatch@4.0.5:
+    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
     engines: {node: '>=12'}
 
   pify@4.0.1:
@@ -856,8 +856,8 @@ packages:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
     engines: {node: '>=4'}
 
-  tar@7.5.17:
-    resolution: {integrity: sha512-wPEBwzapC+2PaTYPH6e2L+cNOEE227S47wUYFqlegcs8zlLLmeb9Fcff1HVZY4Fwku/1Eyv38n7GYwB2aaS71g==}
+  tar@7.5.19:
+    resolution: {integrity: sha512-4LeEWl96twnS2Q7Bz4MGqgazLqO+hJN63GZxXoIqh1T3VweYD997gbU1ItNsQafqqXTXd5WFyFdReLtwvRBNiw==}
     engines: {node: '>=18'}
 
   term-size@2.2.1:
@@ -898,8 +898,8 @@ packages:
     resolution: {integrity: sha512-hVDIBwsRruT73PbK7uP5ebUt+ezEtCmzZz3F59BSr2F6OVFnJ/6h8liuvdLrQ88Xmnk6/+xGGuq+pG9WwTuy3A==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  validate-package-exports@1.1.0:
-    resolution: {integrity: sha512-fnIYf0OCtjbk5X8GM4VMK8yQndPtE45wcMH/cUTHake7xxvahDlUVGNmxupRr+XTWWGLmccVkCPBL7lI8aOuXg==}
+  validate-package-exports@1.2.0:
+    resolution: {integrity: sha512-f3QeHIkZwlVMcuuN/YfhnS7OVP2wScvfpBxs3yiQUrT4RNeI4q+kLAkLOVxqFnGmDVi2BvU+5Xt1nr+davDedQ==}
     engines: {node: '>=22.22.2'}
     hasBin: true
 
@@ -1182,7 +1182,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@npmcli/arborist@9.8.0':
+  '@npmcli/arborist@9.9.0':
     dependencies:
       '@gar/promise-retry': 1.0.3
       '@isaacs/string-locale-compare': 1.1.0
@@ -1331,7 +1331,7 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@webdeveric/utils@0.79.0': {}
+  '@webdeveric/utils@0.81.0': {}
 
   abbrev@4.0.0: {}
 
@@ -1363,7 +1363,7 @@ snapshots:
       read-cmd-shim: 6.0.0
       write-file-atomic: 7.0.1
 
-  brace-expansion@5.0.6:
+  brace-expansion@5.0.7:
     dependencies:
       balanced-match: 4.0.4
 
@@ -1381,7 +1381,7 @@ snapshots:
       minipass-collect: 2.0.1
       minipass-flush: 1.0.7
       minipass-pipeline: 1.2.4
-      p-map: 7.0.4
+      p-map: 7.0.5
       ssri: 13.0.1
 
   chardet@2.2.0: {}
@@ -1439,9 +1439,9 @@ snapshots:
     dependencies:
       reusify: 1.1.0
 
-  fdir@6.5.0(picomatch@4.0.4):
+  fdir@6.5.0(picomatch@4.0.5):
     optionalDependencies:
-      picomatch: 4.0.4
+      picomatch: 4.0.5
 
   fill-range@7.1.1:
     dependencies:
@@ -1604,7 +1604,7 @@ snapshots:
 
   minimatch@10.2.5:
     dependencies:
-      brace-expansion: 5.0.6
+      brace-expansion: 5.0.7
 
   minipass-collect@2.0.1:
     dependencies:
@@ -1658,7 +1658,7 @@ snapshots:
       nopt: 9.0.0
       proc-log: 6.1.0
       semver: 7.8.5
-      tar: 7.5.17
+      tar: 7.5.19
       tinyglobby: 0.2.17
       undici: 6.27.0
       which: 6.0.1
@@ -1731,7 +1731,7 @@ snapshots:
 
   p-map@2.1.0: {}
 
-  p-map@7.0.4: {}
+  p-map@7.0.5: {}
 
   p-try@2.2.0: {}
 
@@ -1757,7 +1757,7 @@ snapshots:
       proc-log: 6.1.0
       sigstore: 4.1.1
       ssri: 13.0.1
-      tar: 7.5.17
+      tar: 7.5.19
     transitivePeerDependencies:
       - supports-color
 
@@ -1782,7 +1782,7 @@ snapshots:
 
   picomatch@2.3.2: {}
 
-  picomatch@4.0.4: {}
+  picomatch@4.0.5: {}
 
   pify@4.0.1: {}
 
@@ -1890,7 +1890,7 @@ snapshots:
 
   strip-bom@3.0.0: {}
 
-  tar@7.5.17:
+  tar@7.5.19:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
@@ -1902,8 +1902,8 @@ snapshots:
 
   tinyglobby@0.2.17:
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
+      fdir: 6.5.0(picomatch@4.0.5)
+      picomatch: 4.0.5
 
   to-regex-range@5.0.1:
     dependencies:
@@ -1929,10 +1929,10 @@ snapshots:
 
   validate-npm-package-name@7.0.2: {}
 
-  validate-package-exports@1.1.0:
+  validate-package-exports@1.2.0:
     dependencies:
-      '@npmcli/arborist': 9.8.0
-      '@webdeveric/utils': 0.79.0
+      '@npmcli/arborist': 9.9.0
+      '@webdeveric/utils': 0.81.0
       npm-packlist: 11.3.0
     transitivePeerDependencies:
       - supports-color
