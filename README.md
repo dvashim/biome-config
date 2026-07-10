@@ -48,7 +48,7 @@ or pnpm:
 pnpm add -D @dvashim/biome-config @biomejs/biome
 ```
 
-> **Requirements:** Biome **2.5.1+** (the version these presets target) and Node.js **>= 24**.
+> **Requirements:** Biome **2.5.3+** (the version these presets target) and Node.js **>= 24**.
 
 ## Configurations
 
@@ -85,7 +85,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.5.1/schema.json`
+`https://biomejs.dev/schemas/2.5.3/schema.json`
 
 ### Formatter
 
@@ -266,13 +266,13 @@ Same as React balanced, but **without nursery (experimental) rules**. All relaxa
 
 ### What version of Biome and Node do I need?
 
-These presets are built and tested against **Biome 2.5.1** — the version their `$schema` is pinned to (see [Defaults → Schema](#schema)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
+These presets are built and tested against **Biome 2.5.3** — the version their `$schema` is pinned to (see [Defaults → Schema](#schema)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
 
 ```bash
-pnpm add -D @biomejs/biome@^2.5.1
+pnpm add -D @biomejs/biome@^2.5.3
 ```
 
-The `$schema` in the examples uses `.../schemas/latest/schema.json` for convenience; pin it to `.../schemas/2.5.1/schema.json` to match the presets exactly and silence editor warnings about unknown fields.
+The `$schema` in the examples uses `.../schemas/latest/schema.json` for convenience; pin it to `.../schemas/2.5.3/schema.json` to match the presets exactly and silence editor warnings about unknown fields.
 
 ### How do I override a rule from the preset?
 
