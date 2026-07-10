@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.10.2
+
+### Patch Changes
+
+- [#163](https://github.com/dvashim/biome-config/pull/163) [`77d0663`](https://github.com/dvashim/biome-config/commit/77d0663f5b37232db7a57a1b222185a21367ee64) - Update the presets to target Biome 2.5.3: bump the `$schema` URL in all six dist configs (2.5.1 → 2.5.3) and the documented version requirement in the README. No rule changes — 2.5.2 and 2.5.3 are bug-fix releases; the only new rule (`noSvelteUnnecessaryStateWrap`, nursery) is Svelte-specific and out of scope for these presets.
+
 ## 1.10.1
 
 ### Patch Changes
