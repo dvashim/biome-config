@@ -8,7 +8,7 @@ Shared Biome configuration presets published as `@dvashim/biome-config` on npm. 
 
 ## Commands
 
-- **Check all (format + exports + stable sync):** `pnpm run check`
+- **Check all (format + exports + stable sync + types):** `pnpm run check`
 - **Check formatting only:** `pnpm run check:format`
 - **Fix formatting:** `biome format --write`
 - **Fix formatting + key order (applies the `useSortedKeys` assist):** `biome check --write`
@@ -16,7 +16,7 @@ Shared Biome configuration presets published as `@dvashim/biome-config` on npm. 
 - **Regenerate `-stable` variants from their parents:** `pnpm run sync-stable`
 - **Create a changeset:** `pnpm changeset`
 
-There is no build step or test suite. The `dist/` JSON files are checked into the repo directly. CI runs `pnpm run check` on all PR branches targeting `main`.
+There is no build step or test suite. The `dist/` JSON files are checked into the repo directly. `scripts/sync-stable.ts` runs directly on Node via native type stripping (engines require Node ≥24) and is type-checked by `check:types` (`tsc --noEmit`). CI runs `pnpm run check` on all PR branches targeting `main`.
 
 ## Architecture
 
@@ -39,8 +39,8 @@ All six configs share identical formatter/VCS/files/overrides settings. They dif
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
 - **react-strict** — ~250 explicit rule configurations across all categories. Unlike `react-recommended`, strict/balanced set **no** `domains` key; React / Next.js / React Native rules are enabled by listing them individually.
 - **react-balanced** — Same rules as strict but with targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.).
-- **react-strict-stable** — Same as react-strict but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.mjs`; do not edit by hand.
-- **react-balanced-stable** — Same as react-balanced but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.mjs`; do not edit by hand.
+- **react-strict-stable** — Same as react-strict but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.ts`; do not edit by hand.
+- **react-balanced-stable** — Same as react-balanced but without nursery (experimental) rules. Auto-derived by `scripts/sync-stable.ts`; do not edit by hand.
 
 ### Rule-list design
 

@@ -60,7 +60,7 @@ The presets SHALL NOT enumerate GraphQL language rules, nor rules whose only app
 
 ### Requirement: Stable variants exclude nursery rules
 
-The `react-strict-stable` and `react-balanced-stable` presets SHALL be mechanically derived from their parents with all nursery rules removed, via `scripts/sync-stable.mjs`, and SHALL NOT be edited by hand.
+The `react-strict-stable` and `react-balanced-stable` presets SHALL be mechanically derived from their parents with all nursery rules removed, via `scripts/sync-stable.ts`, and SHALL NOT be edited by hand.
 
 #### Scenario: Stable variants stay in sync
 

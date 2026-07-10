@@ -10,23 +10,23 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const PAIRS = [
   ['dist/biome.react-strict.json', 'dist/biome.react-strict-stable.json'],
   ['dist/biome.react-balanced.json', 'dist/biome.react-balanced-stable.json'],
-]
+] as const
 
 const execFileAsync = promisify(execFile)
 
-function biomeFormat(text, virtualPath) {
+function biomeFormat(text: string, virtualPath: string): Promise<string> {
   const promise = execFileAsync(
     'pnpm',
     ['exec', 'biome', 'format', `--stdin-file-path=${virtualPath}`],
     { cwd: root }
   )
-  promise.child.stdin.end(text)
+  promise.child.stdin?.end(text)
   return promise.then(({ stdout }) => stdout)
 }
 
-function addSectionBreaks(text) {
+function addSectionBreaks(text: string): string {
   const lines = text.split('\n')
-  const out = []
+  const out: string[] = []
   for (const line of lines) {
     if (
       /^ {2}"[^"]+":/.test(line)
@@ -41,8 +41,12 @@ function addSectionBreaks(text) {
   return out.join('\n')
 }
 
-async function deriveStable(srcAbs, destAbs) {
-  const obj = JSON.parse(await readFile(srcAbs, 'utf8'))
+type BiomeConfig = {
+  linter?: { rules?: { nursery?: unknown } }
+}
+
+async function deriveStable(srcAbs: string, destAbs: string): Promise<string> {
+  const obj = JSON.parse(await readFile(srcAbs, 'utf8')) as BiomeConfig
   delete obj.linter?.rules?.nursery
   const naive = `${JSON.stringify(obj, null, 2)}\n`
   const formatted = await biomeFormat(naive, relative(root, destAbs))

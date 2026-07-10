@@ -1,0 +1,14 @@
+{
+  "include": ["scripts"],
+  "compilerOptions": {
+    "erasableSyntaxOnly": true,
+    "lib": ["esnext"],
+    "module": "nodenext",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext",
+    "types": ["node"],
+    "verbatimModuleSyntax": true
+  }
+}
