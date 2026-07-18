@@ -1,5 +1,11 @@
 # @dvashim/biome-config
 
+## 1.10.3
+
+### Patch Changes
+
+- [#169](https://github.com/dvashim/biome-config/pull/169) [`ece8655`](https://github.com/dvashim/biome-config/commit/ece86555f1b0276137a4a12dacfc93dec8e834a0) - Update the presets to target Biome 2.5.4: bump the `$schema` URL in all six dist configs (and `biome.json`) and the documented version in the README (2.5.3 → 2.5.4). No rule changes — 2.5.4 is a bug-fix/formatter patch that adds no new lint rules and renames, graduates, or removes none. Its rule-adjacent fixes touch rules the presets already cover (`noLabelWithoutControl`, `noCommentText`) or enhance an already-enabled one (`useSortedClasses`), so the strict/balanced rule lists and the `-stable` variants are unchanged.
+
 ## 1.10.2
 
 ### Patch Changes
