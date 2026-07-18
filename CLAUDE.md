@@ -8,11 +8,11 @@ Shared Biome configuration presets published as `@dvashim/biome-config` on npm. 
 
 ## Commands
 
-- **Check all (format + exports + stable sync + types):** `pnpm run check`
+- **Check all (format + publint + stable sync + types):** `pnpm run check`
 - **Check formatting only:** `pnpm run check:format`
 - **Fix formatting:** `biome format --write`
 - **Fix formatting + key order (applies the `useSortedKeys` assist):** `biome check --write`
-- **Validate package exports:** `pnpm run check:exports`
+- **Lint packaging correctness (publint):** `pnpm run check:publint`
 - **Regenerate `-stable` variants from their parents:** `pnpm run sync-stable`
 - **Create a changeset:** `pnpm changeset`
 
