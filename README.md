@@ -48,7 +48,7 @@ or pnpm:
 pnpm add -D @dvashim/biome-config @biomejs/biome
 ```
 
-> **Requirements:** Biome **2.5.4+** (the version these presets target) and Node.js **>= 24**.
+> **Requirements:** Biome **2.5.5+** (the version these presets target) and Node.js **>= 24**.
 
 ## Configurations
 
@@ -85,7 +85,7 @@ All configurations share the same base defaults.
 
 ### Schema
 
-`https://biomejs.dev/schemas/2.5.4/schema.json`
+`https://biomejs.dev/schemas/2.5.5/schema.json`
 
 ### Formatter
 
@@ -187,8 +187,9 @@ The most opinionated configuration. Enables all recommended rules plus **~250 op
 
 - **correctness** (25 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`, `noChildrenProp`, `noRenderReturnValue`), React Hooks correctness (`useExhaustiveDependencies`, `useHookAtTopLevel`, `useJsxKeyInIterable`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks. Also flags duplicate JSX attributes (`noDuplicateAttributes`), duplicate enum member names (`noDuplicateEnumValueNames`), unused `new` expressions (`noUnusedInstantiation`), restricted imports/elements (`noPrivateImports`, `noRestrictedElements`), and Next.js issues (`noNextAsyncClientComponent`, `useInlineScriptId`, `noBeforeInteractiveScriptOutsideDocument`).
 
-- **nursery** (71 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (72 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noMisusedPromises`
+  - **Equality:** `noNegationInEqualityCheck` (flags `!foo === bar`, which precedence parses as `(!foo) === bar` — almost always meant as `foo !== bar`)
   - **Complexity:** `noExcessiveNestedCallbacks`
   - **Promises:** `noFloatingPromises`, `useAwaitThenable`
   - **TypeScript:** `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`, `useReduceTypeParameter`
@@ -266,13 +267,13 @@ Same as React balanced, but **without nursery (experimental) rules**. All relaxa
 
 ### What version of Biome and Node do I need?
 
-These presets are built and tested against **Biome 2.5.4** — the version their `$schema` is pinned to (see [Defaults → Schema](#schema)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
+These presets are built and tested against **Biome 2.5.5** — the version their `$schema` is pinned to (see [Defaults → Schema](#schema)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
 
 ```bash
-pnpm add -D @biomejs/biome@^2.5.4
+pnpm add -D @biomejs/biome@^2.5.5
 ```
 
-The `$schema` in the examples uses `.../schemas/latest/schema.json` for convenience; pin it to `.../schemas/2.5.4/schema.json` to match the presets exactly and silence editor warnings about unknown fields.
+The `$schema` in the examples uses `.../schemas/latest/schema.json` for convenience; pin it to `.../schemas/2.5.5/schema.json` to match the presets exactly and silence editor warnings about unknown fields.
 
 ### How do I override a rule from the preset?
 
