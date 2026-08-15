@@ -9,4 +9,11 @@ Bump Biome from 2.5.7 to 2.5.8. Update the `$schema` URL across all six dist con
 
 Biome 2.5.8 also adds `noSvelteLegacyConst`, which is deliberately omitted — its only domain is `svelte`, and the presets exclude rules exclusive to non-React frameworks. These are the only rules 2.5.8 adds; none were renamed, graduated out of nursery, or removed, and the release introduces no new formatter, assist, or `files` options, and no new option on any rule the presets already list.
 
+Two upstream behavior changes come with Biome 2.5.8 itself and are inherited rather than suppressed, so expect them when you upgrade even though no preset rule caused them:
+
+- **HTML `style` attribute values are now parsed as CSS**, and every CSS lint rule applies inside them. These presets enable CSS rules and turn on full HTML support, so projects with HTML files may see new diagnostics inside `style="..."`.
+- **`useSortedClasses` orders variants under `sort_v4`.** It is an assist, so `biome check --write` can reorder Tailwind classes differently than on 2.5.7 — a one-time diff.
+
+Three fixes make existing rules report less, and need nothing from you: `useAwait` no longer reports async functions containing an `await using`; `noUselessUndefined` no longer reports `return undefined` when the function has a non-`undefined` return type annotation; `noUndeclaredVariables` no longer reports Vue template globals.
+
 One behavior note specific to `useReactCompiler`: unlike every other framework rule these presets enable by name, it re-checks for its gating dependency at runtime. With `react` absent from your `package.json` it reports nothing and costs nothing, so `react-strict` consumers who do not use React are unaffected by it. On React sources it added roughly 16% to lint time on a 60-file benchmark.

@@ -64,9 +64,20 @@ lagging and the target advances.
   React fixture went 99 ms → 115 ms (+16%), while a 60-file non-React fixture went
   91 ms → 94 ms, within noise, with zero diagnostics.
 - **Rule audit against 2.5.8 — three additions, nothing else.** A per-category
-  rule-key diff of the 2.5.7 and 2.5.8 JSON schemas (522 → 525 rules) shows the
-  three additions above, all under `nursery`, and **no** rule renamed, graduated
-  out of nursery, or removed.
+  rule-key diff of the 2.5.7 and 2.5.8 JSON schemas (**514 → 517** rules) shows
+  the three additions above, all under `nursery`, and **no** rule renamed,
+  graduated out of nursery, or removed. A full *recursive* diff of the two schema
+  documents produced 13 structural differences, every one attributable to those
+  three rules and none to anything else — so nothing changed in the assist
+  `Source` actions, formatter, VCS, `files`, `javascript`, `json`, or `html`
+  blocks either. (Counts here exclude each category's non-rule `preset` key; the
+  per-category one-liner in `CLAUDE.md` includes it and therefore runs 8 high,
+  the same artifact the 2.5.7 pass recorded.)
+- **Coverage audit — no in-scope rule is missing.** Every 2.5.8 rule absent from
+  `react-strict` was classified: **205** are recommended with no domain and so are
+  already active through `recommended: true`; **45** belong to framework-only
+  domains (vue 33, qwik 6, svelte 3, solid 2, solid+qwik 1); **7** are GraphQL-only.
+  All three groups are omitted by an existing requirement, leaving **zero** gaps.
 - **Configuration-option audit — no new option on any listed rule.** The only new
   schema definitions are those belonging to the three new rules; no shared
   configuration definition changed (no new formatter, assist, `files`,
@@ -78,6 +89,23 @@ lagging and the target advances.
   report React-specific diagnostics in non-React code". `infer` matches the
   presets' intent, so the entry stays a bare severity string with no `options`
   block, per the standing convention.
+- **Behavior-change audit — inherited, not masked.** A schema diff cannot see a
+  change to what an existing rule reports, so the 2.5.8 release notes were read
+  separately. Two entries change what consumers see without adding any rule or
+  option, and both are inherited rather than suppressed:
+  - **HTML `style` attributes are now parsed as CSS**, and every CSS lint rule
+    applies inside them. The presets enable CSS rules *and* set
+    `html.experimentalFullSupportEnabled`, so consumers with HTML files can get
+    new diagnostics inside `style="…"` that 2.5.7 never produced.
+  - **`useSortedClasses` now orders variants under `sort_v4`.** It is an assist
+    the presets list, so `biome check --write` can reorder Tailwind classes
+    differently than on 2.5.7, producing one-time diffs.
+
+  Three further changes make existing rules report **less** and need no action:
+  `useAwait` no longer flags async functions containing `await using`;
+  `noUselessUndefined` no longer flags `return undefined` under a non-`undefined`
+  return type; `noUndeclaredVariables` no longer flags Vue template globals.
+  `noImportCycles` and `noMisusedPromises` gained performance improvements only.
 - **Regenerate the `-stable` variants.** Both additions are nursery, so
   `pnpm sync-stable` strips them; the `-stable` rule lists stay at 182 rules and
   change only in their `$schema` line. The balanced relaxation likewise does not
@@ -126,7 +154,10 @@ lagging and the target advances.
   additionally pay a React Compiler pass, measured at +16% on a 60-file fixture,
   while those without React see neither its diagnostics nor its cost.
   `react-balanced` consumers gain one, with `useReactCompiler` off. `-stable`,
-  `recommended`, and `react-recommended` consumers see no rule change.
+  `recommended`, and `react-recommended` consumers see no rule change — but every
+  preset inherits 2.5.8's two upstream behavior changes: CSS rules now apply
+  inside HTML `style` attributes, and `useSortedClasses` orders variants
+  differently. Those follow from upgrading Biome, not from this rule-list change.
 - **Root config**: `biome.json` `$schema` (the repo dogfoods the `recommended`
   preset, which carries no nursery rules, so its own checks are unaffected).
 - **Specs**: `linter-rule-coverage` — one requirement added. `dev-tooling-currency`
