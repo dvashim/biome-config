@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.7/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.8/schema.json",
   "assist": {
     "actions": {
       "recommended": true,
@@ -128,6 +128,7 @@
         "noIdenticalTestTitle": "warn",
         "noImpliedEval": "warn",
         "noInlineStyles": "warn",
+        "noInvalidPropertyInitValue": "warn",
         "noJsRestrictedProperties": "warn",
         "noJsxLeakedDollar": "warn",
         "noJsxNamespace": "warn",
@@ -178,6 +179,7 @@
         "useNullishCoalescing": "warn",
         "usePlaywrightValidDescribeCallback": "warn",
         "useReactAsyncServerFunction": "warn",
+        "useReactCompiler": "off",
         "useReactFunctionComponentDefinition": "warn",
         "useReactNativePlatformComponents": "warn",
         "useReduceTypeParameter": "warn",
