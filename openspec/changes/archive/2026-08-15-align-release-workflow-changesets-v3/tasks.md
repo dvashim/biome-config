@@ -28,4 +28,4 @@
 - [x] 5.1 Run `pnpm run check` and confirm it passes
 - [x] 5.2 Confirm no file under `dist/` and no part of `README.md` changed, so the no-changeset sizing decision holds
 - [x] 5.3 Open a PR to `main` and confirm the `Check` workflow passes
-- [ ] 5.4 After the change lands and the next release runs, confirm the release produced an npm publish, a `v<version>` git tag, and a GitHub release — the observable proof the v1.9.0 breakage is gone
+- [x] 5.4 After the change lands and the next release runs, confirm the release produced an npm publish, a `v<version>` git tag, and a GitHub release — the observable proof the v1.9.0 breakage is gone
