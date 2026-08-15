@@ -39,4 +39,4 @@
 - [x] 6.1 Run `pnpm run check` and confirm every check passes, including `check:sync-stable`
 - [x] 6.2 Confirm each rule the README names exists in `dist/biome.react-strict.json` under the category the README claims
 - [x] 6.3 Add a `minor` changeset naming both added rules and the 2.5.8 target
-- [ ] 6.4 Open a PR to `main` and confirm the `Check` workflow passes
+- [x] 6.4 Open a PR to `main` and confirm the `Check` workflow passes
