@@ -48,4 +48,4 @@
 - [x] 7.2 Confirm each rule the README names exists in `dist/biome.react-strict.json` under the category the README claims
 - [x] 7.3 Add a `minor` changeset naming the four added rules, the 2.5.9 target, **and** the HTML formatter output changes that reach every preset including the ones whose rule lists do not move
 - [x] 7.4 Commit the already-uncommitted dev-dependency bump (`@biomejs/biome`, `@changesets/cli`, `publint`, pnpm `packageManager`) as part of this change
-- [ ] 7.5 Open a PR to `main` and confirm the `Check` workflow passes
+- [x] 7.5 Open a PR to `main` and confirm the `Check` workflow passes
