@@ -42,8 +42,8 @@ All six configs share identical `$schema` / `assist` / `formatter` / `html` / `j
 
 - **recommended** — Only Biome's built-in recommended rules. No domain-specific settings. Intentionally omits a `files` section so consumers control their own includes/excludes.
 - **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
-- **react-strict** — 254 explicit rule entries across 8 categories (72 of them nursery). Unlike `react-recommended`, strict/balanced set **no** `domains` key; React / Next.js / React Native rules are enabled by listing them individually.
-- **react-balanced** — Same rule *set* as strict (also 254) with ~15 targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.). See the relaxation table in `README.md`.
+- **react-strict** — 264 explicit rule entries across 8 categories (82 of them nursery). Unlike `react-recommended`, strict/balanced set **no** `domains` key; React / Next.js / React Native rules are enabled by listing them individually.
+- **react-balanced** — Same rule *set* as strict (also 264) with 18 targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.). See the relaxation table in `README.md`.
 - **react-strict-stable** / **react-balanced-stable** — Same as their parents but without nursery (experimental) rules (182 entries each). Auto-derived by `scripts/sync-stable.ts`; **do not edit by hand.**
 
 ### Rule-list design
