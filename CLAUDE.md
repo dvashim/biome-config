@@ -4,95 +4,89 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Shared Biome configuration presets published as `@dvashim/biome-config` on npm. The package distributes pre-built JSON config files (in `dist/`) that consumers extend in their `biome.json`.
+Shared Biome configuration presets published as `@dvashim/biome-config` on npm. The package distributes pre-built JSON config files (in `dist/`) that consumers extend from their own `biome.json`.
 
-Despite the name, `dist/` is **source** — the JSON files are checked into the repo and published as-is. There is no build step and no test suite.
+Despite the name, `dist/` is **source** — the JSON files are checked in and published as-is. There is no build step and no test suite; the only executable code is `scripts/sync-stable.ts`.
 
 ## Commands
 
-- **Check all (format + publint + stable sync + types):** `pnpm run check` (runs every `check:*` script via `pnpm run "/^check:.*/"`)
-- **Check formatting only:** `pnpm run check:format`
-- **Fix formatting:** `biome format --write`
-- **Fix formatting + key order (applies the `useSortedKeys` assist):** `biome check --write`
-- **Lint packaging correctness (publint):** `pnpm run check:publint`
-- **Check `-stable` drift only:** `pnpm run check:sync-stable`
-- **Regenerate `-stable` variants from their parents:** `pnpm run sync-stable`
+- **Check everything (format + publint + stable sync + types):** `pnpm run check` (fans out to every `check:*` script via `pnpm run "/^check:.*/"`)
+- **Formatting only:** `pnpm run check:format` — fix with `biome format --write`
+- **Fix formatting *and* key order (applies the `useSortedKeys` assist):** `biome check --write`
+- **Packaging correctness:** `pnpm run check:publint`
+- **`-stable` drift only:** `pnpm run check:sync-stable`
+- **Regenerate `-stable` variants from their parents:** `pnpm sync-stable`
 - **Create a changeset:** `pnpm changeset`
-- **Per-category rule counts (for keeping README in sync):**
+- **Per-category rule counts (for keeping the README in sync):**
   `node -e "const r=require('./dist/biome.react-strict.json').linter.rules;for(const[k,v]of Object.entries(r))if(typeof v==='object')console.log(k,Object.keys(v).length)"`
+- **Inspect a rule** (category, default severity, recommended status, domains, version added): `pnpm exec biome explain <rule>`
 
-`scripts/sync-stable.ts` runs directly on Node via native type stripping (engines require Node ≥24) and is type-checked by `check:types` (`tsc --noEmit`). CI runs `pnpm run check` on all PRs targeting `main`, and again on push to `main` before release.
+`scripts/sync-stable.ts` runs directly on Node via native type stripping (`engines` require Node ≥ 24) and is type-checked by `check:types` (`tsc --noEmit`). CI runs `pnpm run check` on every PR to `main`, and again on push to `main` before release.
+
+**`pnpm run check` does not verify key order** — `check:format` runs `biome format`, which formats but never applies assists. Run `biome check --write` (not just `biome format --write`) after editing any `dist/*.json`.
 
 ## Architecture
 
-The package exports six Biome config presets via `dist/`:
+Six presets, all exported from `dist/`:
 
 | Export path | File |
 |---|---|
 | `.` / `./recommended` | `dist/biome.recommended.json` |
 | `./react-recommended` / `./react/recommended` | `dist/biome.react-recommended.json` |
 | `./react-balanced` / `./react/balanced` | `dist/biome.react-balanced.json` |
+| `./react-balanced-stable` / `./react/balanced-stable` | `dist/biome.react-balanced-stable.json` |
 | `./react-strict` / `./react/strict` | `dist/biome.react-strict.json` |
 | `./react-strict-stable` / `./react/strict-stable` | `dist/biome.react-strict-stable.json` |
-| `./react-balanced-stable` / `./react/balanced-stable` | `dist/biome.react-balanced-stable.json` |
 
 ### Config hierarchy
 
-All six configs share identical `$schema` / `assist` / `formatter` / `html` / `javascript` / `json` / `overrides` / `vcs` blocks — a change to any of those must be applied to all six. They differ only in `files` and in linter rules:
+All six share byte-identical `$schema` / `assist` / `formatter` / `html` / `javascript` / `json` / `overrides` / `vcs` blocks — **a change to any of those must be applied to all six.** They differ only in `files` and in linter rules:
 
-- **recommended** — Only Biome's built-in recommended rules. No domain-specific settings. Intentionally omits a `files` section so consumers control their own includes/excludes.
-- **react-recommended** — Same as recommended + `"domains": { "react": "recommended" }`. Adds `"files": { "includes": ["**", "!!**/dist"] }` (shared by all react configs).
-- **react-strict** — 264 explicit rule entries across 8 categories (82 of them nursery). Unlike `react-recommended`, strict/balanced set **no** `domains` key; React / Next.js / React Native rules are enabled by listing them individually.
-- **react-balanced** — Same rule *set* as strict (also 264) with 18 targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, etc.). See the relaxation table in `README.md`.
-- **react-strict-stable** / **react-balanced-stable** — Same as their parents but without nursery (experimental) rules (182 entries each). Auto-derived by `scripts/sync-stable.ts`; **do not edit by hand.**
+- **recommended** — Biome's built-in recommended rules only, no domains. Deliberately omits `files` so consumers control their own includes/excludes.
+- **react-recommended** — recommended + `"domains": { "react": "recommended" }`, plus the `"files": { "includes": ["**", "!!**/dist"] }` block shared by all react presets.
+- **react-strict** — 264 explicit rule entries across 8 categories (82 of them nursery). Sets **no** `domains` key; React / Next.js / React Native / Playwright / Drizzle / Tailwind rules are enabled by listing each rule individually.
+- **react-balanced** — same rule *set* as strict (264) with 18 targeted relaxations for common patterns (barrel files, default exports, namespace imports, magic numbers, type assertions…). The full table lives in `README.md`.
+- **react-strict-stable** / **react-balanced-stable** — parents minus nursery (182 entries each). Generated by `scripts/sync-stable.ts`; **never hand-edit.** Only 15 of balanced's 18 relaxations survive here — the other three (`noTailwindArbitraryValue`, `noUnsafeTypeAssertion`, `useReactCompiler`) live in nursery and drop with the category.
 
 ### Rule-list design
 
-`react-strict` / `react-balanced` do **not** set `linter.rules.recommended` (so Biome's implicit `recommended: true` baseline applies) and set no `domains` key. Their explicit lists therefore hold only **opt-in** rules: non-recommended rules they enable, plus deliberate overrides of recommended rules (a non-default severity, options, or `"off"` to disable one). A recommended **stable** rule listed at its default severity is redundant and should not appear. **Nursery rules are always opt-in** — `recommended: true` never enables nursery, which is also why the `-stable` variants (nursery stripped) drop to Biome's recommended baseline plus the stable opt-ins. Use `biome explain <rule>` for a rule's diagnostic category, default severity, recommended status, and domains.
+`react-strict` / `react-balanced` do **not** set `linter.rules.recommended` (Biome's implicit `recommended: true` baseline applies) and set no `domains`. Their explicit lists therefore hold only **opt-in** entries: non-recommended rules they enable, plus deliberate overrides of recommended rules (non-default severity, options, or `"off"`). A recommended **stable** rule at its default severity is redundant and must not appear. **Nursery rules are always opt-in** — `recommended: true` never enables nursery, which is why stripping it drops the `-stable` variants back to the recommended baseline plus the stable opt-ins.
 
-Scope of the explicit lists (formalized in `openspec/specs/linter-rule-coverage/spec.md`):
+Scope (formalized in `openspec/specs/linter-rule-coverage/spec.md`):
 
 - **In scope** — every non-recommended rule targeting `js`, `ts`, `css`, `html`, `json`, or `jsonc`, or belonging to the React, Next.js, React Native, `test`, or `project` domains.
 - **Out of scope** — GraphQL-only rules, and rules whose only domain is `vue`, `solid`, `qwik`, `svelte`, or `astro`.
-- **Severity convention** — new rules land at `warn` in `react-strict`; `react-balanced` relaxes purely stylistic, high-noise, or broadly-firing framework rules to `info` or `off`. Because framework rules are listed individually rather than domain-gated, they fire outside their framework (e.g. `noImgElement` on any `<img>`) — that is why balanced relaxes them.
+- **Severity convention** — new rules land at `warn` in `react-strict`; `react-balanced` relaxes purely stylistic, high-noise, or broadly-firing rules to `info` or `off`.
+- **Framework rules fire everywhere.** Because they are listed individually rather than domain-gated, most defeat Biome's dependency gate and reach every consumer (e.g. `noImgElement` on any `<img>`). That gating behavior is established **empirically** — run the rule against a fixture with and without the gating dependency — not inferred from sibling rules; `useReactCompiler` is the known exception that still self-gates. Defeating the gate does not automatically warrant a balanced relaxation: a rule whose trigger pattern is itself framework-specific (`useTailwindShorthandClasses`) matches nothing in projects that lack the framework.
+- **Configuration-required rules** (the `noRestricted*` family and anything inert until the consumer supplies entries) are listed at a bare severity string with **no** `options` block, at the same severity in both presets.
 
 ### scripts/sync-stable.ts
 
-Derives each `-stable` file from its parent: parse JSON → `delete linter.rules.nursery` → re-serialize → pipe through `biome format --stdin-file-path=<dest>` → re-insert a blank line before each top-level key. Those blank lines between top-level blocks are load-bearing for the byte-exact comparison, so `-stable` files must be regenerated, never hand-edited or hand-reformatted. `--check` compares instead of writing and exits 1 on drift.
+Derives each `-stable` file from its parent: parse JSON → `delete linter.rules.nursery` → re-serialize → pipe through `biome format --stdin-file-path=<dest>` → insert a blank line before each top-level key. Those blank lines are load-bearing for the byte-exact comparison, so `-stable` files must be regenerated, never hand-edited or hand-reformatted. (The hand-maintained `react-strict` / `react-balanced` parents carry no such blank lines; `recommended` and `react-recommended` do.) `--check` compares instead of writing and exits 1 on drift.
 
 ### Root biome.json
 
-The repo's own `biome.json` extends `dist/biome.recommended.json` (with `"root": true`) to dogfood the config — editing the recommended preset changes how this repo checks itself. Notable settings:
-
-- `useSortedKeys` assist with `groupByNesting` for maintaining key order in the dist JSON files.
-- `overrides` for expanded JSON formatting on `.claude/settings.local.json` (repo-specific; `package.json` override is in the dist configs).
-
-### Shared overrides (in dist configs)
-
-All dist configs include a `package.json` override that:
-
-- Sets `json.formatter.expand` to `"always"` (one entry per line).
-- Disables `assist.actions.source.useSortedKeys` (package.json uses conventional, non-alphabetical key order).
+`biome.json` extends `dist/biome.recommended.json` with `"root": true` to dogfood the config — editing the recommended preset changes how this repo checks itself. It adds the `useSortedKeys` assist with `groupByNesting` (key order in the dist files) and an override expanding `.claude/settings.local.json`. The `package.json` override (expanded formatting, `useSortedKeys` off — package.json uses conventional, non-alphabetical key order) ships inside the dist configs instead.
 
 ## OpenSpec workflow
 
-Non-trivial work is planned as an OpenSpec change (schema: `spec-driven`, CLI `openspec`, config in `openspec/config.yaml`):
+Non-trivial work is planned as an OpenSpec change (schema `spec-driven`, CLI `openspec` v1.9.0, config in `openspec/config.yaml`):
 
-- `openspec/specs/<capability>/spec.md` — the standing requirements. Two capabilities exist: **linter-rule-coverage** (which rules belong in the presets, how upgrades reconcile them, changeset sizing, README sync) and **dev-tooling-currency** (devDependencies / pnpm / OpenSpec CLI track latest stable). Read the relevant spec before changing preset rules or bumping Biome — most conventions below are enforced there.
-- `openspec/changes/<name>/` — an in-flight change (`proposal.md`, `design.md`, `tasks.md`, delta `specs/`), archived to `openspec/changes/archive/<YYYY-MM-DD>-<name>/` when done. Archiving syncs the delta spec into the main spec and moves the directory in one step.
-- Skills/commands: `/opsx:propose`, `/opsx:apply`, `/opsx:archive`, `/opsx:sync`, `/opsx:explore`.
+- `openspec/specs/<capability>/spec.md` — standing requirements. Two capabilities: **linter-rule-coverage** (which rules belong in the presets, how upgrades reconcile them, changeset sizing, README sync) and **dev-tooling-currency** (devDependencies / pnpm / OpenSpec CLI track latest stable; major upgrades must reconcile their integration points, e.g. CI actions pinned to a tool's major). Read the relevant spec before changing preset rules or bumping Biome — most conventions below are enforced there.
+- `openspec/changes/<name>/` — an in-flight change (`proposal.md`, `design.md`, `tasks.md`, delta `specs/`), archived to `openspec/changes/archive/<YYYY-MM-DD>-<name>/` when done. Archiving syncs the delta spec into the main spec and moves the directory in one step. Past passes are the best worked examples of an upgrade.
+- Skills/commands: `/opsx:propose`, `/opsx:apply`, `/opsx:archive`, `/opsx:sync`, `/opsx:explore`, `/opsx:update`.
 
-`.claude/commands/opsx/*.md` and `.claude/skills/openspec-*/SKILL.md` are **generated by the OpenSpec CLI** (`openspec update`) — never hand-edit them. Each skill's `metadata.generatedBy` must match the installed CLI version; drift means they need regenerating, and the regenerated files get committed with the CLI bump.
+`.claude/commands/opsx/*.md` and `.claude/skills/openspec-*/SKILL.md` are **generated by the OpenSpec CLI** (`openspec update`) — never hand-edit them. Each skill's `metadata.generatedBy` must match the installed CLI version; drift means they need regenerating, and the regenerated files are committed with the CLI bump.
 
 ## Slash commands
 
-- `/add-rule` — Add a Biome linter rule to the dist config files. Asks for rule name (required), category (default: `nursery`), and severity (default: `warn`). Handles both inserting new rules and updating existing ones.
+- `/add-rule` — add a Biome linter rule to the dist configs. Asks for rule name (required), category (default `nursery`), and severity (default `warn`); handles both inserting a new rule and re-leveling an existing one.
 
 ## Key conventions
 
-- Config files in `dist/` must have keys sorted (via the `useSortedKeys` assist in `biome.json`). Because of `groupByNesting`, rules with simple string values (e.g. `"warn"`) must appear **before** rules with object values (e.g. `{ "level": "warn", "options": { ... } }`) within the same category — see the tail of `style` in `react-balanced.json` (`noIncrementDecrement`, `useConsistentArrayType`, `useConsistentTypeDefinitions`, `useNamingConvention` follow the string-valued entries). Note: `pnpm check` runs `biome format` and does **not** verify key order; run `biome check --write` (not just `biome format --write`) to actually apply the sort.
-- **Biome version upgrades** require updating the `$schema` URL in all six dist files, `biome.json`, and `README.md`, plus the `@biomejs/biome` devDependency. Also check the Biome changelog for new linter rules and add them to `react-strict` and `react-balanced` (these have explicit rule lists; `recommended` and `react-recommended` use `"recommended": true` and pick up new rules automatically). Diffing the rule keys of the old and new `configuration_schema.json` is the reliable way to find additions. Across a minor/major upgrade, also reconcile rules that **graduated** from `nursery` to a stable category (relocate the entry, preserving each preset's severity — it then starts appearing in the `-stable` variants), were **renamed** (migrate to the new name, preserving severity), or were **removed** (drop them). After editing `react-strict` or `react-balanced`, run `pnpm sync-stable`; `pnpm check` fails on drift via `check:sync-stable`.
-- **README is part of the contract.** Its per-category rule counts must equal what `react-strict` lists, and every rule it names must exist in that preset. Any rule-list change updates the affected counts, highlights, and the balanced relaxation table in the same change.
-- Versioning uses [Changesets](https://github.com/changesets/changesets). Size it by published impact: **minor** when a preset rule list changes (rules added/removed/renamed/re-leveled — consumers' diagnostics change), **patch** when only the `$schema` target advances with no rule-list change, and **no changeset** when nothing in `dist/*.json` or `README.md` changed (dev deps, root `biome.json`, planning artifacts, regenerated tooling assets). The changeset config has `"commit": true`, so `pnpm changeset` auto-commits.
-- Work lands via PR to `main`; Changesets opens the release PR automatically on push to `main`.
-- Package manager is **pnpm**. CI installs with `pnpm ci` — a real pnpm 11 command, not a typo for `npm ci`; do not "fix" it. Both workflows resolve Node from `.node-version`, which holds the major (`24`) rather than an exact version or `lts/*` — patch updates land automatically, and moving to the next LTS line (Node 26 is promoted 2026-10-28) is a deliberate one-line PR. Keep it aligned with the `engines` floor.
+- **Key order.** `dist/*.json` keys are sorted by the `useSortedKeys` assist. Because of `groupByNesting`, rules with string values (`"warn"`) sort **before** rules with object values (`{ "level": …, "options": … }`) within a category — see the tail of `style` in `react-balanced.json`. Apply with `biome check --write`.
+- **Biome version upgrades** touch the `$schema` URL in all six dist files plus `biome.json` and `README.md`, and the `@biomejs/biome` devDependency. Reconciliation compares the version pinned in the `$schema` URLs against the npm `latest` dist-tag — *not* the installed binary, which an automated dep bump can move ahead of the presets. A pass audits four things and records the outcome of each: **new rules** (diff the rule keys of the old and new `configuration_schema.json`); **rules that graduated** out of nursery (relocate, preserving each preset's severity — they then start appearing in the `-stable` variants), were **renamed** (migrate, preserving severity), or were **removed** (drop); **new options on already-listed rules** (add an `options` block only to override an upstream default, never to restate it); and **behavior changes the schema cannot see** (read the release notes — a formatter or parser change can be the bump's largest consumer impact and reaches presets whose rule lists never move). `recommended` and `react-recommended` pick up new rules automatically via `"recommended": true`. After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` — `check:sync-stable` fails the build on drift.
+- **README is part of the contract.** Its per-category rule counts must equal what `react-strict` lists, every rule it names must exist in that preset, and the balanced relaxation table must report both the total (18) and the stable-category subset that reaches `react-balanced-stable` (15). Verify counts with the one-liner above, not by eye.
+- **Changeset sizing** by published impact: **minor** when a preset rule list changes (added/removed/renamed/re-leveled — consumers' diagnostics change), **patch** when only the `$schema` target advances with no rule-list change, and **no changeset** when nothing in `dist/*.json` or `README.md` changed (dev deps, root `biome.json`, planning artifacts, regenerated tooling assets). The changeset config sets `"commit": true`, so `pnpm changeset` auto-commits.
+- **Release flow.** Work lands via PR to `main`; Changesets opens the release PR automatically on push to `main`. Commits follow Conventional Commits (`feat:`, `docs:`, `chore(openspec):`, `build(deps-dev):`).
+- **Package manager is pnpm.** CI installs with `pnpm ci` — a real pnpm 11 command, not a typo for `npm ci`; do not "fix" it. Both workflows resolve Node from `.node-version`, which holds the major (`24`) rather than an exact version or `lts/*`, so patch updates land automatically and moving to the next LTS line is a deliberate one-line PR. Keep it aligned with the `engines` floor.

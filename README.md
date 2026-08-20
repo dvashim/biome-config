@@ -330,7 +330,7 @@ Add a `linter.rules` section in your `biome.json`. Local settings merge with and
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"],
   "linter": {
     "rules": {
@@ -371,7 +371,7 @@ For exclusions that should not affect Git tracking, use negated patterns in `fil
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
   "extends": ["@dvashim/biome-config"],
   "files": {
     "includes": ["**", "!!**/generated", "!!**/coverage"]
@@ -409,7 +409,9 @@ Releases are sized by the effect they have on the diagnostics you receive:
 - **minor** — a preset's rule list changed: a rule was added, removed, renamed, or re-leveled. Expect new or different diagnostics.
 - **patch** — the presets moved to a newer Biome release with no rule-list change, or documentation was corrected.
 
-Because a minor release can surface new warnings, pin the version if your CI treats lint output as a hard failure. The [CHANGELOG](https://github.com/dvashim/biome-config/blob/main/CHANGELOG.md) records the rules each release touched.
+Either size can also carry changes that come from Biome itself rather than from the presets. When a release advances the Biome version the presets target, you inherit that version's formatter output, parser coverage, and rule fixes — in every preset, including `recommended`, `react-recommended`, and the `-stable` variants whose rule lists did not move. Release 1.15.0, for example, changed HTML formatting for all six.
+
+Because a minor release can surface new warnings, pin the version if your CI treats lint output as a hard failure. The [CHANGELOG](https://github.com/dvashim/biome-config/blob/main/CHANGELOG.md) records the rules each release touched and lists what it inherits from Biome under **Inherited from Biome**.
 
 ## Contributing
 
