@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
   "assist": {
     "actions": {
       "recommended": true,
@@ -157,6 +157,7 @@
         "noUndeclaredClasses": "warn",
         "noUnnecessaryTemplateExpression": "warn",
         "noUnsafePlusOperands": "warn",
+        "noUnsafeTypeAssertion": "off",
         "noUntrustedLicenses": "warn",
         "noUnusedClasses": "warn",
         "noUselessTypeConversion": "warn",
@@ -164,6 +165,7 @@
         "useAwaitThenable": "warn",
         "useBaseline": "warn",
         "useConsistentTestIt": "warn",
+        "useControlLabel": "warn",
         "useDisposables": "warn",
         "useDomNodeTextContent": "warn",
         "useDomQuerySelector": "warn",
@@ -176,6 +178,7 @@
         "useIncludes": "warn",
         "useMathMinMax": "warn",
         "useNamedCaptureGroup": "warn",
+        "useNamedLayer": "warn",
         "useNullishCoalescing": "warn",
         "usePlaywrightValidDescribeCallback": "warn",
         "useReactAsyncServerFunction": "warn",
@@ -187,6 +190,7 @@
         "useRegexpTest": "warn",
         "useSortedClasses": "warn",
         "useStringStartsEndsWith": "warn",
+        "useTailwindShorthandClasses": "warn",
         "useTestHooksInOrder": "warn",
         "useTestHooksOnTop": "warn",
         "useThisInClassMethods": "warn",
