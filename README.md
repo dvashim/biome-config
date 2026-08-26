@@ -45,10 +45,10 @@ Shared [Biome](https://biomejs.dev) configuration presets — a base recommended
 
 | Dependency | Version |
 |---|---|
-| [Biome](https://biomejs.dev) | **2.5.9+** — the release the presets target |
+| [Biome](https://biomejs.dev) | **2.5.10+** — the release the presets target |
 | Node.js | **>= 24** — declared in the package's `engines` |
 
-Biome is not bundled, so install a compatible version yourself. The presets pin their `$schema` to `https://biomejs.dev/schemas/2.5.9/schema.json`; using that same URL in your own `biome.json` matches the presets exactly and silences editor warnings about unknown fields.
+Biome is not bundled, so install a compatible version yourself. The presets pin their `$schema` to `https://biomejs.dev/schemas/2.5.10/schema.json`; using that same URL in your own `biome.json` matches the presets exactly and silences editor warnings about unknown fields.
 
 ## Installation
 
@@ -92,7 +92,7 @@ Add a `biome.json` to your project root and extend a preset. The `extends` path 
 ```jsonc
 // biome.json
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
   "extends": ["@dvashim/biome-config"]
 }
 ```
@@ -225,13 +225,13 @@ Same as base recommended, plus enables the **React domain** (`"react": "recommen
 
 ### React strict
 
-The most opinionated configuration. Enables all recommended rules plus **264 optional and nursery rules** across 8 categories. Every non-recommended rule that applies to JavaScript/TypeScript/JSX, CSS, HTML, JSON, or the **React, Next.js, and React Native** domains is explicitly configured. Rules exclusive to GraphQL or other frameworks (Vue, Solid, Qwik, Svelte, Astro) are intentionally omitted.
+The most opinionated configuration. Enables all recommended rules plus **262 optional and nursery rules** across 8 categories. Every non-recommended rule that applies to JavaScript/TypeScript/JSX, CSS, HTML, JSON, or the **React, Next.js, and React Native** domains is explicitly configured. Rules exclusive to GraphQL or other frameworks (Vue, Solid, Qwik, Svelte, Astro) are intentionally omitted.
 
 - **a11y** (8 rules) — Selectively disables noisy rules (`useButtonType`, `useKeyWithClickEvents`, `useSemanticElements`, `noStaticElementInteractions`, `noNoninteractiveElementToInteractiveRole`) and downgrades `useFocusableInteractive` to `info`, while keeping the rest at recommended defaults. Adds `noAmbiguousAnchorText` (promoted from nursery in Biome 2.5.0) and `noNoninteractiveElementInteractions`.
 
 - **complexity** (16 rules) — Monitors cognitive complexity, function length, nested test suites, and logic expressions. Warns on `forEach`, implicit coercions, `void`, and useless patterns. Also prefers `Array#find` (`useArrayFind`) and flags useless returns (`noUselessReturn`), redundant default exports (`noRedundantDefaultExport`), and division-like regexes (`noDivRegex`).
 
-- **correctness** (25 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`, `noChildrenProp`, `noRenderReturnValue`), React Hooks correctness (`useExhaustiveDependencies`, `useHookAtTopLevel`, `useJsxKeyInIterable`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks. Also flags duplicate JSX attributes (`noDuplicateAttributes`), duplicate enum member names (`noDuplicateEnumValueNames`), unused `new` expressions (`noUnusedInstantiation`), restricted imports/elements (`noPrivateImports`, `noRestrictedElements`), and Next.js issues (`noNextAsyncClientComponent`, `useInlineScriptId`, `noBeforeInteractiveScriptOutsideDocument`).
+- **correctness** (24 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`, `noChildrenProp`, `noRenderReturnValue`), React Hooks correctness (`useExhaustiveDependencies`, `useHookAtTopLevel`, `useJsxKeyInIterable`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks. Also flags duplicate JSX attributes (`noDuplicateAttributes`), unused `new` expressions (`noUnusedInstantiation`), restricted imports/elements (`noPrivateImports`, `noRestrictedElements`), and Next.js issues (`noNextAsyncClientComponent`, `useInlineScriptId`, `noBeforeInteractiveScriptOutsideDocument`).
 
 - **nursery** (82 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noMisusedPromises`
@@ -266,13 +266,13 @@ The most opinionated configuration. Enables all recommended rules plus **264 opt
 
 - **style** (76 rules) — Enforces consistent syntax, naming conventions (`strictCase: true`), array shorthand syntax, `type` over `interface`, React function components, readonly class properties, `noDefaultExport`, `noMagicNumbers`, `noJsxLiterals`, and more. Now also includes rules promoted from nursery in Biome 2.5.0, such as `noIncrementDecrement`, `noMultiAssign`, `noMultilineString`, `noTernary`, `useDestructuring`, `useErrorCause`, `useGlobalThis`, and `useSpreadOverApply`. Adds `noHexColors`, `noValueAtRule`, `useNodeAssertStrict`, the configurable `noRestrictedGlobals` / `noRestrictedImports` / `noRestrictedTypes` family, and the Next.js `noHeadElement` rule.
 
-- **suspicious** (42 rules) — Flags `var` (error), `console`, `alert`, bitwise operators, empty blocks, import cycles, evolving types, skipped tests, and deprecated imports. Now also includes rules promoted from nursery in Biome 2.5.0, such as `noShadow`, `noUnnecessaryConditions`, `noForIn`, `noEqualsToNull`, `noLeakedRender`, and `noParametersOnlyUsedInRecursion`. Adds `noArrayIndexKey`, test-quality rules (`noFocusedTests`, `noDuplicateTestHooks`, `noExportsInTest`), `useDeprecatedDate`, `useRequiredScripts`, and Next.js document rules (`noDocumentImportInPage`, `noHeadImportInDocument`).
+- **suspicious** (41 rules) — Flags `var` (error), `console`, `alert`, bitwise operators, empty blocks, import cycles, evolving types, skipped tests, and deprecated imports. Now also includes rules promoted from nursery in Biome 2.5.0, such as `noShadow`, `noUnnecessaryConditions`, `noForIn`, `noEqualsToNull`, `noLeakedRender`, and `noParametersOnlyUsedInRecursion`. Adds `noArrayIndexKey`, test-quality rules (`noFocusedTests`, `noDuplicateTestHooks`, `noExportsInTest`), `useRequiredScripts`, and Next.js document rules (`noDocumentImportInPage`, `noHeadImportInDocument`).
 
 ---
 
 ### React strict-stable
 
-Same as React strict, but **without nursery (experimental) rules** — 182 rules across 7 categories: a11y, complexity, correctness, performance, security, style, and suspicious.
+Same as React strict, but **without nursery (experimental) rules** — 180 rules across 7 categories: a11y, complexity, correctness, performance, security, style, and suspicious.
 
 ---
 
@@ -307,7 +307,7 @@ Same rule set as strict, with **18 targeted relaxations** to reduce false positi
 
 ### React balanced-stable
 
-Same as React balanced, but **without nursery (experimental) rules** — 182 rules, with the 15 stable-category relaxations from the table above still applied (the three nursery relaxations drop out with their category).
+Same as React balanced, but **without nursery (experimental) rules** — 180 rules, with the 15 stable-category relaxations from the table above still applied (the three nursery relaxations drop out with their category).
 
 ## FAQ
 
@@ -318,10 +318,10 @@ Same as React balanced, but **without nursery (experimental) rules** — 182 rul
 
 ### What version of Biome and Node do I need?
 
-These presets are built and tested against **Biome 2.5.9** — the version their `$schema` is pinned to (see [Requirements](#requirements)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
+These presets are built and tested against **Biome 2.5.10** — the version their `$schema` is pinned to (see [Requirements](#requirements)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
 
 ```bash
-pnpm add -D @biomejs/biome@^2.5.9
+pnpm add -D @biomejs/biome@^2.5.10
 ```
 
 ### How do I override a rule from the preset?
@@ -330,7 +330,7 @@ Add a `linter.rules` section in your `biome.json`. Local settings merge with and
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"],
   "linter": {
     "rules": {
@@ -371,7 +371,7 @@ For exclusions that should not affect Git tracking, use negated patterns in `fil
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
   "extends": ["@dvashim/biome-config"],
   "files": {
     "includes": ["**", "!!**/generated", "!!**/coverage"]

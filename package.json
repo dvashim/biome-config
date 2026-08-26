@@ -49,13 +49,16 @@
     "changeset": "changeset",
     "check": "pnpm run \"/^check:.*/\"",
     "check:format": "biome format",
+    "check:presets": "node scripts/check-presets.ts",
     "check:publint": "publint --strict",
+    "check:rule-metadata": "node scripts/sync-rule-metadata.ts --check",
     "check:sync-stable": "node scripts/sync-stable.ts --check",
     "check:types": "tsc --noEmit",
+    "sync-rule-metadata": "node scripts/sync-rule-metadata.ts",
     "sync-stable": "node scripts/sync-stable.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.9",
+    "@biomejs/biome": "^2.5.10",
     "@changesets/changelog-github": "^1.0.0",
     "@changesets/cli": "^3.0.1",
     "@types/node": "^26.2.0",

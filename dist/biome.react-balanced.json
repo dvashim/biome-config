@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
   "assist": {
     "actions": {
       "recommended": true,
@@ -90,7 +90,6 @@
         "noBeforeInteractiveScriptOutsideDocument": "warn",
         "noChildrenProp": "warn",
         "noDuplicateAttributes": "warn",
-        "noDuplicateEnumValueNames": "warn",
         "noGlobalDirnameFilename": "warn",
         "noNestedComponentDefinitions": "warn",
         "noNextAsyncClientComponent": "warn",
@@ -351,7 +350,6 @@
         "noVar": "error",
         "useArraySortCompare": "warn",
         "useAwait": "warn",
-        "useDeprecatedDate": "warn",
         "useErrorMessage": "warn",
         "useGuardForIn": "warn",
         "useNumberToFixedDigitsArgument": "warn",
