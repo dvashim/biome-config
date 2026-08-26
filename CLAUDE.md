@@ -6,22 +6,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Shared Biome configuration presets published as `@dvashim/biome-config` on npm. The package distributes pre-built JSON config files (in `dist/`) that consumers extend from their own `biome.json`.
 
-Despite the name, `dist/` is **source** — the JSON files are checked in and published as-is. There is no build step and no test suite; the only executable code is `scripts/sync-stable.ts`.
+Despite the name, `dist/` is **source** — the JSON files are checked in and published as-is. There is no build step and no unit-test suite; the executable code is the two scripts under `scripts/`, and the presets are verified by the `check:*` scripts rather than by tests.
 
 ## Commands
 
-- **Check everything (format + publint + stable sync + types):** `pnpm run check` (fans out to every `check:*` script via `pnpm run "/^check:.*/"`)
+- **Check everything (format + preset invariants + publint + metadata/stable sync + types):** `pnpm run check` (fans out to every `check:*` script via `pnpm run "/^check:.*/"`)
 - **Formatting only:** `pnpm run check:format` — fix with `biome format --write`
 - **Fix formatting *and* key order (applies the `useSortedKeys` assist):** `biome check --write`
 - **Packaging correctness:** `pnpm run check:publint`
 - **`-stable` drift only:** `pnpm run check:sync-stable`
 - **Regenerate `-stable` variants from their parents:** `pnpm sync-stable`
+- **Preset invariants only** (coverage, category placement, rule existence, redundancy, strict/balanced parity, README inventory, pinned-target consistency): `pnpm run check:presets`
+- **Rule-metadata drift only:** `pnpm run check:rule-metadata`
+- **Regenerate the rule-metadata snapshot:** `pnpm sync-rule-metadata` (add `--biome "pnpm dlx @biomejs/biome@<version>"` when the installed binary is not the version the presets target)
 - **Create a changeset:** `pnpm changeset`
-- **Per-category rule counts (for keeping the README in sync):**
-  `node -e "const r=require('./dist/biome.react-strict.json').linter.rules;for(const[k,v]of Object.entries(r))if(typeof v==='object')console.log(k,Object.keys(v).length)"`
 - **Inspect a rule** (category, default severity, recommended status, domains, version added): `pnpm exec biome explain <rule>`
 
-`scripts/sync-stable.ts` runs directly on Node via native type stripping (`engines` require Node ≥ 24) and is type-checked by `check:types` (`tsc --noEmit`). CI runs `pnpm run check` on every PR to `main`, and again on push to `main` before release.
+Both scripts run directly on Node via native type stripping (`engines` require Node ≥ 24) and are type-checked by `check:types` (`tsc --noEmit`). CI runs `pnpm run check` on every PR to `main`, and again on push to `main` before release — the fan-out picks up new `check:*` scripts with no workflow change.
+
+**The per-category rule counts the README publishes are no longer checked by hand** — `check:presets` compares them against `react-strict` directly, along with every rule the README names and the two relaxation totals. The old `node -e` one-liner is superseded.
 
 **`pnpm run check` does not verify key order** — `check:format` runs `biome format`, which formats but never applies assists. Run `biome check --write` (not just `biome format --write`) after editing any `dist/*.json`.
 
@@ -64,6 +67,62 @@ Scope (formalized in `openspec/specs/linter-rule-coverage/spec.md`):
 
 Derives each `-stable` file from its parent: parse JSON → `delete linter.rules.nursery` → re-serialize → pipe through `biome format --stdin-file-path=<dest>` → insert a blank line before each top-level key. Those blank lines are load-bearing for the byte-exact comparison, so `-stable` files must be regenerated, never hand-edited or hand-reformatted. (The hand-maintained `react-strict` / `react-balanced` parents carry no such blank lines; `recommended` and `react-recommended` do.) `--check` compares instead of writing and exits 1 on drift.
 
+### audit/ — rule metadata and the preset checks
+
+`audit/rule-metadata.json` is a **generated** snapshot of every rule the targeted
+Biome release declares — category, default severity, recommended flag, domains,
+and the languages of its documented examples — produced by
+`scripts/sync-rule-metadata.ts`. **Never hand-edit it.**
+
+It describes the version the presets *target* (their pinned `$schema`), not the
+installed binary. That distinction is deliberate: a Dependabot bump routinely
+moves the installed version ahead of the presets, and keying the checks to the
+installed binary would fail CI for a state the standing requirement calls the
+normal trigger for a version-tracking pass. The sweep therefore refuses to run
+against a mismatched binary, and `--check` **skips** rather than failing when the
+two differ — so snapshot drift is only verified once a pass brings them level.
+Regenerating during a pass is one step: `pnpm sync-rule-metadata`.
+
+Biome publishes no structured rule metadata, so the sweep parses `biome explain`
+output, one invocation per rule (~6s for 522 rules against the local binary). Two
+things it reads are easy to get wrong:
+
+- **A rule's language lives in its example code fences**, not its description —
+  matching descriptions for "graphql" finds 5 of 16 GraphQL rules; reading the
+  fences finds all 16. A fence carrying the `options` modifier is the rule's own
+  options sample (always JSON) and must not be read as its language. A rule with
+  no code example at all (`noRestrictedTypes`) yields no language, which is
+  recorded rather than treated as a parse failure.
+- **`biome explain` reports nursery rules as "recommended."** They are not active
+  via `recommended: true`, so a nursery entry is never redundant. Without that
+  guard `useMathMinMax` is a false positive.
+
+`audit/rule-exclusions.json` is the **hand-edited** ledger: rules the metadata
+cannot place in or out of scope. Each entry carries a `direction` (`in` / `out`)
+and a reason — the direction matters because such a rule may be correctly
+*listed* rather than correctly absent. It holds one entry, `noRestrictedTypes`
+(direction `in`): a TypeScript rule whose only fenced block is its own options
+sample, so it publishes no example language and declares no domain. Entries are
+deliberately hard to justify — the checks reject one the metadata already
+classifies in the same direction, and one that says `out` for a listed rule.
+
+`scripts/check-presets.ts` (`pnpm run check:presets`) enforces eight invariants
+against the snapshot, offline: coverage, category placement, rule existence,
+redundancy, strict/balanced parity, README inventory, pinned-target consistency,
+and listed-rule scope. It reads only committed files — never the network, never
+the Biome binary.
+
+**Coverage and listed-rule scope run in opposite directions, and both are
+needed.** Coverage walks the release and asks whether each rule is accounted for
+— and "listed in `react-strict`" is an accepted answer, so a rule that does not
+belong satisfies it by being there. That is how two GraphQL rules sat in the
+presets across nine version-tracking passes. Listed-rule scope walks the presets
+instead. Its test is a **disjunction** — an in-scope language *or* an in-scope
+domain — and evaluating the domain half alone would flag 201 correct rules in
+`react-strict`, including the 33 that belong only to domains the standing
+requirement never names (`types`, `playwright`, `drizzle`, `tailwind`,
+`turborepo`).
+
 ### Root biome.json
 
 `biome.json` extends `dist/biome.recommended.json` with `"root": true` to dogfood the config — editing the recommended preset changes how this repo checks itself. It adds the `useSortedKeys` assist with `groupByNesting` (key order in the dist files) and an override expanding `.claude/settings.local.json`. The `package.json` override (expanded formatting, `useSortedKeys` off — package.json uses conventional, non-alphabetical key order) ships inside the dist configs instead.
@@ -85,7 +144,7 @@ Non-trivial work is planned as an OpenSpec change (schema `spec-driven`, CLI `op
 ## Key conventions
 
 - **Key order.** `dist/*.json` keys are sorted by the `useSortedKeys` assist. Because of `groupByNesting`, rules with string values (`"warn"`) sort **before** rules with object values (`{ "level": …, "options": … }`) within a category — see the tail of `style` in `react-balanced.json`. Apply with `biome check --write`.
-- **Biome version upgrades** touch the `$schema` URL in all six dist files plus `biome.json` and `README.md`, and the `@biomejs/biome` devDependency. Reconciliation compares the version pinned in the `$schema` URLs against the npm `latest` dist-tag — *not* the installed binary, which an automated dep bump can move ahead of the presets. A pass audits four things and records the outcome of each: **new rules** (diff the rule keys of the old and new `configuration_schema.json`); **rules that graduated** out of nursery (relocate, preserving each preset's severity — they then start appearing in the `-stable` variants), were **renamed** (migrate, preserving severity), or were **removed** (drop); **new options on already-listed rules** (add an `options` block only to override an upstream default, never to restate it); and **behavior changes the schema cannot see** (read the release notes — a formatter or parser change can be the bump's largest consumer impact and reaches presets whose rule lists never move). `recommended` and `react-recommended` pick up new rules automatically via `"recommended": true`. After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` — `check:sync-stable` fails the build on drift.
+- **Biome version upgrades** touch the `$schema` URL in all six dist files plus `biome.json` and `README.md`, and the `@biomejs/biome` devDependency. Reconciliation compares the version pinned in the `$schema` URLs against the npm `latest` dist-tag — *not* the installed binary, which an automated dep bump can move ahead of the presets. A pass audits four things and records the outcome of each: **new rules** (diff the rule keys of the old and new `configuration_schema.json`); **rules that graduated** out of nursery (relocate, preserving each preset's severity — they then start appearing in the `-stable` variants), were **renamed** (migrate, preserving severity), or were **removed** (drop); **new options on already-listed rules** (add an `options` block only to override an upstream default, never to restate it); and **behavior changes the schema cannot see** (read the release notes — a formatter or parser change can be the bump's largest consumer impact and reaches presets whose rule lists never move). `recommended` and `react-recommended` pick up new rules automatically via `"recommended": true`. After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` — `check:sync-stable` fails the build on drift. A pass also regenerates the rule-metadata snapshot (`pnpm sync-rule-metadata`) once the `$schema` target and the installed binary agree; the resulting `audit/rule-metadata.json` diff *is* the new-rules / graduated / renamed / removed audit, reviewable in the PR. `check:presets` then fails if the presets or the README did not keep up.
 - **README is part of the contract.** Its per-category rule counts must equal what `react-strict` lists, every rule it names must exist in that preset, and the balanced relaxation table must report both the total (18) and the stable-category subset that reaches `react-balanced-stable` (15). Verify counts with the one-liner above, not by eye.
 - **Changeset sizing** by published impact: **minor** when a preset rule list changes (added/removed/renamed/re-leveled — consumers' diagnostics change), **patch** when only the `$schema` target advances with no rule-list change, and **no changeset** when nothing in `dist/*.json` or `README.md` changed (dev deps, root `biome.json`, planning artifacts, regenerated tooling assets). The changeset config sets `"commit": true`, so `pnpm changeset` auto-commits.
 - **Release flow.** Work lands via PR to `main`; Changesets opens the release PR automatically on push to `main`. Commits follow Conventional Commits (`feat:`, `docs:`, `chore(openspec):`, `build(deps-dev):`).

@@ -49,9 +49,12 @@
     "changeset": "changeset",
     "check": "pnpm run \"/^check:.*/\"",
     "check:format": "biome format",
+    "check:presets": "node scripts/check-presets.ts",
     "check:publint": "publint --strict",
+    "check:rule-metadata": "node scripts/sync-rule-metadata.ts --check",
     "check:sync-stable": "node scripts/sync-stable.ts --check",
     "check:types": "tsc --noEmit",
+    "sync-rule-metadata": "node scripts/sync-rule-metadata.ts",
     "sync-stable": "node scripts/sync-stable.ts"
   },
   "devDependencies": {
