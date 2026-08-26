@@ -1,5 +1,5 @@
 {
-  "biomeVersion": "2.5.9",
+  "biomeVersion": "2.5.10",
   "rules": {
     "noAccessKey": {
       "category": "a11y",
