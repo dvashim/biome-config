@@ -1,5 +1,29 @@
 # @dvashim/biome-config
 
+## 1.16.0
+
+### Minor Changes
+
+- [#199](https://github.com/dvashim/biome-config/pull/199) [`86644bc`](https://github.com/dvashim/biome-config/commit/86644bc52339ea7f17ee3291840463b9bdef6bd3) - Remove two GraphQL-only rules the React presets should never have listed
+  
+  - **Rule:** Remove `useDeprecatedDate` from `react-strict`, `react-balanced`, and both `-stable` variants. It requires a deletion date on GraphQL's `@deprecated` directive, and it is not one of Biome's recommended rules — so removing the entry **switches it off**. If you lint `.graphql` files and want it, enable it yourself.
+  - **Rule:** Remove `noDuplicateEnumValueNames` from the same four presets. It requires unique enum value names in a GraphQL schema — not TypeScript enums. It **is** recommended, so removing the entry does not disable it: it reverts to Biome's default and stays active at **`error`** where these presets were publishing `warn`. If you lint `.graphql` files, expect that diagnostic to get louder, not quieter. The presets never decided to soften it — `warn` was simply the severity every added rule receives — so this restores the upstream default rather than changing a considered position.
+  - **Scope:** Both rules target GraphQL exclusively, which these presets exclude by design and the README has always said they exclude. Both entered by accident: `useDeprecatedDate` in the bulk pass that added 41 opt-in rules for Biome 2.5.1, and `noDuplicateEnumValueNames` before the config files were renamed to `.json`.
+  - **Presets:** `react-strict` and `react-balanced` now enumerate **262** rules (was 264); `react-strict-stable` and `react-balanced-stable` now enumerate **180** (was 182). `recommended` and `react-recommended` are unchanged.
+  - **No Biome change:** the presets still target Biome 2.5.9 and no `$schema` moves. If you do not lint GraphQL, this release changes nothing for you.
+
+### Patch Changes
+
+- [#199](https://github.com/dvashim/biome-config/pull/199) [`4ef2ef1`](https://github.com/dvashim/biome-config/commit/4ef2ef1a1053db645ddd38caf23710370d2b6937) - Target Biome 2.5.10
+  
+  - **Target:** Advance the `$schema` URL to 2.5.10 across all six dist configs, `biome.json`, and the README. The `@biomejs/biome` requirement moves to `^2.5.10`.
+  - **No rule changes.** 2.5.10 adds no lint rule and renames, graduates, or removes none, and adds no option to any rule these presets list — its configuration schema is byte-identical to 2.5.9's. Every preset lists exactly the rules it listed before, so no diagnostic changes because of this release.
+  - **Inherited from Biome — Astro.** Sixteen parser fixes, the bulk of the release: an expression containing only a comment no longer fails to parse (which previously stopped the whole file from being formatted), a bare `<` in text is text, `{}` renders as nothing, fragment shorthand is supported, frontmatter is no longer cut short by `</script>` inside a string or by a line beginning with a dash, `is:raw` children are treated as raw text, colon-prefixed attributes such as `:href` parse, `{` inside `<math>` stays literal, `{{` opens an object literal rather than an interpolation, `<pre>` and `<textarea>` contents are parsed as markup, template-literal attribute values work, and HTML5 unquoted attribute values containing `` ` ``, `=`, `'` or `"` are accepted. These presets omit Astro-specific *rules* by design, but they lint every file Biome can parse — so if your project has `.astro` files, this release changes how they are parsed and formatted.
+  - **Inherited from Biome — Vue.** Variables and imports used only by same-name bindings such as `:disabled` or `v-bind:disabled` are no longer reported as unused. That is `noUnusedVariables` and `noUnusedImports`, which are recommended and therefore active in **every** preset here, including `recommended` and both `-stable` variants. Separately, `useStrictMode` no longer reports Vue event handlers such as `@click="count++"`.
+  - **Inherited from Biome — Svelte.** Biome no longer crashes on incomplete `{let}` or `{const}` declarations.
+  - **Inherited from Biome — performance.** `noFloatingPromises` skips needless type inference on call arguments of methods on non-generic `new` instances, and eight test-quality rules got faster: `useNamedCaptureGroup`, `noMisplacedAssertion`, `noSkippedTests`, `noExportsInTest`, `noDuplicateTestHooks`, `noIdenticalTestTitle`, `useTestHooksInOrder`, and `useTestHooksOnTop`. No diagnostics change.
+  - **Inherited from Biome — editors.** A memory leak in the LSP server, where usage grew over long editing sessions, is fixed.
+
 ## 1.15.1
 
 ### Patch Changes
