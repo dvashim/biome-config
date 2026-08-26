@@ -122,6 +122,13 @@ either direction, so that an unrecorded one is reported as awaiting
 classification rather than being silently absent or silently present, and it
 SHALL hold no entry for a rule that derivation already classifies.
 
+Excluding a framework's rules SHALL NOT be read as excluding its files. The
+presets lint every file the installed Biome can parse, so a consumer with files
+of an excluded framework still receives that framework's parser and formatter
+behaviour. A pass SHALL therefore disclose upstream work on an excluded framework
+when it reaches those files, rather than treating the framework's exclusion from
+the rule lists as a reason to omit it.
+
 #### Scenario: Non-React framework rule is excluded
 
 - **WHEN** a rule's only domain is `vue`/`solid`/`qwik`/`svelte`/`astro`, or the
@@ -163,6 +170,14 @@ SHALL hold no entry for a rule that derivation already classifies.
   publishes no example to prove it
 - **THEN** its ledger entry records the direction *in scope*, and the rule stays
   listed rather than being reported as a rule that does not belong
+
+#### Scenario: Excluded framework's parser work still reaches consumers
+
+- **WHEN** a Biome release's changes are concentrated in the parser or formatter
+  for a framework whose rules the presets exclude, and the presets process files
+  of that framework
+- **THEN** the pass records that those changes reach consumers who have such
+  files, and the release notes the change publishes say so
 
 ### Requirement: Stable variants exclude nursery rules
 
@@ -223,6 +238,12 @@ unchanged and only the rule lists are reconciled. When the pinned target lags
 the rule set is re-derived, whether or not the installed binary has already
 moved.
 
+A pass that advances the target SHALL also regenerate the rule-metadata snapshot
+against the new version. The snapshot is defined as describing the release the
+presets target, so leaving it behind would make it describe a version the presets
+no longer claim — and it is what re-arms the snapshot drift check, which is inert
+while the target and the installed binary disagree.
+
 #### Scenario: Already on latest
 
 - **WHEN** the version pinned in the presets' `$schema` URLs equals the npm
@@ -245,6 +266,22 @@ moved.
 - **THEN** the pass treats the presets as lagging rather than as already current,
   and advances the `$schema` URLs and the declared `@biomejs/biome` range to that
   version before re-deriving the rule set against it
+
+#### Scenario: Advancing the target regenerates the rule metadata
+
+- **WHEN** a pass advances the pinned Biome target to a newer release
+- **THEN** the rule-metadata snapshot is regenerated against that release in the
+  same change, so the version it records agrees with every file that pins the
+  target
+
+#### Scenario: Target advances with no rule-metadata movement
+
+- **WHEN** the new release declares the same rules with the same categories,
+  severities, recommended statuses, domains, and example languages as the one it
+  replaces
+- **THEN** the regenerated snapshot differs only in the version it records, and
+  that empty diff is recorded as the audit result rather than taken as evidence
+  the audit was skipped
 
 ### Requirement: Version-tracking passes release according to their published impact
 
