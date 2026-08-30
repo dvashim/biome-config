@@ -22,7 +22,7 @@ Shared [Biome](https://biomejs.dev) configuration presets — a base recommended
 [socket-url]: https://socket.dev/npm/package/@dvashim/biome-config
 
 - **One line to adopt** — `extends` a preset and inherit the formatter, linter, and assist settings together.
-- **A ladder, not a single opinion** — six presets, from Biome's own recommended baseline up to 264 explicitly configured rules.
+- **A ladder, not a single opinion** — six presets, from Biome's own recommended baseline up to 262 explicitly configured rules.
 - **React, Next.js, and React Native** — framework rules are enabled by name, so they apply without relying on domain auto-detection.
 - **Nursery-free `-stable` variants** — the same rule sets minus Biome's experimental rules, for teams that want a surface that will not shift under them.
 - **Plain JSON, no runtime dependencies** — the presets are published as config files; Biome is the only thing installed alongside them.
@@ -74,10 +74,10 @@ bun add -d @dvashim/biome-config @biomejs/biome
 |--------|----------------|----------------|---------|
 | [Base recommended](#base-recommended) | `@dvashim/biome-config` | Biome recommended only | — |
 | [React recommended](#react-recommended) | `@dvashim/biome-config/react-recommended` | Biome recommended + React domain | — |
-| [React strict](#react-strict) | `@dvashim/biome-config/react-strict` | 264 | 82 |
-| [React strict-stable](#react-strict-stable) | `@dvashim/biome-config/react-strict-stable` | 182 | — |
-| [React balanced](#react-balanced) | `@dvashim/biome-config/react-balanced` | 264, 18 relaxed | 82 |
-| [React balanced-stable](#react-balanced-stable) | `@dvashim/biome-config/react-balanced-stable` | 182, 15 relaxed | — |
+| [React strict](#react-strict) | `@dvashim/biome-config/react-strict` | 262 | 82 |
+| [React strict-stable](#react-strict-stable) | `@dvashim/biome-config/react-strict-stable` | 180 | — |
+| [React balanced](#react-balanced) | `@dvashim/biome-config/react-balanced` | 262, 18 relaxed | 82 |
+| [React balanced-stable](#react-balanced-stable) | `@dvashim/biome-config/react-balanced-stable` | 180, 15 relaxed | — |
 
 "Explicit rules" counts the entries a preset configures itself; Biome's recommended rules stay active in every preset on top of them. All six share the same [formatter, parser, VCS, and assist defaults](#defaults).
 
