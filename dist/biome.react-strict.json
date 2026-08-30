@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
   "assist": {
     "actions": {
       "recommended": true,
@@ -149,6 +149,7 @@
         "noTailwindArbitraryValue": "warn",
         "noTopLevelLiterals": "warn",
         "noUndeclaredClasses": "warn",
+        "noUndeclaredCustomProperties": "warn",
         "noUnnecessaryTemplateExpression": "warn",
         "noUnsafePlusOperands": "warn",
         "noUnsafeTypeAssertion": "warn",

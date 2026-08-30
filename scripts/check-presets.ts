@@ -7,6 +7,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
 const SNAPSHOT = 'audit/rule-metadata.json'
 const LEDGER = 'audit/rule-exclusions.json'
+const PACKAGE = 'package.json'
 const STRICT = 'dist/biome.react-strict.json'
 const BALANCED = 'dist/biome.react-balanced.json'
 const STRICT_STABLE = 'dist/biome.react-strict-stable.json'
@@ -15,16 +16,8 @@ const BALANCED_STABLE = 'dist/biome.react-balanced-stable.json'
 /** Presets that carry an explicit rule list, and so have entries to check. */
 const RULE_PRESETS = [STRICT, BALANCED, STRICT_STABLE, BALANCED_STABLE] as const
 
-/** Every file whose `$schema` pins the Biome version the presets target. */
-const SCHEMA_PINNED = [
-  'dist/biome.recommended.json',
-  'dist/biome.react-recommended.json',
-  STRICT,
-  BALANCED,
-  STRICT_STABLE,
-  BALANCED_STABLE,
-  'biome.json',
-] as const
+/** The repo's own config, which pins the target but is not a published preset. */
+const ROOT_CONFIG = 'biome.json'
 
 /**
  * Domains whose rules the presets exclude. Read against a rule's full domain
@@ -79,6 +72,14 @@ const IN_SCOPE_DOMAINS = new Set([
 /** `recommended: true` never activates nursery, so a nursery entry is never redundant. */
 const NURSERY = 'nursery'
 
+/**
+ * Header cells of the two count columns in the README's Configurations table.
+ * The table is located by these rather than by position, so reordering a column
+ * cannot silently misalign the read.
+ */
+const RULES_COLUMN = 'Explicit rules'
+const NURSERY_COLUMN = 'Nursery'
+
 type RuleMetadata = {
   category: string
   defaultSeverity: string
@@ -88,6 +89,7 @@ type RuleMetadata = {
 }
 
 type Snapshot = { biomeVersion: string; rules: Record<string, RuleMetadata> }
+type PackageJson = { name: string; exports: Record<string, string> }
 type LedgerEntry = { direction: 'in' | 'out'; reason: string }
 type Ledger = { rules: Record<string, LedgerEntry> }
 type RuleValue = string | { level?: string; options?: unknown }
@@ -103,6 +105,12 @@ const failures: string[] = []
 function report(check: string, lines: string[]): void {
   if (lines.length === 0) return
   failures.push(`${check}\n${lines.map((line) => `  ${line}`).join('\n')}`)
+}
+
+function fail(): never {
+  console.error(failures.join('\n\n'))
+  console.error(`\n${failures.length} check(s) failed.`)
+  process.exit(1)
 }
 
 async function readJson<T>(relPath: string): Promise<T> {
@@ -137,8 +145,84 @@ function pinnedVersion(schema: string | undefined): string | undefined {
   return schema?.match(/schemas\/([^/]+)\/schema\.json/)?.[1]
 }
 
+/** Cells of a markdown table row, less the empties the outer pipes produce. */
+function tableCells(line: string): string[] {
+  return line
+    .split('|')
+    .slice(1, -1)
+    .map((cell) => cell.trim())
+}
+
+/**
+ * The README's Configurations table, found by its count-column headers. Returns
+ * `undefined` when no table carries them — the caller reports that as a failure
+ * rather than as "nothing to check", because a check that quietly finds nothing
+ * to compare is the defect this invariant exists to prevent.
+ */
+function findConfigTable(
+  md: string
+): { columns: string[]; rows: string[][] } | undefined {
+  const lines = md.split('\n')
+  for (const [index, line] of lines.entries()) {
+    if (!line.startsWith('|')) continue
+    const columns = tableCells(line)
+    if (!columns.includes(RULES_COLUMN)) continue
+    if (!columns.includes(NURSERY_COLUMN)) continue
+    const rows: string[][] = []
+    // +2 steps over the `|---|---|` separator that follows every header row.
+    for (const row of lines.slice(index + 2)) {
+      if (!row.startsWith('|')) break
+      rows.push(tableCells(row))
+    }
+    return { columns, rows }
+  }
+  return undefined
+}
+
+/** Every integer a table cell publishes, in order: `264, 18 relaxed` -> [264, 18]. */
+function publishedCounts(cell: string): number[] {
+  return [...cell.matchAll(/\d+/g)].map((match) => Number(match[0]))
+}
+
 const snapshot = await readJson<Snapshot>(SNAPSHOT)
 const ledger = await readJson<Ledger>(LEDGER)
+const pkg = await readJson<PackageJson>(PACKAGE)
+
+/**
+ * `@dvashim/biome-config/react-strict` -> `dist/biome.react-strict.json`. The
+ * exports map is what makes a preset reachable, so it is the authority on which
+ * presets are published and therefore have to be checked and documented.
+ */
+const publishedPresets = new Map<string, string>()
+for (const [subpath, target] of Object.entries(pkg.exports)) {
+  const specifier =
+    subpath === '.' ? pkg.name : `${pkg.name}${subpath.slice(1)}`
+  publishedPresets.set(specifier, target.replace(/^\.\//, ''))
+}
+
+/**
+ * Every file whose `$schema` pins the Biome version the presets target: each
+ * published preset, plus the root config. Derived rather than listed, because a
+ * second hand-maintained list is one the export map can outgrow — and the checks
+ * would then index a map that never loaded the new preset.
+ */
+const SCHEMA_PINNED = [...new Set(publishedPresets.values()), ROOT_CONFIG]
+
+// Parity, the relaxation counts and the -stable totals all name a specific
+// preset, so these four paths stay hand-written where the rest of the list is
+// derived. A rename in the export map would leave them pointing at nothing.
+{
+  const published = new Set(publishedPresets.values())
+  report(
+    'preset paths: a check names a preset the package does not publish',
+    RULE_PRESETS.filter((path) => !published.has(path))
+  )
+  // Every invariant below dereferences these by name, so there is nothing left
+  // to check past this point — report and stop, rather than continue into a
+  // guaranteed undefined.
+  if (failures.length > 0) fail()
+}
+
 const presets = new Map<string, Preset>()
 for (const path of SCHEMA_PINNED)
   presets.set(path, await readJson<Preset>(path))
@@ -365,6 +449,119 @@ const readme = await readFile(resolve(root, 'README.md'), 'utf8')
     stable,
     'stable-category relaxations'
   )
+  // The ladder bullet publishes react-strict's total in prose, well away from
+  // the table that publishes it again. Both are checked; neither stands in for
+  // the other.
+  checkPhrase(
+    /up to (\d+) explicitly configured rules/,
+    strictEntries.length,
+    'explicitly configured rules in the ladder bullet'
+  )
+
+  // The Configurations table is the README's published inventory of the ladder.
+  // Read it structurally — count columns located by header name, each row keyed
+  // by the `extends` specifier it already carries — because the totals that
+  // drifted (`| 264 | 82 |`, `| 182 | — |`) are bare cells with no surrounding
+  // words for a text matcher to anchor on. Reconciling the per-category counts
+  // above is not evidence for these: they are published in a different place, in
+  // a different shape, and a change can update one and leave the other stale.
+  const relaxedByPreset = new Map([
+    [BALANCED, total],
+    [BALANCED_STABLE, stable],
+  ])
+  const table = findConfigTable(readme)
+  if (table === undefined) {
+    problems.push(
+      `README has no Configurations table with "${RULES_COLUMN}" and `
+        + `"${NURSERY_COLUMN}" columns to check`
+    )
+  } else {
+    const rulesAt = table.columns.indexOf(RULES_COLUMN)
+    const nurseryAt = table.columns.indexOf(NURSERY_COLUMN)
+    const documented = new Set<string>()
+    for (const cells of table.rows) {
+      const specifier = cells
+        .map((cell) => cell.match(/`([^`]+)`/)?.[1])
+        .find((value) => value?.startsWith(pkg.name))
+      if (specifier === undefined) {
+        problems.push(
+          `README table row publishes no ${pkg.name} extends path: ${cells[0]}`
+        )
+        continue
+      }
+      const path = publishedPresets.get(specifier)
+      if (path === undefined) {
+        problems.push(
+          `README table documents ${specifier}, which package.json does not export`
+        )
+        continue
+      }
+      documented.add(path)
+
+      // Unreachable while the pinned-file list is derived from this same export
+      // map. Kept because a cast here is what turned a disagreement between the
+      // two into a stack trace instead of a finding, and the next caller to index
+      // this map from a different list should get a message, not a crash.
+      const preset = presets.get(path)
+      if (preset === undefined) {
+        problems.push(
+          `${path} is exported but was not loaded — the pinned-file list and `
+            + 'the export map disagree'
+        )
+        continue
+      }
+      const entries = entriesOf(preset)
+      const nursery = entries.filter((e) => e.category === NURSERY).length
+      const relaxed = relaxedByPreset.get(path) ?? 0
+      const published = publishedCounts(cells[rulesAt] ?? '')
+
+      if (entries.length === 0) {
+        if (published.length > 0) {
+          problems.push(
+            `README table publishes ${published[0]} explicit rules for ${path}, `
+              + 'which lists none'
+          )
+        }
+      } else if (published[0] !== entries.length) {
+        problems.push(
+          `README table says ${path} has ${published[0] ?? 'no'} explicit rules, `
+            + `it lists ${entries.length}`
+        )
+      }
+
+      if (relaxed > 0 && published[1] !== relaxed) {
+        problems.push(
+          `README table says ${path} relaxes ${published[1] ?? 'no'} rules, `
+            + `it relaxes ${relaxed}`
+        )
+      }
+      if (relaxed === 0 && published.length > 1) {
+        problems.push(
+          `README table publishes a relaxation count for ${path}, which relaxes none`
+        )
+      }
+
+      const publishedNursery = publishedCounts(cells[nurseryAt] ?? '')
+      if (nursery === 0) {
+        if (publishedNursery.length > 0) {
+          problems.push(
+            `README table publishes ${publishedNursery[0]} nursery rules for `
+              + `${path}, which lists none`
+          )
+        }
+      } else if (publishedNursery[0] !== nursery) {
+        problems.push(
+          `README table says ${path} has ${publishedNursery[0] ?? 'no'} nursery `
+            + `rules, it lists ${nursery}`
+        )
+      }
+    }
+    for (const path of new Set(publishedPresets.values())) {
+      if (!documented.has(path)) {
+        problems.push(`README table has no row for ${path}, which is published`)
+      }
+    }
+  }
 
   const stableCount = entriesOf(presets.get(STRICT_STABLE) as Preset).length
   for (const match of readme.matchAll(
@@ -447,11 +644,7 @@ const readme = await readFile(resolve(root, 'README.md'), 'utf8')
   )
 }
 
-if (failures.length > 0) {
-  console.error(failures.join('\n\n'))
-  console.error(`\n${failures.length} check(s) failed.`)
-  process.exit(1)
-}
+if (failures.length > 0) fail()
 console.log(
   `presets check out against Biome ${snapshot.biomeVersion}: `
     + `${Object.keys(snapshot.rules).length} rules classified, `

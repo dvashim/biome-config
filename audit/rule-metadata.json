@@ -1,5 +1,5 @@
 {
-  "biomeVersion": "2.5.10",
+  "biomeVersion": "2.5.11",
   "rules": {
     "noAccessKey": {
       "category": "a11y",
@@ -77,6 +77,13 @@
       "domains": [],
       "languages": ["ts"],
       "recommended": true
+    },
+    "noAstroSetHtmlDirective": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["astro"],
+      "languages": ["astro"],
+      "recommended": false
     },
     "noAsyncPromiseExecutor": {
       "category": "suspicious",
@@ -1791,6 +1798,13 @@
       "defaultSeverity": "info",
       "domains": ["project"],
       "languages": ["js"],
+      "recommended": false
+    },
+    "noUndeclaredCustomProperties": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["project"],
+      "languages": ["jsx"],
       "recommended": false
     },
     "noUndeclaredDependencies": {

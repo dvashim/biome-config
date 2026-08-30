@@ -285,16 +285,21 @@ while the target and the installed binary disagree.
 
 ### Requirement: Version-tracking passes release according to their published impact
 
-A Biome version-tracking pass SHALL create a Changesets release when it edits the
-consumer-facing published surface — any `dist/*.json` preset or `README.md` — and
-SHALL NOT create a changeset when it edits only dev dependencies (including the
-`@biomejs/biome` devDependency range), the root `biome.json`, planning artifacts,
-or OpenSpec-generated tooling assets while leaving every `dist/*.json` preset and
-`README.md` unchanged. When such a release only advances the pinned `$schema`
-target to a newer stable Biome version and makes no preset rule-list change, it
-SHALL be a `patch`. When the release also changes a preset rule list — adding,
-removing, renaming, or re-leveling a rule in `react-strict` or `react-balanced` —
-it SHALL be a `minor`, because the diagnostics consumers receive change.
+A Biome version-tracking pass, and any other change, SHALL create a Changesets
+release when it edits the consumer-facing published surface — any `dist/*.json`
+preset or `README.md` — and SHALL NOT create a changeset when it edits only dev
+dependencies (including the `@biomejs/biome` devDependency range), the root
+`biome.json`, planning artifacts, or OpenSpec-generated tooling assets while
+leaving every `dist/*.json` preset and `README.md` unchanged. When such a
+release only advances the pinned `$schema` target to a newer stable Biome
+version and makes no preset rule-list change, it SHALL be a `patch`. When the
+release also changes a preset rule list — adding, removing, renaming, or
+re-leveling a rule in `react-strict` or `react-balanced` — it SHALL be a
+`minor`, because the diagnostics consumers receive change. When a release edits
+`README.md` alone — correcting published prose or a published count with no
+preset rule-list change and no advance of the pinned `$schema` target — it SHALL
+be a `patch`, because `README.md` reaches consumers through the npm package page
+whether or not it is named in the package's `files` list.
 
 #### Scenario: Newer-release bump ships as a patch
 
@@ -317,13 +322,30 @@ it SHALL be a `minor`, because the diagnostics consumers receive change.
   it only bumps dev dependencies or regenerates tooling assets
 - **THEN** no changeset is created and no release is published
 
+#### Scenario: Documentation-only correction ships as a patch
+
+- **WHEN** a change edits `README.md` without changing any preset rule list and
+  without advancing the pinned `$schema` target — for example correcting a
+  published rule count that drifted from the presets
+- **THEN** a `patch` changeset is created that names what the correction fixes
+
 ### Requirement: README rule inventory matches the presets
 
 The README's per-category rule counts SHALL equal the number of rules the
 `react-strict` preset lists in that category, and every rule named in a README
-category description or highlights list SHALL exist in that preset. A change that
-alters a preset rule list SHALL update the affected counts and any now-stale rule
+category description or highlights list SHALL exist in that preset. Every
+**preset total** the README publishes — in the Configurations table's count
+columns and in the prose that introduces the ladder — SHALL equal the number of
+rules that preset lists, and the Configurations table SHALL carry one row per
+published preset, so a preset cannot ship undocumented. A change that alters a
+preset rule list SHALL update the affected counts, totals, and any now-stale rule
 names in the same change.
+
+Per-category counts SHALL NOT be treated as evidence for a total: they are
+published in a different place, in a different shape, and a change that
+reconciles one can leave the other stale. A published count SHALL be reconciled
+against the presets wherever it appears, not only where it is convenient to
+match.
 
 #### Scenario: Rule-list change updates the category count
 
@@ -338,6 +360,26 @@ names in the same change.
 - **THEN** that rule is present in `dist/biome.react-strict.json` under that
   category, and a rule that was renamed or removed upstream is renamed or dropped
   from the README in the same change that reconciles the preset
+
+#### Scenario: Published preset total is reconciled
+
+- **WHEN** a change alters the number of rules a preset lists and the README
+  publishes that preset's total
+- **THEN** every published total for that preset is updated in the same change,
+  in the Configurations table and in the ladder prose alike
+
+#### Scenario: Configurations table covers every published preset
+
+- **WHEN** the package publishes a preset that the Configurations table has no row
+  for, or the table carries a row for a preset the package does not publish
+- **THEN** the check fails and names the preset
+
+#### Scenario: Retired prose matcher fails rather than passing silently
+
+- **WHEN** README prose that a published count was read from is reworded so the
+  check's matcher finds nothing
+- **THEN** the check fails reporting that it has no count to check, rather than
+  passing because it found no mismatch
 
 ### Requirement: Rules requiring configuration are listed without options
 
@@ -521,6 +563,15 @@ runs as part of `pnpm run check`, and that check SHALL fail on drift. A
 version-tracking pass SHALL NOT be the only thing that establishes them, because
 a condition re-derived by hand once per pass is unverified between passes.
 
+The set of preset files the checks cover SHALL be derived from the package's own
+export map rather than maintained as a second list beside it, so that a preset the
+package publishes is covered by construction and cannot be omitted by an
+oversight. Where a path must still be named by hand — because a check refers to
+one preset specifically — that name SHALL be verified against the derived set. A
+preset the checks cannot resolve SHALL be reported as a named failure, never
+allowed to abort the run: a check that dies on an unexpected input reports
+nothing about the inputs it had already read.
+
 The metadata SHALL describe the Biome release the presets **target** — the
 version pinned in their `$schema` URLs — and SHALL cover, for every rule that
 release declares, its category, recommended status, domains, default
@@ -545,8 +596,13 @@ The enforced invariants SHALL be:
 - **Preset parity** — `react-strict` and `react-balanced` list identical rule
   sets, differing only in severity and options.
 - **README inventory** — the README's per-category counts equal what `react-strict`
-  lists in each category, every rule the README names exists in that preset, and
-  the balanced relaxation table's published totals reconcile against the presets.
+  lists in each category, every rule the README names exists in that preset, the
+  balanced relaxation table's published totals reconcile against the presets, and
+  every published **preset total** — the Configurations table's count columns and
+  the ladder prose — equals what that preset lists, with one table row per
+  published preset. A matcher that reads a published count SHALL fail when it
+  matches nothing, so rewording the text around a count cannot silently retire
+  its check.
 - **Listed-rule scope** — every rule a preset lists is in scope: it targets a
   language the presets cover, or belongs to an in-scope domain, or the ledger
   records it as in scope. This runs opposite to **Coverage**, which a listed rule
@@ -599,8 +655,9 @@ The enforced invariants SHALL be:
 
 #### Scenario: README inventory falls out of step
 
-- **WHEN** a preset rule list changes without the README's counts, named rules, or
-  relaxation totals being updated to match
+- **WHEN** a preset rule list changes without the README's per-category counts,
+  published preset totals, named rules, or relaxation totals being updated to
+  match
 - **THEN** the check fails and reports the mismatch
 
 #### Scenario: Version bump is applied to only some of the pinned files
@@ -616,3 +673,77 @@ The enforced invariants SHALL be:
   language, or whose every domain is an excluded framework domain, and no ledger
   entry records it as in scope
 - **THEN** the check fails and names that rule
+
+#### Scenario: Published preset is covered without being listed again
+
+- **WHEN** the package's export map gains a preset
+- **THEN** the checks cover it without any separate list of preset paths being
+  edited, because that list is derived from the export map
+
+#### Scenario: Hand-written preset path no longer resolves
+
+- **WHEN** a check names a preset path directly and no published preset has that
+  path — for example after a preset is renamed
+- **THEN** the check fails naming that path, rather than silently checking nothing
+
+#### Scenario: Unresolvable preset is reported, not thrown
+
+- **WHEN** a check reaches a preset path it cannot resolve to a loaded preset
+- **THEN** it records a named problem and continues, so the run still reports
+  every other problem it found
+
+### Requirement: A rule's analysis scope is established empirically
+
+A rule whose diagnostics depend on resolving a definition — a CSS custom
+property, a class name, a token, an import — SHALL have the **scope** of that
+resolution established empirically before it is leveled in the presets, by
+running the rule against a fixture whose definition and use sit in different
+files. The result SHALL be recorded, because it is not derivable from the rule's
+category, its domains, or its documentation: a rule may resolve across a project,
+across a file, or not at all, and the description rarely says which.
+
+A rule that reports **correct** code because the definition it cannot find lives
+in another file SHALL be treated as broadly firing for the purposes of the
+balanced relaxation, regardless of its domain, and SHALL be relaxed in
+`react-balanced` to `info` or `off`. This is a distinct ground from the stylistic
+and framework-breadth criteria: those relax a rule that fires accurately on code
+some projects accept, whereas this one relaxes a rule that fires on code no
+project should have to change.
+
+Whether the rule publishes an **option** to declare externally-defined names SHALL
+be checked and recorded as part of the same finding. A rule that can be told about
+its environment is configurable rather than broadly firing, and SHALL NOT be
+relaxed on this ground alone; a rule with no such option offers the consumer no
+recourse short of disabling it.
+
+A fallback syntax SHALL NOT be assumed to suppress the diagnostic. Where a
+language provides one — `var(--x, fallback)` and its equivalents — whether the
+rule honours it SHALL be established by the same fixture rather than inferred
+from the language's semantics.
+
+#### Scenario: Cross-file resolution is tested before leveling
+
+- **WHEN** a pass adds a rule that reports a name it cannot resolve to a
+  definition
+- **THEN** the pass runs it against a fixture whose definition and use are in
+  different files, and records whether the diagnostic fires
+
+#### Scenario: Rule that cannot resolve across files is relaxed in balanced
+
+- **WHEN** such a rule reports a use whose definition exists in another file of
+  the same project, and the rule publishes no option to declare that definition
+- **THEN** `react-strict` lists it at `warn` and `react-balanced` lists it at
+  `info` or `off`, on the ground that it fires on correct code
+
+#### Scenario: Configurable rule is not relaxed on this ground
+
+- **WHEN** such a rule publishes an option that lets the consumer declare
+  externally-defined names
+- **THEN** the analysis-scope finding alone does not justify a balanced
+  relaxation, and the rule is leveled on the ordinary criteria
+
+#### Scenario: Fallback syntax is tested rather than assumed
+
+- **WHEN** the language offers a fallback form for an unresolved name
+- **THEN** the pass establishes by fixture whether the rule treats the fallback
+  as satisfying the reference, and does not assume it does
