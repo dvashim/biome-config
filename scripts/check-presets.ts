@@ -16,16 +16,8 @@ const BALANCED_STABLE = 'dist/biome.react-balanced-stable.json'
 /** Presets that carry an explicit rule list, and so have entries to check. */
 const RULE_PRESETS = [STRICT, BALANCED, STRICT_STABLE, BALANCED_STABLE] as const
 
-/** Every file whose `$schema` pins the Biome version the presets target. */
-const SCHEMA_PINNED = [
-  'dist/biome.recommended.json',
-  'dist/biome.react-recommended.json',
-  STRICT,
-  BALANCED,
-  STRICT_STABLE,
-  BALANCED_STABLE,
-  'biome.json',
-] as const
+/** The repo's own config, which pins the target but is not a published preset. */
+const ROOT_CONFIG = 'biome.json'
 
 /**
  * Domains whose rules the presets exclude. Read against a rule's full domain
@@ -115,6 +107,12 @@ function report(check: string, lines: string[]): void {
   failures.push(`${check}\n${lines.map((line) => `  ${line}`).join('\n')}`)
 }
 
+function fail(): never {
+  console.error(failures.join('\n\n'))
+  console.error(`\n${failures.length} check(s) failed.`)
+  process.exit(1)
+}
+
 async function readJson<T>(relPath: string): Promise<T> {
   return JSON.parse(await readFile(resolve(root, relPath), 'utf8')) as T
 }
@@ -189,6 +187,42 @@ function publishedCounts(cell: string): number[] {
 const snapshot = await readJson<Snapshot>(SNAPSHOT)
 const ledger = await readJson<Ledger>(LEDGER)
 const pkg = await readJson<PackageJson>(PACKAGE)
+
+/**
+ * `@dvashim/biome-config/react-strict` -> `dist/biome.react-strict.json`. The
+ * exports map is what makes a preset reachable, so it is the authority on which
+ * presets are published and therefore have to be checked and documented.
+ */
+const publishedPresets = new Map<string, string>()
+for (const [subpath, target] of Object.entries(pkg.exports)) {
+  const specifier =
+    subpath === '.' ? pkg.name : `${pkg.name}${subpath.slice(1)}`
+  publishedPresets.set(specifier, target.replace(/^\.\//, ''))
+}
+
+/**
+ * Every file whose `$schema` pins the Biome version the presets target: each
+ * published preset, plus the root config. Derived rather than listed, because a
+ * second hand-maintained list is one the export map can outgrow — and the checks
+ * would then index a map that never loaded the new preset.
+ */
+const SCHEMA_PINNED = [...new Set(publishedPresets.values()), ROOT_CONFIG]
+
+// Parity, the relaxation counts and the -stable totals all name a specific
+// preset, so these four paths stay hand-written where the rest of the list is
+// derived. A rename in the export map would leave them pointing at nothing.
+{
+  const published = new Set(publishedPresets.values())
+  report(
+    'preset paths: a check names a preset the package does not publish',
+    RULE_PRESETS.filter((path) => !published.has(path))
+  )
+  // Every invariant below dereferences these by name, so there is nothing left
+  // to check past this point — report and stop, rather than continue into a
+  // guaranteed undefined.
+  if (failures.length > 0) fail()
+}
+
 const presets = new Map<string, Preset>()
 for (const path of SCHEMA_PINNED)
   presets.set(path, await readJson<Preset>(path))
@@ -198,18 +232,6 @@ const balanced = presets.get(BALANCED) as Preset
 const strictEntries = entriesOf(strict)
 const strictRules = new Set(strictEntries.map((entry) => entry.rule))
 const readme = await readFile(resolve(root, 'README.md'), 'utf8')
-
-/**
- * `@dvashim/biome-config/react-strict` -> `dist/biome.react-strict.json`. The
- * exports map is what makes a preset reachable, so it is the authority on which
- * presets are published and therefore have to be documented.
- */
-const publishedPresets = new Map<string, string>()
-for (const [subpath, target] of Object.entries(pkg.exports)) {
-  const specifier =
-    subpath === '.' ? pkg.name : `${pkg.name}${subpath.slice(1)}`
-  publishedPresets.set(specifier, target.replace(/^\.\//, ''))
-}
 
 // --- 1. Coverage ------------------------------------------------------------
 // Every rule the target release declares must be accounted for. A rule that is
@@ -476,7 +498,19 @@ for (const [subpath, target] of Object.entries(pkg.exports)) {
       }
       documented.add(path)
 
-      const entries = entriesOf(presets.get(path) as Preset)
+      // Unreachable while the pinned-file list is derived from this same export
+      // map. Kept because a cast here is what turned a disagreement between the
+      // two into a stack trace instead of a finding, and the next caller to index
+      // this map from a different list should get a message, not a crash.
+      const preset = presets.get(path)
+      if (preset === undefined) {
+        problems.push(
+          `${path} is exported but was not loaded — the pinned-file list and `
+            + 'the export map disagree'
+        )
+        continue
+      }
+      const entries = entriesOf(preset)
       const nursery = entries.filter((e) => e.category === NURSERY).length
       const relaxed = relaxedByPreset.get(path) ?? 0
       const published = publishedCounts(cells[rulesAt] ?? '')
@@ -610,11 +644,7 @@ for (const [subpath, target] of Object.entries(pkg.exports)) {
   )
 }
 
-if (failures.length > 0) {
-  console.error(failures.join('\n\n'))
-  console.error(`\n${failures.length} check(s) failed.`)
-  process.exit(1)
-}
+if (failures.length > 0) fail()
 console.log(
   `presets check out against Biome ${snapshot.biomeVersion}: `
     + `${Object.keys(snapshot.rules).length} rules classified, `
