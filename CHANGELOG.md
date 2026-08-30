@@ -1,5 +1,29 @@
 # @dvashim/biome-config
 
+## 1.17.0
+
+### Minor Changes
+
+- [#202](https://github.com/dvashim/biome-config/pull/202) [`5cdf0a9`](https://github.com/dvashim/biome-config/commit/5cdf0a92c076a56430c353387d867e98707b88c9) - Target Biome 2.5.11 and add `noUndeclaredCustomProperties`
+  
+  - **Inherited from Biome — TypeScript.** `noUnusedVariables` no longer reports type parameters declared by non-default function overload signatures that have an implementation. That rule is recommended and domain-free, so it is active in **every** preset here — including `recommended` and both `-stable` variants, whose rule lists this release does not touch at all. If your code uses overload signatures, this removes false positives without any config change on your side.
+  - **Inherited from Biome — Vue.** Two further `noUnusedVariables` fixes: `<script setup>` bindings used by CSS `v-bind()`, and variables or imports used as custom directives, are no longer reported as unused. `noGlobalAssign` no longer reports assignments to Vue setup-script bindings. Both rules are recommended, so both reach every preset.
+  - **Inherited from Biome — Astro.** `useValidAnchor` now treats the JSX shorthand `<a {href}>` as a valid `href`; adjacent elements inside an Astro expression parse as an implicit fragment instead of erroring; unclosed void elements such as `{cond && <br>}` are accepted. These presets omit Astro *rules* by design, but they lint every file Biome can parse, so a project with `.astro` files inherits all of it.
+  - **New rule: `noUndeclaredCustomProperties`** (nursery) — `warn` in `react-strict`, **`info` in `react-balanced`**. It reports `var(--x)` where `--x` has no visible declaration.
+  - **Why `react-balanced` relaxes it.** Resolution is per file, established by fixture against 2.5.11 rather than inferred: a property declared in `tokens.css` and used in a sibling stylesheet is reported as undefined in the same run, a `var(--x, fallback)` does not suppress it, and the rule publishes no options to declare external names. The ordinary architecture — design tokens in one stylesheet, consumed everywhere — therefore produces a diagnostic on every `var()`. Balanced drops it to `info`, which is Biome's own default severity for the rule, so it stays visible for the self-contained stylesheets it does catch typos in without being raised to a warning it cannot help you act on. In JSX only the string `style="…"` attribute fires, and that is not valid React, so Tailwind and CSS-in-JS projects see nothing from it.
+  - **Excluded: `noAstroSetHtmlDirective`** (nursery). Its only domain and only example language are Astro, which these presets exclude.
+  - **Counts move asymmetrically.** `react-strict` and `react-balanced` go from 262 to 263 explicit rules (nursery 82 → 83), and balanced relaxations from 18 to 19. Both `-stable` variants are **unchanged — 180 rules, 15 relaxations** — because the new rule and its relaxation are nursery, which `-stable` strips.
+  - **Also inherited.** Markdown formatting is now idempotent for fenced code inside blockquotes, and markedly faster; Vue interpolation stays attached to whitespace-sensitive element boundaries; `--stdin-file-path` honours full HTML support for Astro, Svelte and Vue, which these presets enable via `html.experimentalFullSupportEnabled`; and `noFloatingPromises` and `useArraySortCompare` skip needless type inference. No diagnostics change from those.
+
+### Patch Changes
+
+- [#202](https://github.com/dvashim/biome-config/pull/202) [`bc75cd5`](https://github.com/dvashim/biome-config/commit/bc75cd5ec6c5fcc5585dbbd7cbefdf546d728d79) - Correct the README's published rule counts
+  
+  - **Documentation only.** No preset changed. `react-strict` and `react-balanced` list the same 262 rules they have listed since the two out-of-scope GraphQL rules were removed, and both `-stable` variants list the same 180. Nothing about the diagnostics you receive changes.
+  - **What was wrong.** The README advertised 264 explicit rules and 182 in the `-stable` variants — the counts from before that removal. Five sites were stale: the ladder bullet in the intro and all four count cells in the Configurations table. The per-category counts and the prose totals further down were already correct, which is exactly why the discrepancy survived: the build checked those and not these.
+  - **Why it could not be caught.** `check:presets` read the README through matchers shaped around per-category bullets and em-dash prose. A preset's *total* was never part of the invariant, in the check or in the standing requirement behind it, so the Configurations table's bare numeric cells had nothing looking at them.
+  - **Fixed for good.** The Configurations table is now parsed structurally — count columns located by header name, each row keyed by the `extends` path it already publishes — and reconciled against the presets, along with the intro bullet. The table must also carry one row per published preset, so a new preset cannot ship undocumented. Every matcher fails when it finds nothing, so rewording the text around a count reports a missing check rather than passing silently.
+
 ## 1.16.0
 
 ### Minor Changes
