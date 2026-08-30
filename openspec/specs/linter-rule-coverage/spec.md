@@ -563,6 +563,15 @@ runs as part of `pnpm run check`, and that check SHALL fail on drift. A
 version-tracking pass SHALL NOT be the only thing that establishes them, because
 a condition re-derived by hand once per pass is unverified between passes.
 
+The set of preset files the checks cover SHALL be derived from the package's own
+export map rather than maintained as a second list beside it, so that a preset the
+package publishes is covered by construction and cannot be omitted by an
+oversight. Where a path must still be named by hand — because a check refers to
+one preset specifically — that name SHALL be verified against the derived set. A
+preset the checks cannot resolve SHALL be reported as a named failure, never
+allowed to abort the run: a check that dies on an unexpected input reports
+nothing about the inputs it had already read.
+
 The metadata SHALL describe the Biome release the presets **target** — the
 version pinned in their `$schema` URLs — and SHALL cover, for every rule that
 release declares, its category, recommended status, domains, default
@@ -664,3 +673,21 @@ The enforced invariants SHALL be:
   language, or whose every domain is an excluded framework domain, and no ledger
   entry records it as in scope
 - **THEN** the check fails and names that rule
+
+#### Scenario: Published preset is covered without being listed again
+
+- **WHEN** the package's export map gains a preset
+- **THEN** the checks cover it without any separate list of preset paths being
+  edited, because that list is derived from the export map
+
+#### Scenario: Hand-written preset path no longer resolves
+
+- **WHEN** a check names a preset path directly and no published preset has that
+  path — for example after a preset is renamed
+- **THEN** the check fails naming that path, rather than silently checking nothing
+
+#### Scenario: Unresolvable preset is reported, not thrown
+
+- **WHEN** a check reaches a preset path it cannot resolve to a loaded preset
+- **THEN** it records a named problem and continues, so the run still reports
+  every other problem it found
