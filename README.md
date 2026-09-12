@@ -22,7 +22,7 @@ Shared [Biome](https://biomejs.dev) configuration presets — a base recommended
 [socket-url]: https://socket.dev/npm/package/@dvashim/biome-config
 
 - **One line to adopt** — `extends` a preset and inherit the formatter, linter, and assist settings together.
-- **A ladder, not a single opinion** — six presets, from Biome's own recommended baseline up to 263 explicitly configured rules.
+- **A ladder, not a single opinion** — six presets, from Biome's own recommended baseline up to 274 explicitly configured rules.
 - **React, Next.js, and React Native** — framework rules are enabled by name, so they apply without relying on domain auto-detection.
 - **Nursery-free `-stable` variants** — the same rule sets minus Biome's experimental rules, for teams that want a surface that will not shift under them.
 - **Plain JSON, no runtime dependencies** — the presets are published as config files; Biome is the only thing installed alongside them.
@@ -45,10 +45,10 @@ Shared [Biome](https://biomejs.dev) configuration presets — a base recommended
 
 | Dependency | Version |
 |---|---|
-| [Biome](https://biomejs.dev) | **2.5.11+** — the release the presets target |
+| [Biome](https://biomejs.dev) | **2.5.13+** — the release the presets target |
 | Node.js | **>= 24** — declared in the package's `engines` |
 
-Biome is not bundled, so install a compatible version yourself. The presets pin their `$schema` to `https://biomejs.dev/schemas/2.5.11/schema.json`; using that same URL in your own `biome.json` matches the presets exactly and silences editor warnings about unknown fields.
+Biome is not bundled, so install a compatible version yourself. The presets pin their `$schema` to `https://biomejs.dev/schemas/2.5.13/schema.json`; using that same URL in your own `biome.json` matches the presets exactly and silences editor warnings about unknown fields.
 
 ## Installation
 
@@ -74,9 +74,9 @@ bun add -d @dvashim/biome-config @biomejs/biome
 |--------|----------------|----------------|---------|
 | [Base recommended](#base-recommended) | `@dvashim/biome-config` | Biome recommended only | — |
 | [React recommended](#react-recommended) | `@dvashim/biome-config/react-recommended` | Biome recommended + React domain | — |
-| [React strict](#react-strict) | `@dvashim/biome-config/react-strict` | 263 | 83 |
+| [React strict](#react-strict) | `@dvashim/biome-config/react-strict` | 274 | 94 |
 | [React strict-stable](#react-strict-stable) | `@dvashim/biome-config/react-strict-stable` | 180 | — |
-| [React balanced](#react-balanced) | `@dvashim/biome-config/react-balanced` | 263, 19 relaxed | 83 |
+| [React balanced](#react-balanced) | `@dvashim/biome-config/react-balanced` | 274, 22 relaxed | 94 |
 | [React balanced-stable](#react-balanced-stable) | `@dvashim/biome-config/react-balanced-stable` | 180, 15 relaxed | — |
 
 "Explicit rules" counts the entries a preset configures itself; Biome's recommended rules stay active in every preset on top of them. All six share the same [formatter, parser, VCS, and assist defaults](#defaults).
@@ -92,7 +92,7 @@ Add a `biome.json` to your project root and extend a preset. The `extends` path 
 ```jsonc
 // biome.json
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
   "extends": ["@dvashim/biome-config"]
 }
 ```
@@ -233,7 +233,7 @@ The most opinionated configuration. Enables all recommended rules plus **263 opt
 
 - **correctness** (24 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`, `noChildrenProp`, `noRenderReturnValue`), React Hooks correctness (`useExhaustiveDependencies`, `useHookAtTopLevel`, `useJsxKeyInIterable`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks. Also flags duplicate JSX attributes (`noDuplicateAttributes`), unused `new` expressions (`noUnusedInstantiation`), restricted imports/elements (`noPrivateImports`, `noRestrictedElements`), and Next.js issues (`noNextAsyncClientComponent`, `useInlineScriptId`, `noBeforeInteractiveScriptOutsideDocument`).
 
-- **nursery** (83 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (94 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noMisusedPromises`
   - **Equality:** `noNegationInEqualityCheck` (flags `!foo === bar`, which precedence parses as `(!foo) === bar` — almost always meant as `foo !== bar`)
   - **Complexity:** `noExcessiveNestedCallbacks`
@@ -278,7 +278,7 @@ Same as React strict, but **without nursery (experimental) rules** — 180 rules
 
 ### React balanced
 
-Same rule set as strict, with **19 targeted relaxations** to reduce false positives and noise in real-world projects:
+Same rule set as strict, with **22 targeted relaxations** to reduce false positives and noise in real-world projects:
 
 | Category | Rule | Strict | Balanced | Reason |
 |----------|------|--------|----------|--------|
@@ -288,7 +288,10 @@ Same rule set as strict, with **19 targeted relaxations** to reduce false positi
 | nursery | `noTailwindArbitraryValue` | warn | off | Arbitrary values are a deliberate Tailwind escape hatch |
 | nursery | `noUndeclaredCustomProperties` | warn | info | Resolves custom properties per file, so tokens declared in another stylesheet are reported as undefined; matches Biome's own default severity |
 | nursery | `noUnsafeTypeAssertion` | warn | off | Type assertions are unavoidable in generic and third-party-typed code |
+| nursery | `useBetterDomTraversing` | warn | info | Stylistic preference over ordinary DOM code, and its fixes are unsafe by the rule's own account |
+| nursery | `useLayeredStyles` | warn | off | Reports every style rule and `@import` outside a cascade layer, including in CSS Modules, with no option to exempt |
 | nursery | `useReactCompiler` | warn | off | Reports components incompatible with React Compiler, which most projects have not adopted |
+| nursery | `useReactNamingConvention` | warn | info | Naming convention for context, id, and ref bindings; fires across an existing codebase on first adoption |
 | performance | `noBarrelFile` | warn | off | Common pattern in libraries |
 | performance | `noImgElement` | warn | off | Next.js rule; fires on any `<img>` |
 | performance | `noNamespaceImport` | warn | off | Allows `import * as` |
@@ -302,13 +305,13 @@ Same rule set as strict, with **19 targeted relaxations** to reduce false positi
 | style | `noNestedTernary` | warn | off | Allows nested ternaries |
 | style | `useNamingConvention` | strictCase: true | strictCase: false | More lenient casing |
 
-> Fifteen of the 19 relaxations live in stable categories, so those 15 apply in `react-balanced-stable` as well. The `noTailwindArbitraryValue`, `noUndeclaredCustomProperties`, `noUnsafeTypeAssertion`, and `useReactCompiler` relaxations live in `nursery`, which the `-stable` variants drop entirely.
+> Fifteen of the 22 relaxations live in stable categories, so those 15 apply in `react-balanced-stable` as well. The `noTailwindArbitraryValue`, `noUndeclaredCustomProperties`, `noUnsafeTypeAssertion`, `useBetterDomTraversing`, `useLayeredStyles`, `useReactCompiler`, and `useReactNamingConvention` relaxations live in `nursery`, which the `-stable` variants drop entirely.
 
 ---
 
 ### React balanced-stable
 
-Same as React balanced, but **without nursery (experimental) rules** — 180 rules, with the 15 stable-category relaxations from the table above still applied (the four nursery relaxations drop out with their category).
+Same as React balanced, but **without nursery (experimental) rules** — 180 rules, with the 15 stable-category relaxations from the table above still applied (the seven nursery relaxations drop out with their category).
 
 ## FAQ
 
@@ -319,10 +322,10 @@ Same as React balanced, but **without nursery (experimental) rules** — 180 rul
 
 ### What version of Biome and Node do I need?
 
-These presets are built and tested against **Biome 2.5.11** — the version their `$schema` is pinned to (see [Requirements](#requirements)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
+These presets are built and tested against **Biome 2.5.13** — the version their `$schema` is pinned to (see [Requirements](#requirements)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
 
 ```bash
-pnpm add -D @biomejs/biome@^2.5.11
+pnpm add -D @biomejs/biome@^2.5.13
 ```
 
 ### How do I override a rule from the preset?
@@ -331,7 +334,7 @@ Add a `linter.rules` section in your `biome.json`. Local settings merge with and
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"],
   "linter": {
     "rules": {
@@ -372,7 +375,7 @@ For exclusions that should not affect Git tracking, use negated patterns in `fil
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
   "extends": ["@dvashim/biome-config"],
   "files": {
     "includes": ["**", "!!**/generated", "!!**/coverage"]
