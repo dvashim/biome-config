@@ -2,7 +2,7 @@
   "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
       "source": {
         "noDuplicateClasses": "on"
       }

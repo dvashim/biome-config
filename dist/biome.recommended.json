@@ -3,7 +3,7 @@
 
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
       "source": {
         "noDuplicateClasses": "on"
       }
@@ -56,7 +56,7 @@
 
   "linter": {
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
 

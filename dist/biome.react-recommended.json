@@ -3,7 +3,7 @@
 
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
       "source": {
         "noDuplicateClasses": "on"
       }
@@ -63,7 +63,7 @@
       "react": "recommended"
     },
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
 

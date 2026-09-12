@@ -95,6 +95,7 @@ type Ledger = { rules: Record<string, LedgerEntry> }
 type RuleValue = string | { level?: string; options?: unknown }
 type Preset = {
   $schema?: string
+  assist?: { actions?: Record<string, unknown> }
   linter?: { rules?: Record<string, unknown> }
 }
 
@@ -117,7 +118,7 @@ async function readJson<T>(relPath: string): Promise<T> {
   return JSON.parse(await readFile(resolve(root, relPath), 'utf8')) as T
 }
 
-/** Flattens `linter.rules` into entries, skipping `recommended` and `domains`. */
+/** Flattens `linter.rules` into entries, skipping `domains` and `preset`. */
 function entriesOf(preset: Preset): Entry[] {
   const out: Entry[] = []
   for (const [category, value] of Object.entries(preset.linter?.rules ?? {})) {
@@ -641,6 +642,30 @@ const readme = await readFile(resolve(root, 'README.md'), 'utf8')
     `listed-rule scope: ${outOfScope.length} listed rule(s) the presets should not `
       + `enumerate — remove them, or record why they are in scope in ${LEDGER}`,
     outOfScope
+  )
+}
+
+// --- 9. Deprecated fields ----------------------------------------------------
+// Biome 2.5.0 replaced `recommended` with `preset`, and its loader reports the
+// lint field as deprecated for removal in the next major. The loader only warns
+// about the file it loaded directly, so a preset carrying the field is invisible
+// to every consumer that extends it — which is how it went unmigrated across
+// eight version-tracking passes. `biome migrate` rewrites the assist field the
+// same way, so both are held to the same rule.
+{
+  const deprecated: string[] = []
+  for (const path of new Set(publishedPresets.values())) {
+    const preset = presets.get(path)
+    if ('recommended' in (preset?.linter?.rules ?? {})) {
+      deprecated.push(`${path}: linter.rules.recommended`)
+    }
+    if ('recommended' in (preset?.assist?.actions ?? {})) {
+      deprecated.push(`${path}: assist.actions.recommended`)
+    }
+  }
+  report(
+    'deprecated fields: replace `recommended` with `"preset": "recommended"`',
+    deprecated
   )
 }
 
