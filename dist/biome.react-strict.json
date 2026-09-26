@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
   "assist": {
     "actions": {
       "preset": "recommended",
@@ -125,6 +125,7 @@
         "noInlineStyles": "warn",
         "noInvalidFileInputAccept": "warn",
         "noInvalidPropertyInitValue": "warn",
+        "noJsonUnsafeValues": "warn",
         "noJsRestrictedProperties": "warn",
         "noJsxLeakedDollar": "warn",
         "noJsxNamespace": "warn",
@@ -133,6 +134,7 @@
         "noMisusedPromises": "error",
         "noNegationInEqualityCheck": "warn",
         "noNonScalableViewport": "warn",
+        "noObsoleteTags": "warn",
         "noPlaywrightElementHandle": "warn",
         "noPlaywrightEval": "warn",
         "noPlaywrightForceOption": "warn",
@@ -148,6 +150,7 @@
         "noReactNativeRawText": "warn",
         "noReactStringRefs": "warn",
         "noRestrictedDependencies": "warn",
+        "noReturnInFinally": "warn",
         "noTailwindArbitraryValue": "warn",
         "noThisOutsideOfClass": "warn",
         "noTopLevelLiterals": "warn",
@@ -166,12 +169,13 @@
         "useAwaitThenable": "warn",
         "useBaseline": "warn",
         "useBetterDomTraversing": "warn",
+        "useConsistentFunctionStyle": "warn",
+        "useConsistentObjectKeys": "warn",
         "useConsistentTestIt": "warn",
         "useControlLabel": "warn",
         "useDisposables": "warn",
         "useDomNodeTextContent": "warn",
         "useDomQuerySelector": "warn",
-        "useExhaustiveSwitchCases": "warn",
         "useExpect": "warn",
         "useExplicitReturnType": "warn",
         "useExplicitType": "off",
@@ -201,7 +205,14 @@
         "useTestHooksOnTop": "warn",
         "useThisInClassMethods": "warn",
         "useUnicodeRegex": "warn",
-        "useVarsOnTop": "warn"
+        "useValidTestTitle": "warn",
+        "useVarsOnTop": "warn",
+        "useExhaustiveSwitchCases": {
+          "level": "warn",
+          "options": {
+            "requireExplicitCase": true
+          }
+        }
       },
       "performance": {
         "noAwaitInLoops": "warn",

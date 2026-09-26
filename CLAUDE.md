@@ -118,10 +118,10 @@ needed.** Coverage walks the release and asks whether each rule is accounted for
 belong satisfies it by being there. That is how two GraphQL rules sat in the
 presets across nine version-tracking passes. Listed-rule scope walks the presets
 instead. Its test is a **disjunction** — an in-scope language *or* an in-scope
-domain — and evaluating the domain half alone would flag 201 correct rules in
-`react-strict`, including the 33 that belong only to domains the standing
-requirement never names (`types`, `playwright`, `drizzle`, `tailwind`,
-`turborepo`).
+domain — and evaluating the domain half alone would wrongly flag most of
+`react-strict`: every listed rule that declares no in-scope domain, including
+the 33 that belong only to domains the standing requirement never names
+(`types`, `playwright`, `drizzle`, `tailwind`, `turborepo`).
 
 ### Root biome.json
 
