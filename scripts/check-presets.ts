@@ -69,7 +69,7 @@ const IN_SCOPE_DOMAINS = new Set([
   'test',
 ])
 
-/** `recommended: true` never activates nursery, so a nursery entry is never redundant. */
+/** `recommended: true` never activates nursery, whatever `biome explain` reports. */
 const NURSERY = 'nursery'
 
 /**
@@ -140,6 +140,20 @@ function levelOf(value: RuleValue): string | undefined {
 
 function hasOptions(value: RuleValue): boolean {
   return typeof value !== 'string' && value.options !== undefined
+}
+
+/**
+ * Whether `recommended: true` activates the rule: recommended, domain-free, and
+ * outside `nursery`. `biome explain` reports some nursery rules as recommended
+ * — 11 of 119 in 2.5.14 — but the recommended set never activates nursery. Both
+ * Coverage and Redundancy ask this one question, so they share one answer: when
+ * Coverage asked it without the category, three of the six rules 2.5.14 added
+ * would have passed unlisted, active in no preset.
+ */
+function activeViaRecommended(meta: RuleMetadata): boolean {
+  return (
+    meta.recommended && meta.domains.length === 0 && meta.category !== NURSERY
+  )
 }
 
 function pinnedVersion(schema: string | undefined): string | undefined {
@@ -242,7 +256,7 @@ const readme = await readFile(resolve(root, 'README.md'), 'utf8')
   const unclassified: string[] = []
   for (const [rule, meta] of Object.entries(snapshot.rules)) {
     if (strictRules.has(rule)) continue
-    if (meta.recommended && meta.domains.length === 0) continue
+    if (activeViaRecommended(meta)) continue
     if (
       meta.domains.length > 0
       && meta.domains.every((domain) => EXCLUDED_DOMAINS.has(domain))
@@ -332,8 +346,7 @@ const readme = await readFile(resolve(root, 'README.md'), 'utf8')
   for (const path of RULE_PRESETS) {
     for (const entry of entriesOf(presets.get(path) as Preset)) {
       const meta = snapshot.rules[entry.rule]
-      if (!meta || meta.category === NURSERY) continue
-      if (!meta.recommended || meta.domains.length > 0) continue
+      if (!meta || !activeViaRecommended(meta)) continue
       if (hasOptions(entry.value)) continue
       if (levelOf(entry.value) === meta.defaultSeverity) {
         redundant.push(

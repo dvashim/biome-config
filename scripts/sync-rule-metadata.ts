@@ -13,21 +13,12 @@ const TARGET_SOURCE = 'dist/biome.recommended.json'
 const INSTALLED_BIOME = 'node_modules/@biomejs/biome/bin/biome'
 
 /**
- * Rule categories the configuration schema groups rules under. Each category
- * object also carries non-rule keys (`recommended`, `preset`) that are filtered
- * out; leaving them in would inflate every count by one per category.
+ * Keys that sit beside rules without being rules, at both levels the sweep
+ * reads: the schema's `Rules` definition, whose other keys are the rule
+ * categories, and each category's group, whose other keys are its rules. Any
+ * other key is read as a category or a rule, so a non-rule key a later schema
+ * adds fails the sweep by name rather than being silently swept or skipped.
  */
-const CATEGORIES = [
-  'A11y',
-  'Complexity',
-  'Correctness',
-  'Nursery',
-  'Performance',
-  'Security',
-  'Style',
-  'Suspicious',
-] as const
-
 const NON_RULE_KEYS = new Set(['preset', 'recommended'])
 
 const execFileAsync = promisify(execFile)
@@ -69,15 +60,56 @@ async function readTargetVersion(): Promise<string> {
   return match[1]
 }
 
+/** How the binary a run sweeps with was obtained, as its output reports it. */
+type Binary = { argv: string[]; source: 'override' | 'installed' | 'fetched' }
+
 /**
  * Biome ships no structured rule-metadata API: `biome explain` prints prose,
- * one rule per invocation. The command is therefore configurable so a bootstrap
- * or a back-fill can sweep a version other than the installed one, e.g.
- * `--biome "pnpm dlx @biomejs/biome@2.5.9"`.
+ * one rule per invocation, so the snapshot can only be read from a binary of
+ * the release it describes. That is the release the presets pin, never merely
+ * the one installed (docs/adr/0001), and it is resolved in order:
+ *
+ * 1. `--biome <command>`, kept for bootstrap and back-fill, e.g.
+ *    `--biome "pnpm dlx @biomejs/biome@2.5.9"` — honoured only when it reports
+ *    the pinned version;
+ * 2. the installed binary, when it is that release, which needs no network;
+ * 3. otherwise the release itself, fetched with `pnpm dlx`.
+ *
+ * The split state an automated bump leaves behind is therefore verified rather
+ * than skipped, and a release that cannot be obtained fails the run instead of
+ * letting an unverified snapshot pass.
  */
-function biomeCommand(): string[] {
-  const parts = (flag('biome') ?? INSTALLED_BIOME).trim().split(/\s+/)
-  const [command, ...rest] = parts
+async function resolveBiome(target: string, purpose: string): Promise<Binary> {
+  const override = flag('biome')
+  if (override !== undefined) {
+    const argv = parseCommand(override)
+    const version = await versionOf(argv, `could not run --biome "${override}"`)
+    if (version !== target) {
+      fail(
+        `--biome runs Biome ${version}, but the presets pin ${target}; `
+          + `${SNAPSHOT} describes only the pinned release.`
+      )
+    }
+    return { argv, source: 'override' }
+  }
+
+  if ((await readInstalledVersion()) === target) {
+    return { argv: [resolve(root, INSTALLED_BIOME)], source: 'installed' }
+  }
+
+  const argv = ['pnpm', 'dlx', `@biomejs/biome@${target}`]
+  const version = await versionOf(
+    argv,
+    `could not obtain Biome ${target} to ${purpose} ${SNAPSHOT}`
+  )
+  if (version !== target) {
+    fail(`${argv.join(' ')} runs Biome ${version}, not ${target}`)
+  }
+  return { argv, source: 'fetched' }
+}
+
+function parseCommand(text: string): string[] {
+  const [command, ...rest] = text.trim().split(/\s+/)
   if (!command) fail('--biome was given an empty command')
   return [command.startsWith('-') ? command : resolveIfLocal(command), ...rest]
 }
@@ -99,11 +131,27 @@ async function runBiome(argv: string[], args: string[]): Promise<string> {
   return stdout
 }
 
-async function readBiomeVersion(argv: string[]): Promise<string> {
-  const stdout = await runBiome(argv, ['--version'])
+/** The version `argv` reports; the run fails with `context` when it cannot say. */
+async function versionOf(argv: string[], context: string): Promise<string> {
+  let stdout: string
+  try {
+    stdout = await runBiome(argv, ['--version'])
+  } catch (error) {
+    fail(`${context}:\n${reason(error)}`)
+  }
   const match = stdout.match(/(\d+\.\d+\.\d+)/)
-  if (!match?.[1]) fail(`could not read a version from: ${stdout.trim()}`)
+  if (!match?.[1]) fail(`${context}: no version in "${stdout.trim()}"`)
   return match[1]
+}
+
+/** The most telling text an `execFile` rejection carries. */
+function reason(error: unknown): string {
+  const { message, stderr, stdout } = error as {
+    message?: string
+    stderr?: string
+    stdout?: string
+  }
+  return stderr?.trim() || stdout?.trim() || message || String(error)
 }
 
 /**
@@ -113,7 +161,7 @@ async function readBiomeVersion(argv: string[]): Promise<string> {
  */
 async function readRuleNames(
   version: string,
-  installed: string
+  installed: string | undefined
 ): Promise<string[]> {
   const text =
     version === installed
@@ -126,19 +174,66 @@ async function readRuleNames(
         )
       : await fetchSchema(version)
   const defs = (JSON.parse(text) as SchemaDocument).$defs
+  const categories = Object.entries(defs.Rules?.properties ?? {}).filter(
+    ([key]) => !NON_RULE_KEYS.has(key)
+  )
+  if (categories.length === 0) {
+    fail(`schema ${version} declares no rule categories under $defs.Rules`)
+  }
   const names: string[] = []
-  for (const category of CATEGORIES) {
-    const properties = defs[category]?.properties
-    if (!properties) fail(`schema ${version} has no ${category} category`)
-    for (const name of Object.keys(properties)) {
-      if (!NON_RULE_KEYS.has(name)) names.push(name)
-    }
+  const empty: string[] = []
+  for (const [category, node] of categories) {
+    const rules = rulesUnder(node, defs)
+    if (rules.length === 0) empty.push(category)
+    names.push(...rules)
+  }
+  if (empty.length > 0) {
+    fail(
+      `schema ${version} declares rule categories with no rules the sweep can `
+        + `read: ${empty.join(', ')}.\nA key under $defs.Rules that is not a `
+        + 'category belongs in NON_RULE_KEYS; a category is never dropped.'
+    )
   }
   return names.sort()
 }
 
-type SchemaDocument = {
-  $defs: Record<string, { properties?: Record<string, unknown> } | undefined>
+/** A JSON Schema node, as far as the category walk reads one. */
+type SchemaNode = {
+  $ref?: string
+  anyOf?: SchemaNode[]
+  oneOf?: SchemaNode[]
+  properties?: Record<string, SchemaNode>
+}
+
+type SchemaDocument = { $defs: Record<string, SchemaNode | undefined> }
+
+/**
+ * The rules a category's schema node leads to. The schema declares a category
+ * as `a11y: { anyOf: [{ $ref: SeverityOrA11y }, { type: "null" }] }`, and
+ * `SeverityOrA11y` as `anyOf: [GroupPlainConfiguration, { $ref: A11y }]`, so the
+ * walk follows `$ref`, `anyOf` and `oneOf` down to the definitions that carry
+ * `properties` — the category's rule group. Reading the categories this way,
+ * rather than from a list kept here, is what lets a category a later release
+ * introduces reach the snapshot, and so the coverage check, at all.
+ */
+function rulesUnder(
+  node: SchemaNode | undefined,
+  defs: SchemaDocument['$defs'],
+  seen = new Set<string>()
+): string[] {
+  if (node === undefined) return []
+  if (node.$ref !== undefined) {
+    const name = node.$ref.replace(/^#\/\$defs\//, '')
+    if (seen.has(name)) return []
+    seen.add(name)
+    return rulesUnder(defs[name], defs, seen)
+  }
+  if (node.properties !== undefined) {
+    return Object.keys(node.properties).filter((key) => !NON_RULE_KEYS.has(key))
+  }
+  return [...(node.anyOf ?? []), ...(node.oneOf ?? [])].flatMap((branch) =>
+    rulesUnder(branch, defs, seen)
+  )
 }
 
 async function fetchSchema(version: string): Promise<string> {
@@ -256,12 +351,17 @@ async function sweep(argv: string[], version: string): Promise<Snapshot> {
   return { biomeVersion: version, rules }
 }
 
-async function readInstalledVersion(): Promise<string> {
-  const text = await readFile(
-    resolve(root, 'node_modules/@biomejs/biome/package.json'),
-    'utf8'
-  )
-  return (JSON.parse(text) as { version: string }).version
+/** The installed `@biomejs/biome` version, or `undefined` when none is installed. */
+async function readInstalledVersion(): Promise<string | undefined> {
+  try {
+    const text = await readFile(
+      resolve(root, 'node_modules/@biomejs/biome/package.json'),
+      'utf8'
+    )
+    return (JSON.parse(text) as { version: string }).version
+  } catch {
+    return undefined
+  }
 }
 
 /**
@@ -269,25 +369,27 @@ async function readInstalledVersion(): Promise<string> {
  * comparison that is not plain lexicographic (`noConstantBinaryExpressions`
  * sorts before `noConstEnum`). Rather than reimplement it, the naive JSON is
  * piped through Biome itself, so the file this writes is by construction the
- * file `biome check` accepts. The formatter is the installed Biome, which is a
- * repo-tooling concern and independent of the version being swept.
+ * file `biome check` accepts. The formatter is the swept binary, not whatever
+ * is installed: `--check` compares bytes, so formatting with another version
+ * would report that version's formatting differences as drift (docs/adr/0001).
  */
-async function serialize(snapshot: Snapshot): Promise<string> {
+async function serialize(snapshot: Snapshot, argv: string[]): Promise<string> {
   let text = `${JSON.stringify(snapshot, null, 2)}\n`
   // One `--write` pass sorts the outer level and leaves the keys it moved
   // inside each rule for the next pass, so this runs to a fixpoint.
   for (let pass = 0; pass < 5; pass++) {
-    const next = await biomeCheckWrite(text)
+    const next = await biomeCheckWrite(argv, text)
     if (next === text) return text
     text = next
   }
   fail(`${SNAPSHOT} did not converge after 5 \`biome check --write\` passes`)
 }
 
-function biomeCheckWrite(text: string): Promise<string> {
+function biomeCheckWrite(argv: string[], text: string): Promise<string> {
+  const [command, ...prefix] = argv
   const promise = execFileAsync(
-    'pnpm',
-    ['exec', 'biome', 'check', '--write', `--stdin-file-path=${SNAPSHOT}`],
+    command as string,
+    [...prefix, 'check', '--write', `--stdin-file-path=${SNAPSHOT}`],
     { cwd: root, maxBuffer: 32 * 1024 * 1024 }
   )
   promise.child.stdin?.end(text)
@@ -296,49 +398,25 @@ function biomeCheckWrite(text: string): Promise<string> {
 
 const check = process.argv.includes('--check')
 const target = await readTargetVersion()
-const argv = biomeCommand()
-const swept = await readBiomeVersion(argv)
+const biome = await resolveBiome(target, check ? 'verify' : 'regenerate')
+const swept = `Biome ${target} (${biome.source})`
 
-if (swept !== target) {
-  // The snapshot's contents can only be verified against a binary of the version
-  // it describes. A devDependency bump routinely moves the installed version
-  // ahead of the pinned target, and the standing requirement treats that split
-  // state as the trigger for a version-tracking pass rather than as a defect, so
-  // `--check` reports and passes instead of reddening the build. The version
-  // disagreement itself is not unchecked: `check:presets` fails if the pinned
-  // target is inconsistent across the files that name it.
-  if (check) {
-    console.log(
-      `skipped: ${SNAPSHOT} describes Biome ${target}, the installed binary is `
-        + `${swept}. Snapshot drift becomes checkable once a version-tracking `
-        + `pass brings them level.`
-    )
-    process.exit(0)
-  }
-  fail(
-    `the presets target Biome ${target} but the sweep would run ${swept}.\n`
-      + `The snapshot describes the version the presets target, not whatever is `
-      + `installed.\nSweep the target explicitly:\n\n`
-      + `  node scripts/sync-rule-metadata.ts --biome "pnpm dlx @biomejs/biome@${target}"\n`
-  )
-}
-
-const snapshot = await sweep(argv, target)
-const serialized = await serialize(snapshot)
+const snapshot = await sweep(biome.argv, target)
+const serialized = await serialize(snapshot, biome.argv)
 
 if (check) {
   const actual = await readFile(resolve(root, SNAPSHOT), 'utf8')
   if (actual !== serialized) {
     console.error(
-      `drift: ${SNAPSHOT} does not match a fresh sweep of Biome ${target}.`
+      `drift: ${SNAPSHOT} does not match a fresh sweep of ${swept}.`
     )
     console.error('\nRun `pnpm sync-rule-metadata` to regenerate.')
     process.exit(1)
   }
-  console.log(`${SNAPSHOT} matches Biome ${target} — ${names(snapshot)} rules`)
+  console.log(`${SNAPSHOT} matches ${swept} — ${names(snapshot)} rules`)
 } else {
   await writeFile(resolve(root, SNAPSHOT), serialized)
-  console.log(`wrote ${SNAPSHOT} — ${names(snapshot)} rules at Biome ${target}`)
+  console.log(`wrote ${SNAPSHOT} — ${names(snapshot)} rules at ${swept}`)
 }
 
 function names(value: Snapshot): number {

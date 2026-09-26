@@ -18,7 +18,7 @@ Despite the name, `dist/` is **source** — the JSON files are checked in and pu
 - **Regenerate `-stable` variants from their parents:** `pnpm sync-stable`
 - **Preset invariants only** (coverage, category placement, rule existence, redundancy, strict/balanced parity, README inventory, pinned-target consistency, listed-rule scope, deprecated fields): `pnpm run check:presets`
 - **Rule-metadata drift only:** `pnpm run check:rule-metadata`
-- **Regenerate the rule-metadata snapshot:** `pnpm sync-rule-metadata` (add `--biome "pnpm dlx @biomejs/biome@<version>"` when the installed binary is not the version the presets target)
+- **Regenerate the rule-metadata snapshot:** `pnpm sync-rule-metadata` — it sweeps the release the presets pin, fetching it when the installed binary is a different version
 - **Create a changeset:** `pnpm changeset`
 - **Inspect a rule** (category, default severity, recommended status, domains, version added): `pnpm exec biome explain <rule>`
 
@@ -78,10 +78,16 @@ It describes the version the presets *target* (their pinned `$schema`), not the
 installed binary. That distinction is deliberate: a Dependabot bump routinely
 moves the installed version ahead of the presets, and keying the checks to the
 installed binary would fail CI for a state the standing requirement calls the
-normal trigger for a version-tracking pass. The sweep therefore refuses to run
-against a mismatched binary, and `--check` **skips** rather than failing when the
-two differ — so snapshot drift is only verified once a pass brings them level.
-Regenerating during a pass is one step: `pnpm sync-rule-metadata`.
+normal trigger for a version-tracking pass. So the sweep never reads, compares
+against, or formats with any version but the pinned one (`docs/adr/0001`): it
+uses the installed binary when that is the pinned release, and otherwise
+fetches the release with `pnpm dlx`. `--check` therefore verifies the snapshot
+on every run, split state included, and fails rather than passing when it cannot
+obtain the release. The split state is the only one that pays for this: it needs
+network access to the npm registry and biomejs.dev, and a full `--check` takes
+about 24 s instead of 11 s. `--biome <command>` remains for bootstrap and
+back-fill, and is refused unless it reports the pinned version. Regenerating
+during a pass is one step: `pnpm sync-rule-metadata`.
 
 Biome publishes no structured rule metadata, so the sweep parses `biome explain`
 output, one invocation per rule (~6s for every rule against the local binary). Two
@@ -93,9 +99,14 @@ things it reads are easy to get wrong:
   options sample (always JSON) and must not be read as its language. A rule with
   no code example at all (`noRestrictedTypes`) yields no language, which is
   recorded rather than treated as a parse failure.
-- **`biome explain` reports nursery rules as "recommended."** They are not active
-  via the recommended set, so a nursery entry is never redundant. Without that
-  guard `useMathMinMax` is a false positive.
+- **`biome explain` reports nursery rules as "recommended."** It does for 11 of
+  the 119 in 2.5.14, but the recommended set never activates nursery, so
+  Coverage and Redundancy share one guard on the category
+  (`activeViaRecommended`). Without it, a nursery entry is reported redundant
+  (`useMathMinMax` is the false positive), and an unlisted nursery rule counts as
+  already active: coverage would have passed 2.5.14 with three of its six added
+  rules — `noJsonUnsafeValues`, `noReturnInFinally`, `useConsistentObjectKeys` —
+  unlisted.
 
 `audit/rule-exclusions.json` is the **hand-edited** ledger: rules the metadata
 cannot place in or out of scope. Each entry carries a `direction` (`in` / `out`)
@@ -149,7 +160,7 @@ Non-trivial work is planned as an OpenSpec change using the project's own **`int
 ## Key conventions
 
 - **Key order.** `dist/*.json` keys are sorted by the `useSortedKeys` assist. Because of `groupByNesting`, rules with string values (`"warn"`) sort **before** rules with object values (`{ "level": …, "options": … }`) within a category — see the tail of `style` in `react-balanced.json`. Apply with `biome check --write`.
-- **Biome version upgrades** touch the `$schema` URL in all six dist files plus `biome.json` and `README.md`, and the `@biomejs/biome` devDependency. Reconciliation compares the version pinned in the `$schema` URLs against the npm `latest` dist-tag — *not* the installed binary, which an automated dep bump can move ahead of the presets. A pass audits five things and records the outcome of each: **new rules** (diff the rule keys of the old and new `configuration_schema.json`); **rules that graduated** out of nursery (relocate, preserving each preset's severity — they then start appearing in the `-stable` variants), were **renamed** (migrate, preserving severity), or were **removed** (drop); **new options on already-listed rules** (add an `options` block only to override an upstream default, never to restate it); **behavior changes the schema cannot see** (read the release notes — a formatter or parser change can be the bump's largest consumer impact and reaches presets whose rule lists never move); and **configuration migrations** (run `biome migrate` without `--write` against every preset and the root `biome.json`, and record each proposed rewrite as adopted or declined — apply adopted rewrites by hand and check each value against the field's meaning, because migrate's output depends on how the source is formatted). `recommended` and `react-recommended` pick up new rules automatically via `"preset": "recommended"`. After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` — `check:sync-stable` fails the build on drift. A pass also regenerates the rule-metadata snapshot (`pnpm sync-rule-metadata`) once the `$schema` target and the installed binary agree; the resulting `audit/rule-metadata.json` diff *is* the new-rules / graduated / renamed / removed audit, reviewable in the PR. `check:presets` then fails if the presets or the README did not keep up.
+- **Biome version upgrades** touch the `$schema` URL in all six dist files plus `biome.json` and `README.md`, and the `@biomejs/biome` devDependency. Reconciliation compares the version pinned in the `$schema` URLs against the npm `latest` dist-tag — *not* the installed binary, which an automated dep bump can move ahead of the presets. A pass audits five things and records the outcome of each: **new rules** (diff the rule keys of the old and new `configuration_schema.json`); **rules that graduated** out of nursery (relocate, preserving each preset's severity — they then start appearing in the `-stable` variants), were **renamed** (migrate, preserving severity), or were **removed** (drop); **new options on already-listed rules** (add an `options` block only to override an upstream default, never to restate it); **behavior changes the schema cannot see** (read the release notes — a formatter or parser change can be the bump's largest consumer impact and reaches presets whose rule lists never move); and **configuration migrations** (run `biome migrate` without `--write` against every preset and the root `biome.json`, and record each proposed rewrite as adopted or declined — apply adopted rewrites by hand and check each value against the field's meaning, because migrate's output depends on how the source is formatted). `recommended` and `react-recommended` pick up new rules automatically via `"preset": "recommended"`. After editing `react-strict` or `react-balanced`, run `pnpm sync-stable` — `check:sync-stable` fails the build on drift. A pass also regenerates the rule-metadata snapshot (`pnpm sync-rule-metadata`) after advancing the `$schema` target; the resulting `audit/rule-metadata.json` diff *is* the new-rules / graduated / renamed / removed audit, reviewable in the PR. `check:presets` then fails if the presets or the README did not keep up.
 - **README is part of the contract.** Its per-category rule counts must equal what `react-strict` lists, every rule it names must exist in that preset, the balanced relaxation table must report both the total and the stable-category subset that reaches `react-balanced-stable`, and the Configurations table must carry one row per published preset whose counts match what that preset lists. `check:presets` enforces all of it — including failing when the text a count is read from disappears, so a reworded sentence cannot silently retire its check. Never verify by eye.
 - **Changeset sizing** by published impact: **minor** when a preset rule list changes (added/removed/renamed/re-leveled — consumers' diagnostics change), **patch** when only the `$schema` target advances with no rule-list change or when only `README.md` changes (a corrected count, published prose), and **no changeset** when nothing in `dist/*.json` or `README.md` changed (dev deps, root `biome.json`, planning artifacts, regenerated tooling assets). The changeset config sets `"commit": true`, so `pnpm changeset` auto-commits.
 - **Release flow.** Work lands via PR to `main`; Changesets opens the release PR automatically on push to `main`. Commits follow Conventional Commits (`feat:`, `docs:`, `chore(openspec):`, `build(deps-dev):`).
