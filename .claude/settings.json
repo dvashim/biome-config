@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/intent-gate.mjs"],
+            "command": "node",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}

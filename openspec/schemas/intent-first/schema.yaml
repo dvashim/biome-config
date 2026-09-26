@@ -1,0 +1,421 @@
+# intent-first: intent → proposal → specs → design → adr → tasks
+#
+# Fork of OpenSpec's built-in spec-driven schema (OpenSpec 1.13.2), plus:
+#   - an intent stage a human accepts before any spec work starts
+#   - the ADR step from the intent-driven schema
+#     (github.com/intent-driven-dev/openspec-schemas, MIT)
+#
+# Folders outside openspec/ used by this schema (rename here if needed):
+#   docs/intents/   shared intents that span several changes
+#   docs/adr/       architectural decision records
+#
+# Install: copy this folder to openspec/schemas/intent-first/, then run
+#   openspec schema validate intent-first
+#
+# OpenSpec only checks that artifact files exist. The intent approval gate
+# lives in the instructions; enforce it with a hook or CI check if needed.
+
+name: intent-first
+version: 1
+description: Intent-first workflow - intent → proposal → specs → design → adr → tasks
+
+artifacts:
+  - id: intent
+    generates: intent.md
+    description: Accepted intent - the problem, outcome and constraints this change serves
+    template: intent.md
+    instruction: |
+      Capture WHY this work exists and what outcome it must produce, before any
+      proposal or spec. Write it in business terms, together with the person who
+      asked for the work. A named human approver accepts it. This is the judgment
+      gate of the workflow: every later artifact must trace back to it.
+
+      Pick a mode first:
+      - **Inline** (default): this change delivers the whole intent. Write the full
+        intent in intent.md.
+      - **Slice**: the intent is bigger than one change. The full intent lives in
+        `docs/intents/NNNN-kebab-title.md` at the repository root, never inside
+        `openspec/`. If that file is missing, write it from this same template, with
+        NNNN one higher than the highest number in `docs/intents/`. Then write a
+        short intent.md for this change with only the Source intent, Slice and
+        Approval sections, copying the shared intent's approval details. Do not
+        restate the full intent.
+
+      Sections:
+      - **Problem**: the observable pain or opportunity - who hits it, how often,
+        and what evidence exists. If the request arrived as a solution ("add an
+        export button"), describe the need behind it and put the requested solution
+        under Open questions for the approver to confirm.
+      - **Who is affected**: users, roles, teams, downstream systems.
+      - **Outcome**: what is different for them once this is done.
+      - **Success signal**: how we will know it landed - observable, with numbers
+        where possible (a metric, a ticket trend, a timing).
+      - **Constraints**: limits the solution must respect without choosing it -
+        security, regulatory and compliance, data handling, performance budgets,
+        deadlines, dependencies on other teams.
+      - **Non-goals**: what this work deliberately leaves out.
+      - **Open questions**: unknowns the approver must resolve or explicitly accept.
+      - **Approval**: status, originator, approver, date.
+
+      Keep spec and design content out:
+      - No SHALL/MUST requirements and no scenarios - they belong in specs.
+      - No component, API, library or architecture choices - they belong in
+        design.md and ADRs.
+      If a line reads like a requirement or a technical decision, rewrite it as the
+      need behind it.
+
+      Approval gate:
+      - Draft the intent with the user, then STOP and ask for it to be reviewed by
+        the approver named in it.
+      - Never mark it accepted on your own judgment. Set Status to `accepted` only
+        when the user explicitly confirms the approver accepted it, and record the
+        approver and date.
+      - Do not start the proposal while Status is `draft`.
+      - An accepted intent is frozen: never edit it. If a later step shows it is
+        wrong or incomplete, stop and tell the user; a human revises and re-accepts
+        it. If a shared intent in `docs/intents/` must change after work has
+        shipped against it, write a new intent that names the old one under
+        Supersedes.
+
+      Keep it to about one page, readable by an approver without engineering
+      context.
+    requires: []
+
+  - id: proposal
+    generates: proposal.md
+    description: Scope of the change, traced to the accepted intent
+    template: proposal.md
+    instruction: |
+      Create the proposal that scopes this change to serve the accepted intent.
+
+      Before writing:
+      - Read intent.md and, in slice mode, the shared intent it points to. If the
+        intent's Status (the shared intent's, in slice mode) is not `accepted`,
+        STOP and ask the user to get it accepted first.
+      - The intent owns the motivation. Do not add reasons it does not give; if the
+        change needs one, stop and ask whether the intent must be revised.
+
+      Sections:
+      - **Why**: 1-2 sentences summarising the intent's Problem and Outcome, ending
+        with a pointer to intent.md (and to the shared intent in slice mode). Do not
+        restate the whole intent.
+      - **What Changes**: Bullet list of changes. Be specific about new capabilities, modifications, or removals. Mark breaking changes with **BREAKING**.
+        Every item MUST trace to the intent's Outcome or Constraints. Drop items
+        that do not, or raise them with the user - they are scope creep.
+      - **Capabilities**: Identify which specs will be created or modified:
+        - **New Capabilities**: List capabilities being introduced. Each becomes a new `specs/<capability-path>/spec.md`. Use kebab-case for path segments you introduce (e.g., `user-auth` or `identity/user-auth`) and follow the project's existing spec organization.
+        - **Modified Capabilities**: List existing capabilities whose REQUIREMENTS are changing. Only include if spec-level behavior changes (not just implementation details). Each needs a delta spec file. Use the exact existing path under `openspec/specs/`. Leave empty if no requirement changes.
+      - **Impact**: Affected code, APIs, dependencies, or systems.
+
+      IMPORTANT: The Capabilities section is critical. It creates the contract between
+      proposal and specs phases. Research existing specs before filling this in:
+      run `openspec list --specs` for the project's capability inventory, then
+      `openspec show "<spec-id>" --type spec --json --no-scenarios` for any that
+      look related - that returns a capability's purpose and requirement texts
+      without pulling whole spec files into context. Append `--store "<id>"` to
+      both commands only for a registered standalone store, and keep `--type
+      spec`: a change and a spec sharing a name is otherwise an ambiguous-item
+      error. `openspec list` without `--specs` lists in-flight changes, not
+      specs - it never shows what the project already covers. Reuse an existing
+      capability's exact path instead of introducing a near-duplicate name.
+      The filtered read is only an overview. Before deciding what is already
+      covered or what should change, read each relevant spec in full, including
+      scenarios, with `openspec show "<spec-id>" --type spec` (same `--store` rule).
+      Each capability listed here will need a corresponding spec file.
+
+      Every change must either declare at least one capability (new or
+      modified) or explicitly opt out of specs: `openspec validate` rejects a
+      change with zero deltas unless the change's `.openspec.yaml` sets
+      `skip_specs: true`. Use `skip_specs: true` only when no spec-level
+      behavior changes (pure refactor, tooling, docs) - specs describe
+      behavior, so if behavior does not change, no spec should change either.
+      Do not invent a requirement just to satisfy validation.
+
+      Keep it concise (about one page). The intent covers why, the proposal
+      covers what; implementation details belong in design.md.
+
+      This is the foundation - specs, design, adr, and tasks all build on this.
+    requires:
+      - intent
+
+  - id: specs
+    generates: specs/**/*.md
+    description: Detailed specifications for the change
+    template: spec.md
+    instruction: |
+      Create specification files that define WHAT the system should do.
+
+      A spec is a behavior contract, not an implementation plan.
+
+      Good spec content:
+      - Observable behavior users or downstream systems rely on
+      - Inputs, outputs, and error conditions
+      - External constraints (security, privacy, reliability, compatibility)
+      - Scenarios that can be tested or explicitly validated
+
+      Avoid in specs:
+      - Internal class/function names
+      - Library or framework choices
+      - Step-by-step implementation details
+      - Detailed execution plans (those belong in design.md or tasks.md)
+
+      Quick test: if the implementation can change without changing externally
+      visible behavior, it likely does not belong in the spec.
+
+      Trace to the intent:
+      - Intent Constraints that describe observable behaviour (performance
+        budgets, audit logging, access rules, accessibility) become requirements
+        with scenarios. Constraints about how to build belong in design.md.
+      - No requirement may contradict the intent's Non-goals.
+
+      Create one spec file per capability listed in the proposal's Capabilities section.
+      `<capability-path>` is the spec directory relative to `specs/` (for example,
+      `user-auth` or `identity/user-auth`). Preserve the full path:
+      - New capabilities: use the exact path from the proposal at `specs/<capability-path>/spec.md`. Any path segment newly introduced in the proposal must be kebab-case. Follow the project's existing organization; do not add a new domain level when the project uses a flat layout.
+      - Modified capabilities: use the exact existing path from `openspec/specs/<capability-path>/` when creating the delta at `specs/<capability-path>/spec.md`. Run `openspec list --specs` to confirm that path before writing the delta, appending `--store "<id>"` only for a registered standalone store - a mistyped or invented path targets a capability that does not exist rather than the one you meant. Do not move or rename the capability.
+
+      There must be at least one spec file unless the change's `.openspec.yaml`
+      sets `skip_specs: true` (no spec-level behavior change) - `openspec validate`
+      rejects a zero-delta change without that marker. If the proposal lists no
+      capabilities and `skip_specs` is not set, revisit the proposal first.
+
+      Delta operations (use ## headers):
+      - **ADDED Requirements**: New capabilities
+      - **MODIFIED Requirements**: Changed behavior - MUST include full updated content
+      - **REMOVED Requirements**: Deprecated features - MUST include **Reason** and **Migration**
+      - **RENAMED Requirements**: Name changes only - use FROM:/TO: format
+
+      Format requirements:
+      - Each requirement: `### Requirement: <name>` followed by description
+      - Use SHALL/MUST for normative requirements (avoid should/may)
+      - Each scenario: `#### Scenario: <name>` with WHEN/THEN format
+      - **CRITICAL**: Scenarios MUST use exactly 4 hashtags (`####`). Using 3 hashtags or bullets will fail silently.
+      - Every requirement MUST have at least one scenario.
+
+      New capabilities only: the delta spec's first section is `## Purpose` -
+      one or two sentences (50+ characters, or `openspec validate --strict`
+      reports it as too brief) describing what the capability is for. Archive
+      copies it into the main spec it creates; without it the new main spec is
+      left with a `TBD ... Update Purpose after archive` placeholder to fill in
+      by hand. Do NOT add `## Purpose` to a delta for an existing capability -
+      that spec already has one and the delta's is ignored. To change an
+      existing capability's Purpose - including a leftover `TBD` placeholder -
+      edit `<planningHome.root>/openspec/specs/<capability-path>/spec.md`
+      directly. `planningHome.root` comes from the `openspec instructions ...
+      --json` response. Always use it rather than a repo-relative path: it
+      resolves to the store whenever the change lives in one - whether that
+      came from `--store`, a project `store:` pointer, or a global default
+      store - and to the current repository otherwise. Do not try to work out
+      which case applies; the field already has.
+
+      MODIFIED requirements workflow:
+      1. Locate the existing requirement in `<planningHome.root>/openspec/specs/<capability-path>/spec.md` (the same store-aware root as above)
+      2. Copy the ENTIRE requirement block (from `### Requirement:` through all scenarios)
+      3. Paste under `## MODIFIED Requirements` and edit to reflect new behavior
+      4. Ensure header text matches exactly (whitespace-insensitive)
+
+      Common pitfall: Using MODIFIED with partial content loses detail at archive time.
+      If adding new concerns without changing existing behavior, use ADDED instead.
+
+      Example (a new capability, so its first section is `## Purpose`):
+      ```
+      # Spec Delta
+
+      ## Purpose
+
+      Lets users take their data out of the product in a portable format.
+
+      ## ADDED Requirements
+
+      ### Requirement: User can export data
+      The system SHALL allow users to export their data in CSV format.
+
+      #### Scenario: Successful export
+      - **WHEN** user clicks "Export" button
+      - **THEN** system downloads a CSV file with all user data
+
+      ## REMOVED Requirements
+
+      ### Requirement: Legacy export
+      **Reason**: Replaced by new export system
+      **Migration**: Use new export endpoint at /api/v2/export
+      ```
+
+      Specs should be testable - each scenario is a potential test case.
+    requires:
+      - proposal
+
+  - id: design
+    generates: design.md
+    description: Technical design document with implementation details
+    template: design.md
+    instruction: |
+      Create the design document that explains HOW to implement the change.
+
+      Always create design.md: the adr step reviews it and tasks depend on that
+      review. Keep it proportional - for a small change a few lines per section is
+      enough, and say plainly when there are no significant design decisions.
+
+      Prior decisions - read before designing:
+      List every file in `docs/adr/`. An ADR is superseded when a later ADR's
+      `Supersedes:` field names it; all others are in force. In-force ADRs bind
+      this design; superseded ones are history only. To depart from an in-force
+      ADR, do not edit it - note it under Open Questions and the adr step records
+      a superseding decision.
+
+      Sections:
+      - **Context**: Only the current state and constraints needed to explain the approach. Reference the intent and proposal for motivation instead of restating it (e.g., "See intent.md - Problem").
+      - **Goals / Non-Goals**: What this design achieves and explicitly excludes. Don't restate the intent's or proposal's scope - add only design-level boundaries.
+      - **Prior decisions**: In-force ADRs this design relies on, and any it proposes to revisit. "None" when `docs/adr/` is empty.
+      - **Decisions**: Key technical choices with rationale (why X over Y?). Include alternatives considered for each decision.
+      - **Constraints check**: Every Constraint from the intent, with how this design satisfies it or why it does not apply. None may be dropped silently.
+      - **Risks / Trade-offs**: Known limitations, things that could go wrong. Format: [Risk] → Mitigation
+      - **Migration Plan**: Steps to deploy, rollback strategy (if applicable)
+      - **Open Questions**: Unknowns that can safely be answered later without
+        changing the specs, the approach, or the task breakdown, plus any in-force
+        ADR this design asks to revisit. Omit if none.
+
+      Open questions are for genuinely deferrable unknowns, not decisions you
+      skipped. If a question would change the specs, the chosen approach, or
+      the task breakdown, resolve it now - ask the user instead of guessing.
+
+      Focus on architecture and approach, not line-by-line implementation.
+      The intent covers why, the proposal covers what, the specs cover required
+      behaviour; design covers how. If a section would only restate them, point
+      to them instead.
+
+      Good design docs explain the "why" behind technical decisions.
+    requires:
+      - proposal
+      - specs
+
+  - id: adr
+    generates: adr.md
+    description: ADR review manifest; durable decisions are written to docs/adr/
+    template: adr.md
+    instruction: |
+      Review this change for durable architectural decisions and record them.
+
+      1. Read every ADR in `docs/adr/` (the folder may not exist yet). Work out
+         which are in force: an ADR is superseded when a later ADR's `Supersedes:`
+         field names it. Note the highest number in use.
+      2. Re-read design.md, including Open Questions that ask to revisit an ADR.
+         A decision qualifies only if ALL of these hold:
+         - it is a long-term commitment (a pattern, technology, boundary or
+           contract), not a tactical implementation detail;
+         - it will constrain future changes, not just this one;
+         - no in-force ADR already records it, or it deliberately departs from one.
+      3. For each qualifying decision, create `docs/adr/NNNN-kebab-title.md`, where
+         NNNN is the next 4-digit number (never reused), in this format:
+
+         ```
+         # NNNN. Title
+
+         Status: accepted
+         Date: YYYY-MM-DD
+         Supersedes: none
+
+         ## Context
+         Forces at play; link the intent and this change.
+
+         ## Decision
+         What we decided, stated as a commitment.
+
+         ## Consequences
+         What becomes easier, what becomes harder, what future changes must do.
+         ```
+
+         When it replaces an in-force ADR, set `Status: accepted, supersedes
+         ADR-NNNN`, fill in `Supersedes:`, and explain in Context why the earlier
+         decision no longer holds.
+      4. Write adr.md in this change folder from the template: confirm the review
+         happened, list the in-force ADRs reviewed, and link every ADR created. Do
+         not copy ADR content into it.
+
+      Rules:
+      - Existing ADRs are immutable. Never edit an ADR this change did not
+        create - not its status, body or date. Change a decision only by
+        superseding it. ADRs created by this change may still be revised while
+        the change is under review.
+      - Do not invent ADRs to fill this step. If nothing qualifies, adr.md says so
+        explicitly; that is a complete result.
+    requires:
+      - design
+
+  - id: tasks
+    generates: tasks.md
+    description: Implementation checklist with trackable tasks
+    template: tasks.md
+    instruction: |
+      Create the task list that breaks down the implementation work.
+
+      Before writing tasks, check design.md for Open Questions. If any of them
+      would change what gets built, resolve them with the user first - do not
+      bake an unstated assumption into the task list.
+
+      **IMPORTANT: Follow the template below exactly.** The apply phase parses
+      checkbox format to track progress. A box holding only `x` counts as done,
+      upper or lower case and with any spacing, so `- [ x]` is done too. Every
+      other marker, including `- [~]`, `- [-]` and an empty `- []`, reads as
+      unfinished. A line with no checkbox is not tracked at all.
+
+      Guidelines:
+      - Group related tasks under ## numbered headings
+      - Each task MUST be a checkbox: `- [ ] X.Y Task description`
+      - Tasks should be small enough to complete in one session
+      - Order tasks by dependency (what must be done first?)
+      - Each task MUST state how to verify completion (a test, command,
+        observable behavior, or delivered artifact). Put the verification in
+        that task's checkbox description. Use a separate verification task only
+        when it checks broader integration or system behavior that spans
+        multiple implementation tasks.
+      - Each task group MUST land the tests and documentation its own work
+        calls for. Do NOT collect testing or documentation into a final group -
+        when a late group first exercises work from an early one, the failures
+        cascade back through every group in between and force rework. A group
+        whose work calls for neither, such as scaffolding or dependency setup,
+        carries neither. A final group is for integration checks only, not for
+        the tests and docs an earlier group owed.
+
+      Example:
+      ```
+      # Tasks
+
+      ## 1. Setup
+
+      - [ ] 1.1 Create new module structure and verify expected files are present
+      - [ ] 1.2 Add dependencies to package.json and verify package installation succeeds
+
+      ## 2. Core Implementation
+
+      - [ ] 2.1 Implement data export function and verify the export test passes
+      - [ ] 2.2 Add CSV formatting utilities and verify unit tests cover quoting and delimiters
+      - [ ] 2.3 Document the export API in docs/export.md and verify the documented command runs as written
+      ```
+
+      Trace to the intent and decisions:
+      - Tasks MUST honour the in-force ADRs in `docs/adr/` (including any this
+        change created) and the Constraints check in design.md.
+      - If the intent's Success signal needs instrumentation to be observable
+        (a metric, log or analytics event), include tasks that add it.
+      - If the change has delta specs, end with a task to run
+        `openspec validate <change> --type change --strict` and fix what it reports.
+
+      Reference specs for what needs to be built, design and ADRs for how to build it.
+    requires:
+      - specs
+      - adr
+
+apply:
+  requires:
+    - tasks
+  tracks: tasks.md
+  instruction: |
+    Before coding, read intent.md, proposal.md, the delta specs, design.md,
+    adr.md and the in-force ADRs in docs/adr/. Work through pending tasks in
+    order and mark each complete as you go. Pause if you hit blockers or need
+    clarification.
+
+    If the implementation would contradict the intent, a spec or an in-force
+    ADR, stop and ask - do not quietly change artifacts to match the code.
+    Never edit intent.md.

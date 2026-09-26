@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
   "assist": {
     "actions": {
       "preset": "recommended",
@@ -130,6 +130,7 @@
         "noInlineStyles": "warn",
         "noInvalidFileInputAccept": "warn",
         "noInvalidPropertyInitValue": "warn",
+        "noJsonUnsafeValues": "warn",
         "noJsRestrictedProperties": "warn",
         "noJsxLeakedDollar": "warn",
         "noJsxNamespace": "warn",
@@ -138,6 +139,7 @@
         "noMisusedPromises": "error",
         "noNegationInEqualityCheck": "warn",
         "noNonScalableViewport": "warn",
+        "noObsoleteTags": "warn",
         "noPlaywrightElementHandle": "warn",
         "noPlaywrightEval": "warn",
         "noPlaywrightForceOption": "warn",
@@ -153,6 +155,7 @@
         "noReactNativeRawText": "warn",
         "noReactStringRefs": "warn",
         "noRestrictedDependencies": "warn",
+        "noReturnInFinally": "warn",
         "noTailwindArbitraryValue": "off",
         "noThisOutsideOfClass": "warn",
         "noTopLevelLiterals": "warn",
@@ -171,6 +174,8 @@
         "useAwaitThenable": "warn",
         "useBaseline": "warn",
         "useBetterDomTraversing": "info",
+        "useConsistentFunctionStyle": "off",
+        "useConsistentObjectKeys": "warn",
         "useConsistentTestIt": "warn",
         "useControlLabel": "warn",
         "useDisposables": "warn",
@@ -206,6 +211,7 @@
         "useTestHooksOnTop": "warn",
         "useThisInClassMethods": "warn",
         "useUnicodeRegex": "warn",
+        "useValidTestTitle": "info",
         "useVarsOnTop": "warn"
       },
       "performance": {
