@@ -1,4 +1,6 @@
-schema: spec-driven
+# schema: spec-driven
+
+schema: intent-first
 
 # Project context (optional)
 # This is shown to AI when creating artifacts.
