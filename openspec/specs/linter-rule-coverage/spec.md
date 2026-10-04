@@ -241,8 +241,9 @@ moved.
 A pass that advances the target SHALL also regenerate the rule-metadata snapshot
 against the new version. The snapshot is defined as describing the release the
 presets target, so leaving it behind would make it describe a version the presets
-no longer claim — and it is what re-arms the snapshot drift check, which is inert
-while the target and the installed binary disagree.
+no longer claim. The snapshot check verifies it against the pinned target on
+every run, whatever version is installed, so a change that advances the target
+without regenerating the snapshot fails that check.
 
 #### Scenario: Already on latest
 
@@ -575,18 +576,22 @@ nothing about the inputs it had already read.
 The metadata SHALL describe the Biome release the presets **target** — the
 version pinned in their `$schema` URLs — and SHALL cover, for every rule that
 release declares, its category, recommended status, domains, default
-severity, and the languages of its published examples. The check SHALL NOT be keyed to the version of the locally installed
-binary: an automated devDependency bump routinely moves the installed version
-ahead of the pinned target, and the standing requirement already treats that
-split state as the trigger for a version-tracking pass rather than as a
-defect.
+severity, and the languages of its published examples. The check SHALL NOT be
+keyed to the version of the locally installed binary: an automated devDependency
+bump routinely moves the installed version ahead of the pinned target, and the
+standing requirement already treats that split state as the trigger for a
+version-tracking pass rather than as a defect.
 
 The enforced invariants SHALL be:
 
 - **Coverage** — every rule the target release declares is accounted for as one of:
-  listed in `react-strict`; recommended with no domain, and so already active via
-  `recommended: true`; belonging only to an excluded framework domain; targeting
-  only an excluded language; or named in the exclusion ledger.
+  listed in `react-strict`; recommended, domain-free, and outside `nursery`, and so
+  already active via `recommended: true`; belonging only to an excluded framework
+  domain; targeting only an excluded language; or named in the exclusion ledger. A
+  `nursery` rule SHALL NOT be accounted for as active through the recommended set
+  even when the release reports it as recommended, because that set never
+  activates `nursery`. Counting it as active would let a release's new rule go
+  unlisted, reaching no consumer, while the check reports it accounted for.
 - **Category placement** — every rule a preset lists is listed under the category
   the target release reports for it.
 - **Rule existence** — every rule a preset lists still exists in the target
@@ -616,8 +621,9 @@ The enforced invariants SHALL be:
 #### Scenario: Unclassifiable rule fails the check
 
 - **WHEN** the target Biome release contains a rule that is neither listed in
-  `react-strict`, nor recommended-with-no-domain, nor framework-domain-only, nor
-  excluded-language-only, nor named in the exclusion ledger
+  `react-strict`, nor recommended-with-no-domain outside `nursery`, nor
+  framework-domain-only, nor excluded-language-only, nor named in the exclusion
+  ledger
 - **THEN** the check fails and names the rules awaiting classification, so a
   coverage gap surfaces at build time rather than at the next version-tracking pass
 
@@ -645,6 +651,14 @@ The enforced invariants SHALL be:
   preset lists it
 - **THEN** the check treats the entry as required rather than redundant, because
   `recommended: true` does not activate nursery rules
+
+#### Scenario: Unlisted nursery rule reported as recommended is awaiting classification
+
+- **WHEN** the target release declares a `nursery` rule that it reports as
+  recommended and that has no domain, no preset lists it, neither its domains nor
+  its example languages exclude it, and no ledger entry names it
+- **THEN** the check fails and names it as awaiting classification, rather than
+  counting it as already active via `recommended: true`
 
 #### Scenario: Preset rule sets diverge
 
@@ -832,3 +846,78 @@ automated dependency bump moving the installed binary ahead of the presets.
 - **WHEN** the union of the per-hop diffs equals the endpoint-to-endpoint diff
 - **THEN** the pass records that agreement as the check's outcome, rather than
   citing it as grounds for diffing only the endpoints next time
+
+### Requirement: The rule-metadata snapshot is verified against the release it describes
+
+The rule-metadata snapshot SHALL be verified against the Biome release it
+describes — the version pinned in the presets' `$schema` URLs — on every run of
+`pnpm run check`, whatever version of Biome is installed. When the installed
+binary is that release, the check SHALL read the release from it. When it is not,
+the check SHALL obtain the pinned release for the comparison rather than skipping
+it. The verification SHALL NOT go inert while the installed binary and the pinned
+target disagree. That split state is the normal trigger for a version-tracking
+pass, and it is also the state in which a snapshot that names a release without
+describing it would otherwise pass every invariant that reads the snapshot.
+
+A check that cannot obtain the pinned release — because it is unreachable, or
+because that version was never published — SHALL fail and state that the snapshot
+could not be verified against it. It SHALL NOT report the snapshot as verified or
+the comparison as skipped. Regeneration SHALL describe the same release the check
+verifies against: it SHALL read the pinned target whatever version is installed,
+and SHALL NOT write any other version's rules into the snapshot.
+
+The snapshot SHALL cover every rule category the release's own configuration
+schema declares, derived from that schema rather than from a list maintained
+beside it, so that a category a later release introduces is covered by
+construction. A declared category from which no rules can be read SHALL fail the
+regeneration and the check, naming the category. It SHALL NOT be passed over.
+
+#### Scenario: Versions agree
+
+- **WHEN** the installed binary is the release the presets pin
+- **THEN** the check verifies the snapshot against the installed binary without
+  obtaining any other release, and needs no network access
+
+#### Scenario: Snapshot is verified while the installed binary is ahead
+
+- **WHEN** an automated devDependency bump has moved the installed Biome past the
+  pinned target, and the snapshot correctly describes the pinned release
+- **THEN** the check verifies the snapshot against the pinned release and passes,
+  rather than reporting the comparison as skipped
+
+#### Scenario: Relabelled snapshot fails verification
+
+- **WHEN** every file that pins the target, and the version the snapshot records,
+  name a published release whose rules the snapshot does not describe — for
+  example, the pins were advanced and the snapshot's version relabelled without it
+  being regenerated
+- **THEN** the check fails reporting drift against that release, whatever version
+  is installed
+
+#### Scenario: Pinned release cannot be obtained
+
+- **WHEN** the check needs a release other than the installed one and cannot
+  obtain it, because there is no network access or the pinned version was never
+  published
+- **THEN** the check fails and names the release it could not verify against
+
+#### Scenario: Regeneration reads the pinned target
+
+- **WHEN** the snapshot is regenerated while the installed binary is a different
+  release from the pinned target
+- **THEN** the regenerated snapshot describes the pinned target and records its
+  version
+
+#### Scenario: Release declares a rule category not seen before
+
+- **WHEN** the target release's configuration schema declares a rule category
+  that no earlier release declared
+- **THEN** the regenerated snapshot includes that category's rules, so the
+  Coverage invariant evaluates them like any other rule
+
+#### Scenario: Declared category yields no rules
+
+- **WHEN** a category the configuration schema declares resolves to no group of
+  rules that can be read
+- **THEN** regeneration and the check both fail naming that category, rather than
+  producing or accepting a snapshot without its rules
