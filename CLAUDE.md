@@ -60,7 +60,7 @@ Scope (formalized in `openspec/specs/linter-rule-coverage/spec.md`):
 - **In scope** — every non-recommended rule targeting `js`, `ts`, `css`, `html`, `json`, or `jsonc`, or belonging to the React, Next.js, React Native, `test`, or `project` domains.
 - **Out of scope** — GraphQL-only rules, and rules whose only domain is `vue`, `solid`, `qwik`, `svelte`, or `astro`.
 - **Severity convention** — new rules land at `warn` in `react-strict`; `react-balanced` relaxes purely stylistic, high-noise, or broadly-firing rules to `info` or `off`.
-- **Framework rules fire everywhere.** Because they are listed individually rather than domain-gated, most defeat Biome's dependency gate and reach every consumer (e.g. `noImgElement` on any `<img>`). That gating behavior is established **empirically** — run the rule against a fixture with and without the gating dependency — not inferred from sibling rules; `useReactCompiler` is the known exception that still self-gates. Defeating the gate does not automatically warrant a balanced relaxation: a rule whose trigger pattern is itself framework-specific (`useTailwindShorthandClasses`) matches nothing in projects that lack the framework.
+- **Framework rules fire everywhere.** Because they are listed individually rather than domain-gated, most defeat Biome's dependency gate and reach every consumer (e.g. `noImgElement` on any `<img>`). That gating behavior is established **empirically** — run the rule against a fixture with and without the gating dependency — not inferred from sibling rules, and re-measured when a release touches the rule: `useReactCompiler` gated itself on React 19 until Biome 2.5.15 dropped the check. Defeating the gate does not automatically warrant a balanced relaxation: a rule whose trigger pattern is itself framework-specific (`useTailwindShorthandClasses`) matches nothing in projects that lack the framework.
 - **Configuration-required rules** (the `noRestricted*` family and anything inert until the consumer supplies entries) are listed at a bare severity string with **no** `options` block, at the same severity in both presets.
 
 ### scripts/sync-stable.ts
@@ -131,7 +131,7 @@ presets across nine version-tracking passes. Listed-rule scope walks the presets
 instead. Its test is a **disjunction** — an in-scope language *or* an in-scope
 domain — and evaluating the domain half alone would wrongly flag most of
 `react-strict`: every listed rule that declares no in-scope domain, including
-the 33 that belong only to domains the standing requirement never names
+every one that belongs only to domains the standing requirement never names
 (`types`, `playwright`, `drizzle`, `tailwind`, `turborepo`).
 
 ### Root biome.json

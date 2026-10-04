@@ -32,9 +32,9 @@ const EXCLUDED_LANGUAGES = new Set(['graphql'])
 /**
  * Languages the presets cover. A listed rule qualifies through one of these
  * **or** through an in-scope domain — the scope test is a disjunction, and
- * evaluating the domain half alone would flag the 33 listed rules that belong
+ * evaluating the domain half alone would flag every listed rule that belongs
  * only to domains the requirement does not name (`types`, `playwright`,
- * `drizzle`, `tailwind`, `turborepo`), every one of which is a js/ts rule.
+ * `drizzle`, `tailwind`, `turborepo`) — each of them a js/ts rule.
  */
 const IN_SCOPE_LANGUAGES = new Set([
   'cjs',
