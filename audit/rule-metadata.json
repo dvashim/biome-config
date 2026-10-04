@@ -1,5 +1,5 @@
 {
-  "biomeVersion": "2.5.14",
+  "biomeVersion": "2.5.15",
   "rules": {
     "noAccessKey": {
       "category": "a11y",
@@ -77,6 +77,13 @@
       "domains": [],
       "languages": ["ts"],
       "recommended": true
+    },
+    "noAstroConflictingSetDirectives": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["astro"],
+      "languages": ["astro"],
+      "recommended": false
     },
     "noAstroSetHtmlDirective": {
       "category": "nursery",
@@ -1121,6 +1128,13 @@
       "languages": ["js", "ts"],
       "recommended": false
     },
+    "noMeaninglessVoidOperator": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["types"],
+      "languages": ["js", "ts"],
+      "recommended": false
+    },
     "noMisleadingCharacterClass": {
       "category": "suspicious",
       "defaultSeverity": "error",
@@ -1148,6 +1162,13 @@
       "domains": [],
       "languages": ["js"],
       "recommended": false
+    },
+    "noMisplacedListElements": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["jsx"],
+      "recommended": true
     },
     "noMisrefactoredShorthandAssign": {
       "category": "suspicious",
@@ -1492,6 +1513,13 @@
       "languages": ["jsx"],
       "recommended": false
     },
+    "noReactObjectTypeAsDefaultProp": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["react"],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noReactPropAssignments": {
       "category": "correctness",
       "defaultSeverity": "info",
@@ -1646,6 +1674,13 @@
       "languages": ["js"],
       "recommended": true
     },
+    "noSelfImport": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["project"],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noSetterReturn": {
       "category": "correctness",
       "defaultSeverity": "error",
@@ -1751,6 +1786,13 @@
       "languages": ["svelte"],
       "recommended": false
     },
+    "noSvelteExportLet": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["svelte"],
+      "languages": ["svelte"],
+      "recommended": false
+    },
     "noSvelteLegacyConst": {
       "category": "nursery",
       "defaultSeverity": "info",
@@ -1787,6 +1829,13 @@
       "recommended": false
     },
     "noTailwindArbitraryValue": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["tailwind"],
+      "languages": ["jsx"],
+      "recommended": false
+    },
+    "noTailwindRawColors": {
       "category": "nursery",
       "defaultSeverity": "info",
       "domains": ["tailwind"],
@@ -2441,7 +2490,7 @@
       "category": "a11y",
       "defaultSeverity": "error",
       "domains": [],
-      "languages": ["jsx"],
+      "languages": ["astro", "jsx"],
       "recommended": true
     },
     "useAnchorContent": {
@@ -3123,6 +3172,13 @@
       "languages": ["js"],
       "recommended": true
     },
+    "useLogicalProperties": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["css"],
+      "recommended": false
+    },
     "useLoneAnonymousOperation": {
       "category": "correctness",
       "defaultSeverity": "error",
@@ -3270,6 +3326,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "usePromiseRejectErrors": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
     "useQwikClasslist": {
       "category": "correctness",
       "defaultSeverity": "error",
@@ -3309,7 +3372,7 @@
       "category": "nursery",
       "defaultSeverity": "info",
       "domains": ["react"],
-      "languages": ["js", "json", "jsx"],
+      "languages": ["js", "jsx"],
       "recommended": false
     },
     "useReactFunctionComponentDefinition": {
@@ -3473,6 +3536,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "useStrictBooleanExpressions": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["types"],
+      "languages": ["js", "ts"],
+      "recommended": false
+    },
     "useStrictMode": {
       "category": "suspicious",
       "defaultSeverity": "warn",
@@ -3485,6 +3555,13 @@
       "defaultSeverity": "info",
       "domains": ["types"],
       "languages": ["ts"],
+      "recommended": false
+    },
+    "useSvelteKitRuneImports": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["svelte"],
+      "languages": ["js", "svelte"],
       "recommended": false
     },
     "useSvelteRequireEachKey": {
