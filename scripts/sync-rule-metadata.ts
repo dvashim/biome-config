@@ -254,6 +254,11 @@ async function fetchSchema(version: string): Promise<string> {
  *   `graphql,expect_diagnostic` or `ts,expect_diagnostic,file=invalid.ts`. The
  *   `options` modifier marks the rule's own options block rather than a sample
  *   in the rule's language, so those fences are skipped.
+ * - An example is read by the fence that opens it. A Markdown rule's example
+ *   opens with a longer fence (````` ````md `````) so that it can show fenced
+ *   code; the shorter fences inside are the example's content, not examples of
+ *   their own. Only a fence of the same character and at least the opening
+ *   length, with nothing after it, closes the example.
  */
 function parseExplain(report: string): RuleMetadata | undefined {
   let category: string | undefined
@@ -262,6 +267,7 @@ function parseExplain(report: string): RuleMetadata | undefined {
   const domains: string[] = []
   const languages = new Set<string>()
   let inDomains = false
+  let openFence: string | undefined
 
   for (const raw of report.split('\n')) {
     const line = raw.trim()
@@ -279,11 +285,22 @@ function parseExplain(report: string): RuleMetadata | undefined {
     const domain = line.match(/^- Name: (.+)$/)
     if (inDomains && domain?.[1]) domains.push(domain[1])
 
-    const fence = line.match(/^```([a-z]+)((?:,[^\s,]+)*)\s*$/)
-    if (fence?.[1]) {
-      const modifiers = (fence[2] ?? '').split(',').filter(Boolean)
-      if (!modifiers.includes('options')) languages.add(fence[1])
+    const fence = line.match(/^(`{3,}|~{3,})(.*)$/)
+    if (openFence) {
+      if (
+        fence?.[1]?.[0] === openFence[0]
+        && fence[1].length >= openFence.length
+        && fence[2]?.trim() === ''
+      )
+        openFence = undefined
+      continue
     }
+    if (!fence?.[1]) continue
+    openFence = fence[1]
+    const info = fence[2]?.trim().split(/\s/)[0] ?? ''
+    const [language, ...modifiers] = info.split(',')
+    if (language && /^[a-z]+$/.test(language) && !modifiers.includes('options'))
+      languages.add(language)
   }
 
   // `languages` is empty for a rule whose only fenced block is its options

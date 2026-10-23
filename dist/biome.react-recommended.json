@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
 
   "assist": {
     "actions": {
@@ -45,7 +45,6 @@
       "trailingCommas": "es5"
     },
     "parser": {
-      "gritMetavariables": false,
       "jsxEverywhere": true,
       "unsafeParameterDecoratorsEnabled": false
     }
@@ -64,6 +63,12 @@
     },
     "rules": {
       "preset": "recommended"
+    }
+  },
+
+  "markdown": {
+    "parser": {
+      "frontmatter": true
     }
   },
 

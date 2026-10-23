@@ -26,8 +26,11 @@ const ROOT_CONFIG = 'biome.json'
  */
 const EXCLUDED_DOMAINS = new Set(['astro', 'qwik', 'solid', 'svelte', 'vue'])
 
-/** Languages the presets do not target, read the same all-or-nothing way. */
-const EXCLUDED_LANGUAGES = new Set(['graphql'])
+/**
+ * Languages the presets do not target — GraphQL, Markdown (tagged `md` in
+ * Biome's examples), and YAML — read the same all-or-nothing way.
+ */
+const EXCLUDED_LANGUAGES = new Set(['graphql', 'md', 'yaml'])
 
 /**
  * Languages the presets cover. A listed rule qualifies through one of these
