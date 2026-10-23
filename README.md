@@ -22,7 +22,7 @@ Shared [Biome](https://biomejs.dev) configuration presets — a base recommended
 [socket-url]: https://socket.dev/npm/package/@dvashim/biome-config
 
 - **One line to adopt** — `extends` a preset and inherit the formatter, linter, and assist settings together.
-- **A ladder, not a single opinion** — six presets, from Biome's own recommended baseline up to 288 explicitly configured rules.
+- **A ladder, not a single opinion** — six presets, from Biome's own recommended baseline up to 313 explicitly configured rules.
 - **React, Next.js, and React Native** — framework rules are enabled by name, so they apply without relying on domain auto-detection.
 - **Nursery-free `-stable` variants** — the same rule sets minus Biome's experimental rules, for teams that want a surface that will not shift under them.
 - **Plain JSON, no runtime dependencies** — the presets are published as config files; Biome is the only thing installed alongside them.
@@ -45,10 +45,10 @@ Shared [Biome](https://biomejs.dev) configuration presets — a base recommended
 
 | Dependency | Version |
 |---|---|
-| [Biome](https://biomejs.dev) | **2.5.15+** — the release the presets target |
+| [Biome](https://biomejs.dev) | **2.6.2+** — the release the presets target |
 | Node.js | **>= 24** — declared in the package's `engines` |
 
-Biome is not bundled, so install a compatible version yourself. The presets pin their `$schema` to `https://biomejs.dev/schemas/2.5.15/schema.json`; using that same URL in your own `biome.json` matches the presets exactly and silences editor warnings about unknown fields.
+Biome is not bundled, so install a compatible version yourself. The presets pin their `$schema` to `https://biomejs.dev/schemas/2.6.2/schema.json`; using that same URL in your own `biome.json` matches the presets exactly and silences editor warnings about unknown fields.
 
 ## Installation
 
@@ -74,10 +74,10 @@ bun add -d @dvashim/biome-config @biomejs/biome
 |--------|----------------|----------------|---------|
 | [Base recommended](#base-recommended) | `@dvashim/biome-config` | Biome recommended only | — |
 | [React recommended](#react-recommended) | `@dvashim/biome-config/react-recommended` | Biome recommended + React domain | — |
-| [React strict](#react-strict) | `@dvashim/biome-config/react-strict` | 288 | 108 |
-| [React strict-stable](#react-strict-stable) | `@dvashim/biome-config/react-strict-stable` | 180 | — |
-| [React balanced](#react-balanced) | `@dvashim/biome-config/react-balanced` | 288, 28 relaxed | 108 |
-| [React balanced-stable](#react-balanced-stable) | `@dvashim/biome-config/react-balanced-stable` | 180, 15 relaxed | — |
+| [React strict](#react-strict) | `@dvashim/biome-config/react-strict` | 313 | 85 |
+| [React strict-stable](#react-strict-stable) | `@dvashim/biome-config/react-strict-stable` | 228 | — |
+| [React balanced](#react-balanced) | `@dvashim/biome-config/react-balanced` | 313, 33 relaxed | 85 |
+| [React balanced-stable](#react-balanced-stable) | `@dvashim/biome-config/react-balanced-stable` | 228, 15 relaxed | — |
 
 "Explicit rules" counts the entries a preset configures itself; Biome's recommended rules stay active in every preset on top of them. All six share the same [formatter, parser, VCS, and assist defaults](#defaults).
 
@@ -92,7 +92,7 @@ Add a `biome.json` to your project root and extend a preset. The `extends` path 
 ```jsonc
 // biome.json
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
   "extends": ["@dvashim/biome-config"]
 }
 ```
@@ -161,7 +161,6 @@ All six configurations share the same base defaults — they differ only in `fil
 | experimentalEmbeddedSnippetsEnabled | `true` |
 | globals | `[]` |
 | jsxRuntime | `"transparent"` |
-| parser.gritMetavariables | `false` |
 | parser.jsxEverywhere | `true` |
 | parser.unsafeParameterDecoratorsEnabled | `false` |
 
@@ -177,6 +176,12 @@ All six configurations share the same base defaults — they differ only in `fil
 | Option | Value |
 |--------|-------|
 | experimentalFullSupportEnabled | `true` |
+
+#### Markdown
+
+| Option | Value |
+|--------|-------|
+| parser.frontmatter | `true` |
 
 #### Files (React presets only)
 
@@ -225,68 +230,63 @@ Same as base recommended, plus enables the **React domain** (`"react": "recommen
 
 ### React strict
 
-The most opinionated configuration. On top of Biome's recommended rules, it explicitly configures **288 rules** across 8 categories — every in-scope optional and nursery rule, plus deliberate overrides of recommended ones. Every non-recommended rule that applies to JavaScript/TypeScript/JSX, CSS, HTML, JSON, or the **React, Next.js, and React Native** domains is explicitly configured. Rules exclusive to GraphQL or other frameworks (Vue, Solid, Qwik, Svelte, Astro) are intentionally omitted.
+The most opinionated configuration. On top of Biome's recommended rules, it explicitly configures **313 rules** across 8 categories — every in-scope optional and nursery rule, plus deliberate overrides of recommended ones. Every non-recommended rule that applies to JavaScript/TypeScript/JSX, CSS, HTML, JSON, or the **React, Next.js, and React Native** domains is explicitly configured. Rules exclusive to GraphQL, Markdown, YAML, or other frameworks (Vue, Solid, Qwik, Svelte, Astro) are intentionally omitted.
 
 - **a11y** (8 rules) — Selectively disables noisy rules (`useButtonType`, `useKeyWithClickEvents`, `useSemanticElements`, `noStaticElementInteractions`, `noNoninteractiveElementToInteractiveRole`) and downgrades `useFocusableInteractive` to `info`, while keeping the rest at recommended defaults. Adds `noAmbiguousAnchorText` (promoted from nursery in Biome 2.5.0) and `noNoninteractiveElementInteractions`.
 
-- **complexity** (16 rules) — Monitors cognitive complexity, function length, nested test suites, and logic expressions. Warns on `forEach`, implicit coercions, `void`, and useless patterns. Also prefers `Array#find` (`useArrayFind`) and flags useless returns (`noUselessReturn`), redundant default exports (`noRedundantDefaultExport`), and division-like regexes (`noDivRegex`).
+- **complexity** (22 rules) — Monitors cognitive complexity, function length, nested test suites, and logic expressions. Warns on `forEach`, implicit coercions, `void`, and useless patterns. Also prefers `Array#find` (`useArrayFind`) and flags useless returns (`noUselessReturn`), redundant default exports (`noRedundantDefaultExport`), and division-like regexes (`noDivRegex`). Biome 2.6.0 promoted `noExcessiveNestedCallbacks`, `noExcessiveSelectorClasses`, `useArraySome`, and `useRegexpTest` here from nursery.
 
-- **correctness** (24 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`, `noChildrenProp`, `noRenderReturnValue`), React Hooks correctness (`useExhaustiveDependencies`, `useHookAtTopLevel`, `useJsxKeyInIterable`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks. Also flags duplicate JSX attributes (`noDuplicateAttributes`), unused `new` expressions (`noUnusedInstantiation`), restricted imports/elements (`noPrivateImports`, `noRestrictedElements`), and Next.js issues (`noNextAsyncClientComponent`, `useInlineScriptId`, `noBeforeInteractiveScriptOutsideDocument`).
+- **correctness** (31 rules) — Ensures no undeclared variables/dependencies, proper React patterns (`noReactPropAssignments`, `noNestedComponentDefinitions`, `noChildrenProp`, `noRenderReturnValue`), React Hooks correctness (`useExhaustiveDependencies`, `useHookAtTopLevel`, `useJsxKeyInIterable`), Node.js guards (`noNodejsModules`, `noProcessGlobal`, `noGlobalDirnameFilename`), and JSON import attributes. `noUnresolvedImports` is disabled since TypeScript already performs these checks. Also flags duplicate JSX attributes (`noDuplicateAttributes`), unused `new` expressions (`noUnusedInstantiation`), restricted imports/elements (`noPrivateImports`, `noRestrictedElements`), and Next.js issues (`noNextAsyncClientComponent`, `useInlineScriptId`, `noBeforeInteractiveScriptOutsideDocument`). Biome 2.6.0 promoted the React rules `noComponentHookFactories`, `noJsxNamespace`, and `useReactAsyncServerFunction`, and the React Native rules `noReactNativeRawText` and `useReactNativePlatformComponents`, here from nursery.
 
-- **nursery** (108 rules) — Opts into all experimental rules. Highlights include:
+- **nursery** (85 rules) — Opts into all experimental rules. Highlights include:
   - **Errors:** `noMisusedPromises`
   - **Equality:** `noNegationInEqualityCheck` (flags `!foo === bar`, which precedence parses as `(!foo) === bar` — almost always meant as `foo !== bar`)
-  - **Complexity:** `noExcessiveNestedCallbacks`
   - **Promises:** `noFloatingPromises`, `useAwaitThenable`
-  - **TypeScript:** `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`, `useReduceTypeParameter`, `noUnsafeTypeAssertion` (bans every type assertion except `as const`; relaxed to `off` in balanced)
-  - **Object/class hygiene:** `noBaseToString` (catches accidental `"[object Object]"` stringification), `useThisInClassMethods`, `noExtendNative` (bans patching built-in prototypes)
+  - **TypeScript:** `useExhaustiveSwitchCases`, `useExplicitReturnType`, `noMisleadingReturnType`, `noUselessTypeConversion`, `useNullishCoalescing`, `noUnsafeTypeAssertion` (bans every type assertion except `as const`; relaxed to `off` in balanced)
+  - **Object/class hygiene:** `noBaseToString` (catches accidental `"[object Object]"` stringification), `noExtendNative` (bans patching built-in prototypes)
   - **Resource management:** `useDisposables` (enforces `using` for `Disposable`/`AsyncDisposable`)
-  - **Arrays:** `useArraySome`, `useIncludes` (prefer `Array#includes()` over `indexOf()` — new in Biome 2.5.0)
-  - **Regex:** `useNamedCaptureGroup`, `useUnicodeRegex`, `useRegexpExec`, `useRegexpTest`
-  - **DOM:** `useDomNodeTextContent`, `useDomQuerySelector`
-  - **Math:** `useMathMinMax`
-  - **Styling:** `noDuplicateSelectors`, `noInlineStyles`, `noExcessiveSelectorClasses`, `noUndeclaredClasses`, `noUnusedClasses`, `useNamedLayer` (disallows anonymous `@layer` blocks, which no later rule can append to or reorder), `noInvalidPropertyInitValue` (checks an `@property` rule's `initial-value` against its declared `syntax` — browsers silently refuse to register a custom property when it does not match)
-  - **Testing:** `useConsistentTestIt`, `useExpect`, `noConditionalExpect`, `noIdenticalTestTitle`, `useTestHooksInOrder`, `useTestHooksOnTop`
-  - **Playwright:** Full suite of 11 Playwright rules
-  - **Drizzle:** `noDrizzleDeleteWithoutWhere`, `noDrizzleUpdateWithoutWhere`
-  - **Tailwind:** `useSortedClasses`, `useTailwindShorthandClasses` (suggests `size-4` for `w-4 h-4`), `noTailwindArbitraryValue` (flags arbitrary values such as `w-[400px]`; relaxed to `off` in balanced)
-  - **React:** `useReactAsyncServerFunction`, `noComponentHookFactories`, `noJsxNamespace`, `noReactStringRefs`, `useReactFunctionComponentDefinition`, `useReactCompiler` (runs React Compiler in lint mode and reports components it cannot safely compile; relaxed to `off` in balanced; like the other framework rules here, it runs whether or not `react` is a dependency, skipping files that define no component or hook)
-  - **React Native:** `noReactNativeRawText`, `noReactNativeLiteralColors`, `noReactNativeDeepImports`, `useReactNativePlatformComponents`
+  - **Arrays:** `useIncludes` (prefer `Array#includes()` over `indexOf()` — new in Biome 2.5.0)
+  - **Regex:** `useRegexpExec`
+  - **Styling:** `noUndeclaredClasses`, `noUnusedClasses`, `useNamedLayer` (disallows anonymous `@layer` blocks, which no later rule can append to or reorder), `noInvalidPropertyInitValue` (checks an `@property` rule's `initial-value` against its declared `syntax` — browsers silently refuse to register a custom property when it does not match)
+  - **Tailwind:** `useTailwindSortedClasses`, `useTailwindShorthandClasses` (suggests `size-4` for `w-4 h-4`), `noTailwindArbitraryValue` (flags arbitrary values such as `w-[400px]`; relaxed to `off` in balanced)
+  - **React:** `useReactFunctionComponentDefinition`, `useReactCompiler` (runs React Compiler in lint mode and reports components it cannot safely compile; relaxed to `off` in balanced; like the other framework rules here, it runs whether or not `react` is a dependency, skipping files that define no component or hook)
   - **Accessibility:** `noNonScalableViewport` (flags `user-scalable=no` in a viewport meta tag — WCAG 1.4.4), `useControlLabel` (reports a `button` or `menuitem` with no accessible label, in JSX and HTML alike)
-  - **Security:** `useIframeSandbox`
-  - **Dependencies:** `noUntrustedLicenses`, `noRestrictedDependencies`
+  - **Dependencies:** `noRestrictedDependencies`
   - **Restrictions:** `noJsRestrictedProperties` (bans specific object/property pairs — reports nothing until you configure its `entries`)
   - **Disabled:** `useExplicitType`
 
-  > Biome 2.5.0 graduated many rules out of nursery; the rules that previously lived here are now configured under their stable categories above (and consequently appear in the `-stable` variants).
+  > Biome 2.5.0 and 2.6.0 graduated many rules out of nursery. 2.6.0 alone promoted 48 that these presets list, the full suite of 11 Playwright rules among them, and two more now run through Biome's recommended set instead of being listed. The rules that previously lived here are now configured under their stable categories (and consequently appear in the `-stable` variants).
 
 - **performance** (11 rules) — Warns on `await` in loops, barrel files, `delete`, namespace imports, re-export all, non-top-level regex, synchronous scripts (`noSyncScripts`), and binding props in JSX (`noJsxPropsBind`, error). Adds Next.js performance rules (`noImgElement`, `noUnwantedPolyfillio`, `useGoogleFontPreconnect`).
 
-- **security** (4 rules) — `noSecrets`, `noScriptUrl`, and React `dangerouslySetInnerHTML` guards (`noDangerouslySetInnerHtml`, `noDangerouslySetInnerHtmlWithChildren`)
+- **security** (5 rules) — `noSecrets`, `noScriptUrl`, React `dangerouslySetInnerHTML` guards (`noDangerouslySetInnerHtml`, `noDangerouslySetInnerHtmlWithChildren`), and `useIframeSandbox`, promoted from nursery in Biome 2.6.0.
 
-- **style** (76 rules) — Enforces consistent syntax, naming conventions (`strictCase: true`), array shorthand syntax, `type` over `interface`, React function components, readonly class properties, `noDefaultExport`, `noMagicNumbers`, `noJsxLiterals`, and more. Now also includes rules promoted from nursery in Biome 2.5.0, such as `noIncrementDecrement`, `noMultiAssign`, `noMultilineString`, `noTernary`, `useDestructuring`, `useErrorCause`, `useGlobalThis`, and `useSpreadOverApply`. Adds `noHexColors`, `noValueAtRule`, `useNodeAssertStrict`, the configurable `noRestrictedGlobals` / `noRestrictedImports` / `noRestrictedTypes` family, and the Next.js `noHeadElement` rule.
+- **style** (92 rules) — Enforces consistent syntax, naming conventions (`strictCase: true`), array shorthand syntax, `type` over `interface`, React function components, readonly class properties, `noDefaultExport`, `noMagicNumbers`, `noJsxLiterals`, and more. Now also includes rules promoted from nursery in Biome 2.5.0, such as `noIncrementDecrement`, `noMultiAssign`, `noMultilineString`, `noTernary`, `useDestructuring`, `useErrorCause`, `useGlobalThis`, and `useSpreadOverApply`. Biome 2.6.0 promoted more: the test-ordering rules `useConsistentTestIt`, `useTestHooksInOrder`, and `useTestHooksOnTop`, the regex rules `useNamedCaptureGroup` and `useUnicodeRegex`, `useDomQuerySelector`, `noInlineStyles`, `noReactNativeLiteralColors`, `useReduceTypeParameter`, and `useThisInClassMethods`. Adds `noHexColors`, `noValueAtRule`, `useNodeAssertStrict`, the configurable `noRestrictedGlobals` / `noRestrictedImports` / `noRestrictedTypes` family, and the Next.js `noHeadElement` rule.
 
-- **suspicious** (41 rules) — Flags `var` (error), `console`, `alert`, bitwise operators, empty blocks, import cycles, evolving types, skipped tests, and deprecated imports. Now also includes rules promoted from nursery in Biome 2.5.0, such as `noShadow`, `noUnnecessaryConditions`, `noForIn`, `noEqualsToNull`, `noLeakedRender`, and `noParametersOnlyUsedInRecursion`. Adds `noArrayIndexKey`, test-quality rules (`noFocusedTests`, `noDuplicateTestHooks`, `noExportsInTest`), `useRequiredScripts`, and Next.js document rules (`noDocumentImportInPage`, `noHeadImportInDocument`).
+- **suspicious** (59 rules) — Flags `var` (error), `console`, `alert`, bitwise operators, empty blocks, import cycles, evolving types, skipped tests, and deprecated imports. Now also includes rules promoted from nursery in Biome 2.5.0, such as `noShadow`, `noUnnecessaryConditions`, `noForIn`, `noEqualsToNull`, `noLeakedRender`, and `noParametersOnlyUsedInRecursion`. Biome 2.6.0 promoted the test-quality rules `useExpect`, `noConditionalExpect`, and `noIdenticalTestTitle`, the Drizzle rules `noDrizzleDeleteWithoutWhere` and `noDrizzleUpdateWithoutWhere`, `noDuplicateSelectors`, `noReactStringRefs`, `noReactNativeDeepImports`, and `noUntrustedLicenses`. Adds `noArrayIndexKey`, test-quality rules (`noFocusedTests`, `noDuplicateTestHooks`, `noExportsInTest`), `useRequiredScripts`, and Next.js document rules (`noDocumentImportInPage`, `noHeadImportInDocument`).
 
 ---
 
 ### React strict-stable
 
-Same as React strict, but **without nursery (experimental) rules** — 180 rules across 7 categories: a11y, complexity, correctness, performance, security, style, and suspicious.
+Same as React strict, but **without nursery (experimental) rules** — 228 rules across 7 categories: a11y, complexity, correctness, performance, security, style, and suspicious.
 
 ---
 
 ### React balanced
 
-Same rule set as strict, with **28 targeted relaxations** to reduce false positives and noise in real-world projects:
+Same rule set as strict, with **33 targeted relaxations** to reduce false positives and noise in real-world projects:
 
 | Category | Rule | Strict | Balanced | Reason |
 |----------|------|--------|----------|--------|
 | complexity | `noExcessiveLinesPerFunction` | warn (default) | warn (maxLines: 100) | Higher threshold |
 | complexity | `noImplicitCoercions` | warn | off | Too noisy with `!!value` patterns |
 | complexity | `noUselessReturn` | warn | info | Informational only |
+| nursery | `noExcessiveStatementsPerFunction` | warn | off | Its default of ten statements reports an ordinary hook-using component and any `describe` with more than ten tests |
 | nursery | `noTailwindArbitraryValue` | warn | off | Arbitrary values are a deliberate Tailwind escape hatch |
+| nursery | `noTailwindLegacyUtilities` | warn | off | Outside Tailwind v4 it reports class names Tailwind once used, such as Bootstrap's `flex-grow-1`, and its safe fix rewrites them |
 | nursery | `noTailwindRawColors` | warn | off | Reports every Tailwind palette color; whether to require design-system color names is the project's choice |
+| nursery | `noTailwindRestyledComponents` | warn | off | Reports every Tailwind appearance utility passed to a component; how components may be restyled is a design-system choice |
 | nursery | `noUndeclaredCustomProperties` | warn | info | Resolves custom properties per file, so tokens declared in another stylesheet are reported as undefined; matches Biome's own default severity |
 | nursery | `noUnsafeTypeAssertion` | warn | off | Type assertions are unavoidable in generic and third-party-typed code |
 | nursery | `useBetterDomTraversing` | warn | info | Stylistic preference over ordinary DOM code, and its fixes are unsafe by the rule's own account |
@@ -294,9 +294,11 @@ Same rule set as strict, with **28 targeted relaxations** to reduce false positi
 | nursery | `useExhaustiveSwitchCases` | warn (requireExplicitCase: true) | warn (default) | Accepts a `default` clause as handling the union members a switch does not list |
 | nursery | `useLayeredStyles` | warn | off | Reports every style rule and `@import` outside a cascade layer, including in CSS Modules, with no option to exempt |
 | nursery | `useLogicalProperties` | warn | off | Reports every physical property, `width` and `height` included; writing-mode support is the project's choice |
+| nursery | `useLowercaseTestTitle` | warn | off | Reports the `describe('ComponentName')` convention, and its fix lowercases the component name |
 | nursery | `useReactCompiler` | warn | off | Reports components incompatible with React Compiler, which most projects have not adopted |
 | nursery | `useReactNamingConvention` | warn | info | Naming convention for context, id, and ref bindings; fires across an existing codebase on first adoption |
 | nursery | `useStrictBooleanExpressions` | warn | off | Reports every truthiness check on an optional boolean or string; `noLeakedRender` still catches leaked values in JSX |
+| nursery | `useTailwindStaticClassStrings` | warn | off | Reports every class string assembled from fragments, Tailwind or not, such as `'btn-' + variant` |
 | nursery | `useValidTestTitle` | warn | info | Reports any non-literal title, such as a string variable or `Foo.name`, as not a string, with no option to exempt it |
 | performance | `noBarrelFile` | warn | off | Common pattern in libraries |
 | performance | `noImgElement` | warn | off | Next.js rule; fires on any `<img>` |
@@ -311,13 +313,13 @@ Same rule set as strict, with **28 targeted relaxations** to reduce false positi
 | style | `noNestedTernary` | warn | off | Allows nested ternaries |
 | style | `useNamingConvention` | strictCase: true | strictCase: false | More lenient casing |
 
-> Fifteen of the 28 relaxations live in stable categories, so those 15 apply in `react-balanced-stable` as well. The `noTailwindArbitraryValue`, `noTailwindRawColors`, `noUndeclaredCustomProperties`, `noUnsafeTypeAssertion`, `useBetterDomTraversing`, `useConsistentFunctionStyle`, `useExhaustiveSwitchCases`, `useLayeredStyles`, `useLogicalProperties`, `useReactCompiler`, `useReactNamingConvention`, `useStrictBooleanExpressions`, and `useValidTestTitle` relaxations live in `nursery`, which the `-stable` variants drop entirely.
+> Fifteen of the 33 relaxations live in stable categories, so those 15 apply in `react-balanced-stable` as well. The `noExcessiveStatementsPerFunction`, `noTailwindArbitraryValue`, `noTailwindLegacyUtilities`, `noTailwindRawColors`, `noTailwindRestyledComponents`, `noUndeclaredCustomProperties`, `noUnsafeTypeAssertion`, `useBetterDomTraversing`, `useConsistentFunctionStyle`, `useExhaustiveSwitchCases`, `useLayeredStyles`, `useLogicalProperties`, `useLowercaseTestTitle`, `useReactCompiler`, `useReactNamingConvention`, `useStrictBooleanExpressions`, `useTailwindStaticClassStrings`, and `useValidTestTitle` relaxations live in `nursery`, which the `-stable` variants drop entirely.
 
 ---
 
 ### React balanced-stable
 
-Same as React balanced, but **without nursery (experimental) rules** — 180 rules, with the 15 stable-category relaxations from the table above still applied (the thirteen nursery relaxations drop out with their category).
+Same as React balanced, but **without nursery (experimental) rules** — 228 rules, with the 15 stable-category relaxations from the table above still applied (the eighteen nursery relaxations drop out with their category).
 
 ## FAQ
 
@@ -328,10 +330,10 @@ Same as React balanced, but **without nursery (experimental) rules** — 180 rul
 
 ### What version of Biome and Node do I need?
 
-These presets are built and tested against **Biome 2.5.15** — the version their `$schema` is pinned to (see [Requirements](#requirements)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
+These presets are built and tested against **Biome 2.6.2** — the version their `$schema` is pinned to (see [Requirements](#requirements)) — and require **Node.js >= 24**. Biome is not bundled, so install a compatible version yourself:
 
 ```bash
-pnpm add -D @biomejs/biome@^2.5.15
+pnpm add -D @biomejs/biome@^2.6.2
 ```
 
 ### How do I override a rule from the preset?
@@ -340,7 +342,7 @@ Add a `linter.rules` section in your `biome.json`. Local settings merge with and
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"],
   "linter": {
     "rules": {
@@ -381,7 +383,7 @@ For exclusions that should not affect Git tracking, use negated patterns in `fil
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
   "extends": ["@dvashim/biome-config"],
   "files": {
     "includes": ["**", "!!**/generated", "!!**/coverage"]

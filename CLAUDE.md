@@ -43,7 +43,7 @@ Six presets, all exported from `dist/`:
 
 ### Config hierarchy
 
-All six share byte-identical `$schema` / `assist` / `formatter` / `html` / `javascript` / `json` / `overrides` / `vcs` blocks — **a change to any of those must be applied to all six.** They differ only in `files` and in linter rules. Rule counts are published in the README's Configurations table, which `check:presets` reconciles against the presets on every run — they are deliberately not repeated here, because a count in two places drifts in one of them:
+All six share byte-identical `$schema` / `assist` / `formatter` / `html` / `javascript` / `json` / `markdown` / `overrides` / `vcs` blocks — **a change to any of those must be applied to all six.** They differ only in `files` and in linter rules. Rule counts are published in the README's Configurations table, which `check:presets` reconciles against the presets on every run — they are deliberately not repeated here, because a count in two places drifts in one of them:
 
 - **recommended** — Biome's built-in recommended rules only (`"preset": "recommended"`), no domains. Deliberately omits `files` so consumers control their own includes/excludes.
 - **react-recommended** — recommended + `"domains": { "react": "recommended" }`, plus the `"files": { "includes": ["**", "!!**/dist"] }` block shared by all react presets.
@@ -58,7 +58,7 @@ All six share byte-identical `$schema` / `assist` / `formatter` / `html` / `java
 Scope (formalized in `openspec/specs/linter-rule-coverage/spec.md`):
 
 - **In scope** — every non-recommended rule targeting `js`, `ts`, `css`, `html`, `json`, or `jsonc`, or belonging to the React, Next.js, React Native, `test`, or `project` domains.
-- **Out of scope** — GraphQL-only rules, and rules whose only domain is `vue`, `solid`, `qwik`, `svelte`, or `astro`.
+- **Out of scope** — GraphQL-, Markdown-, and YAML-only rules, and rules whose only domain is `vue`, `solid`, `qwik`, `svelte`, or `astro`.
 - **Severity convention** — new rules land at `warn` in `react-strict`; `react-balanced` relaxes purely stylistic, high-noise, or broadly-firing rules to `info` or `off`.
 - **Framework rules fire everywhere.** Because they are listed individually rather than domain-gated, most defeat Biome's dependency gate and reach every consumer (e.g. `noImgElement` on any `<img>`). That gating behavior is established **empirically** — run the rule against a fixture with and without the gating dependency — not inferred from sibling rules, and re-measured when a release touches the rule: `useReactCompiler` gated itself on React 19 until Biome 2.5.15 dropped the check. Defeating the gate does not automatically warrant a balanced relaxation: a rule whose trigger pattern is itself framework-specific (`useTailwindShorthandClasses`) matches nothing in projects that lack the framework.
 - **Configuration-required rules** (the `noRestricted*` family and anything inert until the consumer supplies entries) are listed at a bare severity string with **no** `options` block, at the same severity in both presets.
@@ -98,22 +98,28 @@ things it reads are easy to get wrong:
   fences finds all 16. A fence carrying the `options` modifier is the rule's own
   options sample (always JSON) and must not be read as its language. A rule with
   no code example at all (`noRestrictedTypes`) yields no language, which is
-  recorded rather than treated as a parse failure.
+  recorded rather than treated as a parse failure. An example is read by the
+  fence that opens it: a Markdown rule's example opens with a longer fence
+  (````` ````md `````) so it can show fenced code, and the shorter fences inside
+  are its content — read as fences of their own, they filed
+  `useFencedCodeLanguage` as a JavaScript rule.
 - **`biome explain` reports nursery rules as "recommended."** It does for 11 of
   the 119 in 2.5.14, but the recommended set never activates nursery, so
   Coverage and Redundancy share one guard on the category
   (`activeViaRecommended`). Without it, a nursery entry is reported redundant
-  (`useMathMinMax` is the false positive), and an unlisted nursery rule counts as
-  already active: coverage would have passed 2.5.14 with three of its six added
-  rules — `noJsonUnsafeValues`, `noReturnInFinally`, `useConsistentObjectKeys` —
-  unlisted.
+  (in 2.5.14, `useMathMinMax` was the false positive), and an unlisted nursery
+  rule counts as already active: coverage would have passed 2.5.14 with three of
+  its six added rules — `noJsonUnsafeValues`, `noReturnInFinally`,
+  `useConsistentObjectKeys` — unlisted.
 
 `audit/rule-exclusions.json` is the **hand-edited** ledger: rules the metadata
 cannot place in or out of scope. Each entry carries a `direction` (`in` / `out`)
 and a reason — the direction matters because such a rule may be correctly
-*listed* rather than correctly absent. It holds one entry, `noRestrictedTypes`
-(direction `in`): a TypeScript rule whose only fenced block is its own options
-sample, so it publishes no example language and declares no domain. Entries are
+*listed* rather than correctly absent. It holds two entries, both direction `in`:
+`noRestrictedTypes`, a TypeScript rule whose only fenced block is its own options
+sample, so it publishes no example language and declares no domain; and
+`noEmptySource`, which Biome 2.6 documents with YAML examples only although it
+still reports empty JavaScript and CSS files. Entries are
 deliberately hard to justify — the checks reject one the metadata already
 classifies in the same direction, and one that says `out` for a listed rule.
 
@@ -136,7 +142,7 @@ every one that belongs only to domains the standing requirement never names
 
 ### Root biome.json
 
-`biome.json` extends `dist/biome.recommended.json` with `"root": true` to dogfood the config — editing the recommended preset changes how this repo checks itself. It adds the `useSortedKeys` assist with `groupByNesting` (key order in the dist files) and an override expanding `.claude/settings.local.json`. The `package.json` override (expanded formatting, `useSortedKeys` off — package.json uses conventional, non-alphabetical key order) ships inside the dist configs instead.
+`biome.json` extends `dist/biome.recommended.json` with `"root": true` to dogfood the config — editing the recommended preset changes how this repo checks itself. It adds the `useSortedKeys` assist with `groupByNesting` (key order in the dist files) and an override expanding `.claude/settings.local.json`. Its `files.includes` keeps every Markdown file and `pnpm-lock.yaml` out of the repo's own checks: since Biome 2.6 formats Markdown and YAML by default, it would otherwise rewrite immutable ADRs, archived changes, OpenSpec-generated assets, the Changesets-generated `CHANGELOG.md`, the published `README.md`, and pnpm's own lockfile. The `package.json` override (expanded formatting, `useSortedKeys` off — package.json uses conventional, non-alphabetical key order) ships inside the dist configs instead.
 
 ## OpenSpec workflow
 

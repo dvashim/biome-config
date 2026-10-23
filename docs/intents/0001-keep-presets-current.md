@@ -37,5 +37,5 @@ None. Considered with the originator, none apply: keeping teams' own additions a
 - **Status**: accepted
 - **Originator**: Aleksei, owner of the shared config package
 - **Approver**: Aleksei, owner of the shared config package
-- **Accepted on**:
+- **Accepted on**: 23.10.2026
 - **Supersedes**: none

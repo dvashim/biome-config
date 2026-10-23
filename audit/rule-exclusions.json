@@ -1,6 +1,10 @@
 {
   "$comment": "Rules the target release's own metadata cannot place in or out of scope. Domains and example languages classify almost every rule on their own, so an entry here records a decision that could not be derived — never a convenience, and never a way to silence a rule the metadata does classify. Each entry carries a direction: \"in\" means the rule is in scope and belongs in the presets, \"out\" means it is out of scope and must not be listed.",
   "rules": {
+    "noEmptySource": {
+      "direction": "in",
+      "reason": "A JavaScript and CSS rule, correctly listed. Since Biome 2.6 its documentation shows only YAML examples, written when the rule gained YAML support, so its metadata reads it as a YAML rule — a language the presets exclude — although it still reports empty JavaScript and CSS files. Listed at warn in both presets."
+    },
     "noRestrictedTypes": {
       "direction": "in",
       "reason": "A TypeScript rule, correctly listed. Its only fenced block is its own options sample, so it publishes no code example to read a language from, and it declares no domain — neither signal can place it. Listed under the noRestricted* convention at a bare severity with no options."
