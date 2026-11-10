@@ -1,5 +1,5 @@
 {
-  "biomeVersion": "2.6.2",
+  "biomeVersion": "2.6.6",
   "rules": {
     "noAccessKey": {
       "category": "a11y",
@@ -78,12 +78,33 @@
       "languages": ["jsx"],
       "recommended": true
     },
+    "noArrayForEach": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js", "ts"],
+      "recommended": true
+    },
     "noArrayIndexKey": {
       "category": "suspicious",
       "defaultSeverity": "error",
       "domains": ["react"],
       "languages": ["jsx"],
       "recommended": false
+    },
+    "noArrayMethodsOnArguments": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["cjs", "js"],
+      "recommended": true
+    },
+    "noArraySortForMinMax": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
     },
     "noAssignInExpressions": {
       "category": "suspicious",
@@ -126,6 +147,13 @@
       "domains": [],
       "languages": ["js"],
       "recommended": false
+    },
+    "noAwaitInPromiseMethods": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
     },
     "noBannedTypes": {
       "category": "complexity",
@@ -176,6 +204,13 @@
       "languages": ["jsx"],
       "recommended": true
     },
+    "noBooleanSortComparator": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js", "ts"],
+      "recommended": true
+    },
     "noBunModules": {
       "category": "nursery",
       "defaultSeverity": "warn",
@@ -186,6 +221,13 @@
     "noCatchAssign": {
       "category": "suspicious",
       "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
+    "noChainedComparison": {
+      "category": "nursery",
+      "defaultSeverity": "error",
       "domains": [],
       "languages": ["js"],
       "recommended": true
@@ -267,6 +309,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "noConsoleSpaces": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noConstAssign": {
       "category": "correctness",
       "defaultSeverity": "error",
@@ -280,6 +329,13 @@
       "domains": [],
       "languages": ["js"],
       "recommended": false
+    },
+    "noConstantComparisons": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
     },
     "noConstantCondition": {
       "category": "correctness",
@@ -335,6 +391,13 @@
       "defaultSeverity": "error",
       "domains": ["react"],
       "languages": ["js", "jsx"],
+      "recommended": false
+    },
+    "noDanglingUnderscore": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
       "recommended": false
     },
     "noDebugger": {
@@ -617,8 +680,22 @@
       "languages": ["graphql"],
       "recommended": true
     },
+    "noDynamicDelete": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noDynamicNamespaceImportAccess": {
       "category": "performance",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
+    "noEagerArrayMethodsInLoops": {
+      "category": "nursery",
       "defaultSeverity": "warn",
       "domains": [],
       "languages": ["js"],
@@ -694,6 +771,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "noErasingOperation": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noEvolvingTypes": {
       "category": "suspicious",
       "defaultSeverity": "warn",
@@ -727,6 +811,13 @@
       "defaultSeverity": "info",
       "domains": [],
       "languages": ["js", "json"],
+      "recommended": false
+    },
+    "noExcessiveNestedBlocks": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
       "recommended": false
     },
     "noExcessiveNestedCallbacks": {
@@ -1072,6 +1163,13 @@
       "languages": ["css"],
       "recommended": true
     },
+    "noInvalidRemoveEventListener": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noInvalidThis": {
       "category": "nursery",
       "defaultSeverity": "info",
@@ -1149,6 +1247,13 @@
       "languages": ["jsx"],
       "recommended": true
     },
+    "noLateEventControl": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noLeakedRender": {
       "category": "suspicious",
       "defaultSeverity": "warn",
@@ -1163,11 +1268,25 @@
       "languages": ["js"],
       "recommended": false
     },
+    "noMagicArrayFlatDepth": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noMagicNumbers": {
       "category": "style",
       "defaultSeverity": "info",
       "domains": [],
       "languages": ["js", "ts"],
+      "recommended": false
+    },
+    "noMapSpread": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
       "recommended": false
     },
     "noMeaninglessVoidOperator": {
@@ -1198,6 +1317,13 @@
       "languages": ["ts"],
       "recommended": false
     },
+    "noMismatchedMapKey": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noMisplacedAssertion": {
       "category": "suspicious",
       "defaultSeverity": "warn",
@@ -1214,6 +1340,20 @@
     },
     "noMisrefactoredShorthandAssign": {
       "category": "suspicious",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
+    "noMissingScssInterpolation": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["scss"],
+      "recommended": false
+    },
+    "noMissingThrow": {
+      "category": "nursery",
       "defaultSeverity": "error",
       "domains": [],
       "languages": ["js"],
@@ -1261,6 +1401,13 @@
       "languages": ["js", "ts"],
       "recommended": false
     },
+    "noNegatedArrayPredicate": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noNegationElse": {
       "category": "style",
       "defaultSeverity": "info",
@@ -1306,6 +1453,13 @@
     "noNestedTernary": {
       "category": "style",
       "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "noNewRequire": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
       "domains": [],
       "languages": ["js"],
       "recommended": false
@@ -1373,12 +1527,40 @@
       "languages": ["jsx"],
       "recommended": false
     },
+    "noNull": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "noNumberArgumentOutOfRange": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noObjectConstructor": {
       "category": "nursery",
       "defaultSeverity": "info",
       "domains": [],
       "languages": ["js"],
       "recommended": false
+    },
+    "noObjectLiteralComparison": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
+    "noObsoleteAttributes": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["jsx"],
+      "recommended": true
     },
     "noObsoleteTags": {
       "category": "nursery",
@@ -1422,6 +1604,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "noPathConcat": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noPlaywrightElementHandle": {
       "category": "style",
       "defaultSeverity": "info",
@@ -1457,9 +1646,23 @@
       "languages": ["js"],
       "recommended": false
     },
+    "noPlaywrightNthMethods": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["playwright"],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noPlaywrightPagePause": {
       "category": "suspicious",
       "defaultSeverity": "warn",
+      "domains": ["playwright"],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "noPlaywrightUnsafeReferences": {
+      "category": "nursery",
+      "defaultSeverity": "error",
       "domains": ["playwright"],
       "languages": ["js"],
       "recommended": false
@@ -1554,6 +1757,13 @@
       "domains": [],
       "languages": ["js"],
       "recommended": true
+    },
+    "noPseudoElementInFunctionalPseudoClass": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["css"],
+      "recommended": false
     },
     "noQuickfixBiome": {
       "category": "suspicious",
@@ -1709,6 +1919,13 @@
       "languages": [],
       "recommended": false
     },
+    "noReturnArrayPush": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noReturnAssign": {
       "category": "suspicious",
       "defaultSeverity": "error",
@@ -1765,6 +1982,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "noSelfNestedLayer": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["css"],
+      "recommended": false
+    },
     "noSetterReturn": {
       "category": "correctness",
       "defaultSeverity": "error",
@@ -1786,6 +2010,13 @@
       "languages": ["js"],
       "recommended": true
     },
+    "noSharedBranchCode": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noShorthandPropertyOverrides": {
       "category": "suspicious",
       "defaultSeverity": "error",
@@ -1793,12 +2024,26 @@
       "languages": ["css"],
       "recommended": true
     },
+    "noShortTimeValues": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["css"],
+      "recommended": false
+    },
     "noShoutyConstants": {
       "category": "style",
       "defaultSeverity": "info",
       "domains": [],
       "languages": ["js"],
       "recommended": false
+    },
+    "noSinglePromiseInPromiseMethods": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
     },
     "noSkippedTests": {
       "category": "suspicious",
@@ -1849,6 +2094,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "noSubtractionComparison": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noSuspiciousSemicolonInJsx": {
       "category": "suspicious",
       "defaultSeverity": "warn",
@@ -1877,6 +2129,13 @@
       "languages": ["svelte"],
       "recommended": false
     },
+    "noSvelteBindValueOnCheckableInputs": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["svelte"],
+      "languages": ["svelte"],
+      "recommended": false
+    },
     "noSvelteClassDirective": {
       "category": "nursery",
       "defaultSeverity": "info",
@@ -1891,11 +2150,25 @@
       "languages": ["svelte"],
       "recommended": false
     },
+    "noSvelteIgnoredUnsubscribe": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["svelte"],
+      "languages": ["svelte"],
+      "recommended": false
+    },
     "noSvelteInspect": {
       "category": "nursery",
       "defaultSeverity": "warn",
       "domains": ["svelte"],
       "languages": ["svelte"],
+      "recommended": false
+    },
+    "noSvelteInternal": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["svelte"],
+      "languages": ["js"],
       "recommended": false
     },
     "noSvelteLegacyConst": {
@@ -1940,6 +2213,13 @@
       "languages": ["js"],
       "recommended": true
     },
+    "noSyncMethods": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noSyncScripts": {
       "category": "performance",
       "defaultSeverity": "warn",
@@ -1973,6 +2253,20 @@
       "defaultSeverity": "info",
       "domains": ["tailwind"],
       "languages": ["jsx"],
+      "recommended": false
+    },
+    "noTanstackQueryRestDestructuring": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["tanstackQuery"],
+      "languages": ["js", "svelte"],
+      "recommended": false
+    },
+    "noTanstackQueryVoidQueryFn": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["tanstackQuery", "types"],
+      "languages": ["js", "ts"],
       "recommended": false
     },
     "noTemplateCurlyInString": {
@@ -2066,6 +2360,13 @@
       "languages": ["js", "ts"],
       "recommended": false
     },
+    "noUninvokedArrayCallback": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noUnknownAtRules": {
       "category": "suspicious",
       "defaultSeverity": "error",
@@ -2150,6 +2451,13 @@
       "languages": ["ts"],
       "recommended": false
     },
+    "noUnnecessaryStringTrim": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noUnnecessaryTemplateExpression": {
       "category": "complexity",
       "defaultSeverity": "info",
@@ -2170,6 +2478,20 @@
       "domains": [],
       "languages": ["js"],
       "recommended": true
+    },
+    "noUnreadableForOfExpression": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "noUnreadableIife": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
     },
     "noUnresolvedImports": {
       "category": "correctness",
@@ -2214,6 +2536,13 @@
       "recommended": true
     },
     "noUnsafePlusOperands": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["types"],
+      "languages": ["ts"],
+      "recommended": false
+    },
+    "noUnsafeReturn": {
       "category": "nursery",
       "defaultSeverity": "info",
       "domains": ["types"],
@@ -2318,6 +2647,13 @@
       "languages": ["js"],
       "recommended": true
     },
+    "noUselessAwait": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
     "noUselessCall": {
       "category": "nursery",
       "defaultSeverity": "info",
@@ -2402,12 +2738,26 @@
       "languages": ["js"],
       "recommended": true
     },
+    "noUselessLengthCheck": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "noUselessLoneBlockStatements": {
       "category": "complexity",
       "defaultSeverity": "info",
       "domains": [],
       "languages": ["js"],
       "recommended": true
+    },
+    "noUselessRecursion": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
     },
     "noUselessRegexBackrefs": {
       "category": "suspicious",
@@ -2429,6 +2779,13 @@
       "domains": [],
       "languages": ["js", "ts"],
       "recommended": false
+    },
+    "noUselessSplice": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
     },
     "noUselessStringConcat": {
       "category": "complexity",
@@ -2464,6 +2821,13 @@
       "domains": [],
       "languages": ["js"],
       "recommended": true
+    },
+    "noUselessTypeAssertion": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["types"],
+      "languages": ["ts"],
+      "recommended": false
     },
     "noUselessTypeConstraint": {
       "category": "complexity",
@@ -2542,11 +2906,109 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "noVueChildContent": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueComputedPropertiesInData": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "noVueDataObjectDeclaration": {
       "category": "correctness",
       "defaultSeverity": "error",
       "domains": ["vue"],
       "languages": ["js"],
+      "recommended": false
+    },
+    "noVueDeprecatedConfigKeyCodes": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "noVueDeprecatedDeleteSet": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedDestroyedLifecycle": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedEventsApi": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedFunctionalTemplate": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedHtmlElementIs": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedInlineTemplate": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedListeners": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedModelDefinition": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedPropsDefaultThis": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedRouterLinkTagProp": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedScopeAttribute": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
       "recommended": false
     },
     "noVueDeprecatedScopedSlots": {
@@ -2556,9 +3018,44 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "noVueDeprecatedSlotAttribute": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedSlotScope": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedVBindSync": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueDeprecatedVOnNativeModifier": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "noVueDuplicateKeys": {
       "category": "correctness",
       "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueExcessiveProps": {
+      "category": "nursery",
+      "defaultSeverity": "info",
       "domains": ["vue"],
       "languages": ["vue"],
       "recommended": false
@@ -2577,6 +3074,41 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "noVueLoneTemplate": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueMixin": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
+    "noVueMultipleObjectsInClass": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueMultipleSlotArgs": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueMutatingProps": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
     "noVueOptionsApi": {
       "category": "style",
       "defaultSeverity": "info",
@@ -2587,6 +3119,13 @@
     "noVueRefAsOperand": {
       "category": "correctness",
       "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "noVueRefObjectReactivityLoss": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
       "domains": ["vue"],
       "languages": ["js"],
       "recommended": false
@@ -2612,6 +3151,20 @@
       "languages": ["js", "vue"],
       "recommended": false
     },
+    "noVueRestrictedCallAfterAwait": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueRestrictedVOn": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "noVueRootVIf": {
       "category": "nursery",
       "defaultSeverity": "info",
@@ -2633,7 +3186,105 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "noVueSideEffectsInComputed": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueTemplateKey": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueTemplateShadow": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueTextareaMustache": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueThisInBeforeRouteEnter": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueThisInTemplate": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "noVueUndeclaredDirectives": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueUndeclaredEmits": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
+    "noVueUndeclaredProperties": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
+    "noVueUndeclaredSlots": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueUnusedEmitDeclarations": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
+    "noVueUnusedRefs": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueUselessTemplateAttributes": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueUselessVBind": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueVForTemplateKeyOnChild": {
       "category": "nursery",
       "defaultSeverity": "error",
       "domains": ["vue"],
@@ -2668,6 +3319,20 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "noVueVTextVHtmlOnComponent": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "noVueWatchAfterAwait": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "noWith": {
       "category": "suspicious",
       "defaultSeverity": "error",
@@ -2682,6 +3347,13 @@
       "languages": ["js"],
       "recommended": true
     },
+    "noYamlBooleanKeys": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["yaml"],
+      "recommended": true
+    },
     "noYodaExpression": {
       "category": "style",
       "defaultSeverity": "info",
@@ -2690,6 +3362,20 @@
       "recommended": false
     },
     "noZeroFractions": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "noZeroLengthUnit": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["css"],
+      "recommended": true
+    },
+    "useAccessorPairs": {
       "category": "nursery",
       "defaultSeverity": "info",
       "domains": [],
@@ -2836,6 +3522,13 @@
       "languages": ["json"],
       "recommended": true
     },
+    "useBlockStatementOverIife": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "useBlockStatements": {
       "category": "style",
       "defaultSeverity": "warn",
@@ -2948,6 +3641,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "useConsistentLightnessNotation": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["css"],
+      "recommended": false
+    },
     "useConsistentMemberAccessibility": {
       "category": "style",
       "defaultSeverity": "info",
@@ -2988,6 +3688,13 @@
       "defaultSeverity": "info",
       "domains": [],
       "languages": ["ts"],
+      "recommended": false
+    },
+    "useConsistentUnicodeBom": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["md"],
       "recommended": false
     },
     "useConst": {
@@ -3114,6 +3821,13 @@
       "defaultSeverity": "warn",
       "domains": ["test"],
       "languages": ["js", "ts"],
+      "recommended": false
+    },
+    "useExpectToContain": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["test"],
+      "languages": ["js"],
       "recommended": false
     },
     "useExplicitLengthCheck": {
@@ -3382,6 +4096,13 @@
       "languages": ["js"],
       "recommended": true
     },
+    "useIteratorZip": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": false
+    },
     "useJsonImportAttributes": {
       "category": "correctness",
       "defaultSeverity": "info",
@@ -3435,7 +4156,7 @@
       "category": "nursery",
       "defaultSeverity": "warn",
       "domains": [],
-      "languages": ["css"],
+      "languages": ["css", "scss"],
       "recommended": false
     },
     "useLoneAnonymousOperation": {
@@ -3466,8 +4187,22 @@
       "languages": ["js"],
       "recommended": false
     },
+    "useMathAbs": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "useMathMinMax": {
       "category": "complexity",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
+    "useMathTrunc": {
+      "category": "nursery",
       "defaultSeverity": "warn",
       "domains": [],
       "languages": ["js"],
@@ -3529,6 +4264,13 @@
       "languages": ["js", "jsx", "ts"],
       "recommended": false
     },
+    "useNextScriptForGoogleAnalytics": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["next"],
+      "languages": ["jsx"],
+      "recommended": false
+    },
     "useNodeAssertStrict": {
       "category": "style",
       "defaultSeverity": "warn",
@@ -3578,6 +4320,13 @@
       "languages": ["js"],
       "recommended": false
     },
+    "useObjectFromEntries": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
+    },
     "useObjectSpread": {
       "category": "style",
       "defaultSeverity": "info",
@@ -3590,6 +4339,34 @@
       "defaultSeverity": "warn",
       "domains": [],
       "languages": ["js", "ts"],
+      "recommended": true
+    },
+    "usePackageJsonCpu": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["json"],
+      "recommended": false
+    },
+    "usePackageJsonEngines": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["json"],
+      "recommended": false
+    },
+    "usePackageJsonValidCpu": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["json"],
+      "recommended": true
+    },
+    "usePackageJsonValidEngines": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["json"],
       "recommended": true
     },
     "useParseIntRadix": {
@@ -3683,6 +4460,13 @@
       "languages": ["js", "jsx"],
       "recommended": false
     },
+    "useReactNativeValidPlatformColors": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["reactNative"],
+      "languages": ["js"],
+      "recommended": false
+    },
     "useReadonlyClassProperties": {
       "category": "style",
       "defaultSeverity": "info",
@@ -3744,6 +4528,13 @@
       "defaultSeverity": "error",
       "domains": [],
       "languages": ["jsx"],
+      "recommended": true
+    },
+    "useSetSize": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": [],
+      "languages": ["js", "ts"],
       "recommended": true
     },
     "useShorthandAssign": {
@@ -3844,6 +4635,13 @@
       "languages": ["ts"],
       "recommended": false
     },
+    "useSvelteEventDispatcherTypes": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["svelte"],
+      "languages": ["svelte"],
+      "recommended": false
+    },
     "useSvelteKitResolve": {
       "category": "nursery",
       "defaultSeverity": "info",
@@ -3879,6 +4677,13 @@
       "languages": ["svelte"],
       "recommended": false
     },
+    "useSvelteStoreInitialValue": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["svelte"],
+      "languages": ["js"],
+      "recommended": false
+    },
     "useSymbolDescription": {
       "category": "style",
       "defaultSeverity": "info",
@@ -3904,6 +4709,27 @@
       "category": "nursery",
       "defaultSeverity": "info",
       "domains": ["tailwind"],
+      "languages": ["js", "jsx"],
+      "recommended": false
+    },
+    "useTailwindVariablesShorthand": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["tailwind"],
+      "languages": ["jsx"],
+      "recommended": false
+    },
+    "useTanstackQueryInfiniteQueryPropertyOrder": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["tanstackQuery"],
+      "languages": ["js"],
+      "recommended": false
+    },
+    "useTanstackQueryStableQueryClient": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["react", "tanstackQuery"],
       "languages": ["js", "jsx"],
       "recommended": false
     },
@@ -4075,6 +4901,48 @@
       "languages": ["js"],
       "recommended": false
     },
+    "useVueBlockOrder": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueBooleanPropTypeFirst": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueComponentIs": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueComputedPropertyReturn": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueConsistentBooleanPropStyle": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueConsistentDefineEmitsDeclaration": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "useVueConsistentDefinePropsDeclaration": {
       "category": "style",
       "defaultSeverity": "info",
@@ -4089,8 +4957,22 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "useVueConsistentPropNameCasing": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "useVueConsistentVBindStyle": {
       "category": "style",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueConsistentVForDelimiter": {
+      "category": "nursery",
       "defaultSeverity": "info",
       "domains": ["vue"],
       "languages": ["vue"],
@@ -4103,6 +4985,27 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "useVueConsistentVSlotStyle": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueDefaultExport": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueDefaultProp": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "useVueDefineMacrosOrder": {
       "category": "style",
       "defaultSeverity": "info",
@@ -4110,8 +5013,43 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "useVueDefineOptions": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueDefinePropsDestructuring": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueEmitsValidatorReturn": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueEmitValidator": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "useVueHyphenatedAttributes": {
       "category": "style",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueMacroVariableName": {
+      "category": "nursery",
       "defaultSeverity": "info",
       "domains": ["vue"],
       "languages": ["vue"],
@@ -4134,6 +5072,132 @@
     "useVueNextTickPromise": {
       "category": "style",
       "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueOneComponentPerFile": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["js", "vue"],
+      "recommended": false
+    },
+    "useVuePropTypeConstructor": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueRenderReturn": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueSeparateStaticClass": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueSingleEventPayload": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueSlotNameCasing": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueSlotsAsFunctions": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueTemplateRef": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueToggleInsideTransition": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueTypedObjectProps": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueTypedProps": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueTypedRef": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["ts"],
+      "recommended": false
+    },
+    "useVueValidAttributeName": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidDefaultProp": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidDefineEmits": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidDefineOptions": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidDefineProps": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidNextTick": {
+      "category": "nursery",
+      "defaultSeverity": "error",
       "domains": ["vue"],
       "languages": ["vue"],
       "recommended": false
@@ -4194,6 +5258,27 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "useVueValidVIs": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidVMemo": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidVModel": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "useVueValidVOn": {
       "category": "correctness",
       "defaultSeverity": "error",
@@ -4210,6 +5295,20 @@
     },
     "useVueValidVPre": {
       "category": "correctness",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidVShow": {
+      "category": "nursery",
+      "defaultSeverity": "error",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueValidVSlot": {
+      "category": "nursery",
       "defaultSeverity": "error",
       "domains": ["vue"],
       "languages": ["vue"],
@@ -4236,12 +5335,33 @@
       "languages": ["vue"],
       "recommended": false
     },
+    "useVueVModel": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
+    "useVueVOnExact": {
+      "category": "nursery",
+      "defaultSeverity": "warn",
+      "domains": ["vue"],
+      "languages": ["vue"],
+      "recommended": false
+    },
     "useWhile": {
       "category": "complexity",
       "defaultSeverity": "warn",
       "domains": [],
       "languages": ["js"],
       "recommended": false
+    },
+    "useWhileLoopCondition": {
+      "category": "nursery",
+      "defaultSeverity": "info",
+      "domains": [],
+      "languages": ["js"],
+      "recommended": true
     },
     "useYield": {
       "category": "correctness",
