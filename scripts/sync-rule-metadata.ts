@@ -67,7 +67,7 @@ type Binary = { argv: string[]; source: 'override' | 'installed' | 'fetched' }
  * Biome ships no structured rule-metadata API: `biome explain` prints prose,
  * one rule per invocation, so the snapshot can only be read from a binary of
  * the release it describes. That is the release the presets pin, never merely
- * the one installed (docs/adr/0001), and it is resolved in order:
+ * the one installed, and it is resolved in order:
  *
  * 1. `--biome <command>`, kept for bootstrap and back-fill, e.g.
  *    `--biome "pnpm dlx @biomejs/biome@2.5.9"` — honoured only when it reports
@@ -388,7 +388,7 @@ async function readInstalledVersion(): Promise<string | undefined> {
  * piped through Biome itself, so the file this writes is by construction the
  * file `biome check` accepts. The formatter is the swept binary, not whatever
  * is installed: `--check` compares bytes, so formatting with another version
- * would report that version's formatting differences as drift (docs/adr/0001).
+ * would report that version's formatting differences as drift.
  */
 async function serialize(snapshot: Snapshot, argv: string[]): Promise<string> {
   let text = `${JSON.stringify(snapshot, null, 2)}\n`

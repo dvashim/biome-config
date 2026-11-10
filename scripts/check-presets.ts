@@ -37,7 +37,13 @@ const EXCLUDED_LANGUAGES = new Set(['graphql', 'md', 'yaml'])
  * **or** through an in-scope domain — the scope test is a disjunction, and
  * evaluating the domain half alone would flag every listed rule that belongs
  * only to domains the requirement does not name (`types`, `playwright`,
- * `drizzle`, `tailwind`, `turborepo`) — each of them a js/ts rule.
+ * `drizzle`, `tailwind`, `tanstackQuery`, `turborepo`) — each of them a js/ts
+ * rule.
+ *
+ * `scss` is named on its own because Biome tags SCSS examples apart from CSS:
+ * with `css` alone, a rule documented only in SCSS — `noMissingScssInterpolation`
+ * since 2.6.5 — would be neither in scope nor excluded, reported by coverage
+ * while unlisted and by listed-rule scope once listed.
  */
 const IN_SCOPE_LANGUAGES = new Set([
   'cjs',
@@ -48,6 +54,7 @@ const IN_SCOPE_LANGUAGES = new Set([
   'jsonc',
   'jsx',
   'mjs',
+  'scss',
   'ts',
   'tsx',
 ])
